@@ -53,6 +53,28 @@ jobs:
              cmake -DCMAKE_BUILD_TYPE=Debug -B ./build
              cmake --build ./build
              ./dictu tests/runTests.du | tee /dev/stderr | grep -q 'Total bytes lost: 0'
+     test-freebsd-cmake:
+       name: Test on ${{ matrix.os }}
+       runs-on: ${{ matrix.os }}
+       strategy:
+         matrix:
+           os: [freebsd-latest]
+
+       steps:
+         - uses: actions/checkout@v2
+         - name: Make dictu and run tests (No HTTP)
+           run: |
+             cmake -DCMAKE_BUILD_TYPE=Debug -DDISABLE_HTTP=1 -B ./build
+             cmake --build ./build
+             ./dictu tests/runTests.du | tee /dev/stderr | grep -q 'Total bytes lost: 0'
+         - name: Remove build directory
+           run: |
+             rm -rf build
+         - name: Make dictu and run tests
+           run: |
+             cmake -DCMAKE_BUILD_TYPE=Debug -B ./build
+             cmake --build ./build
+             ./dictu tests/runTests.du | tee /dev/stderr | grep -q 'Total bytes lost: 0'             
      test-windows-cmake:
        name: Test on ${{ matrix.os }}
        runs-on: ${{ matrix.os }}
