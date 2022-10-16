@@ -1,5 +1,5 @@
-#ifndef dictu_socket_h
-#define dictu_socket_h
+#ifndef dictu_net_h
+#define dictu_net_h
 
 #include "optionals.h"
 #include "../vm/vm.h"
@@ -10,6 +10,6 @@
 #include <netinet/in.h>
 #endif
 
-Value createSocketModule(DictuVM *vm);
+Value createNetModule(DictuVM *vm);
 
-#endif //dictu_socket_h
+#endif //dictu_net_h

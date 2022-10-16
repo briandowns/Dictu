@@ -1,4 +1,4 @@
-#include "socket.h"
+#include "net.h"
 
 #include <stdio.h>
 
@@ -329,7 +329,50 @@ void cleanupSockets(void) {
 }
 #endif
 
-Value createSocketModule(DictuVM *vm) {
+typedef char ipv4[4];
+
+typedef struct {
+    ipv4 addr;
+} ipAddr;
+
+typedef char ipMask[16];
+
+typedef struct {
+    ipMask mask;
+} ipMaskAddr;
+
+static Value parseIp(DictuVM *vm, int argCount, Value *args) {
+    if (argCount != 1) {
+        runtimeError(vm, "parseIp() takes 1 argument (%d given)", argCount);
+        return EMPTY_VAL;
+    }
+
+    if (!IS_STRING(args[0])) {
+        runtimeError(vm, "parseIp() argument must be a string");
+        return EMPTY_VAL;
+    }
+
+    char *ipStr = AS_CSTRING(args[1]);
+
+    unsigned char value[4] = {0};
+    size_t index = 0;
+
+    //char *str2 = ipStr; /* save the pointer */
+    while (*ipStr) {
+        if (isdigit((unsigned char)*ipStr)) {
+            value[index] *= 10;
+            value[index] += *ipStr - '0';
+        } else {
+            index++;
+        }
+        ipStr++;
+    }
+    printf("%d %d %d %d\n",  value[0], value[1], value[2], value[3]);
+
+    return newResultSuccess(vm, OBJ_VAL(value));
+}
+
+Value createNetModule(DictuVM *vm) {
     #ifdef _WIN32
     #include "windowsapi.h"
 
@@ -339,23 +382,28 @@ Value createSocketModule(DictuVM *vm) {
     WSAStartup(versionWanted, &wsaData);
     #endif
 
-    ObjString *name = copyString(vm, "Socket", 6);
+    ObjString *name = copyString(vm, "Net", 3);
     push(vm, OBJ_VAL(name));
     ObjModule *module = newModule(vm, name);
     push(vm, OBJ_VAL(module));
 
     /**
-     * Define Socket methods
+     * Define Net methods
      */
-    defineNative(vm, &module->values, "create", createSocket);
+    defineNative(vm, &module->values, "createSocket", createSocket);
+    defineNative(vm, &module->values, "parseIp", parseIp);
+    //defineNative(vm, &module->values, "get_iface_addr", getIfaceAddr);
 
     /**
-     * Define Socket properties
+     * Define Net properties
      */
     defineNativeProperty(vm, &module->values, "AF_INET", NUMBER_VAL(AF_INET));
     defineNativeProperty(vm, &module->values, "SOCK_STREAM", NUMBER_VAL(SOCK_STREAM));
     defineNativeProperty(vm, &module->values, "SOL_SOCKET", NUMBER_VAL(SOL_SOCKET));
     defineNativeProperty(vm, &module->values, "SO_REUSEADDR", NUMBER_VAL(SO_REUSEADDR));
+
+    defineNativeProperty(vm, &module->values, "ip4Len", NUMBER_VAL(4));
+    defineNativeProperty(vm, &module->values, "ip6Len", NUMBER_VAL(16));
 
     pop(vm);
     pop(vm);
