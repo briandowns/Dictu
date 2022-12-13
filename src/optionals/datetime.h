@@ -8,6 +8,7 @@
 #define __USE_XOPEN
 #endif
 
+#include <sys/types.h>
 #include <time.h>
 
 #include "optionals.h"

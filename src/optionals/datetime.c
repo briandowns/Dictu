@@ -11,6 +11,8 @@
 #define HAS_STRPTIME
 #endif
 
+#define AS_TIMEVAL(v) (&(struct timeval)v)
+
 static Value nowNative(DictuVM *vm, int argCount, Value *args) {
     UNUSED(args);
 
@@ -154,6 +156,75 @@ static Value strptimeNative(DictuVM *vm, int argCount, Value *args) {
 }
 #endif
 
+static Value getTimeOfDayNative(DictuVM *vm, int argCount, Value *args) {
+    UNUSED(args);
+
+    if (argCount != 0) {
+        runtimeError(vm, "gettimeofday() takes no arguments (%d given)", argCount);
+        return EMPTY_VAL;
+    }
+
+    struct timeval now;
+
+    // start the timer just before execution
+    if (gettimeofday(&now, NULL) != 0) {
+        runtimeError(vm, "gettimeofday() failed to retrieve information");
+        return EMPTY_VAL;
+    }
+
+    ObjDict *timeOfDayDict = newDict(vm);
+    push(vm, OBJ_VAL(timeOfDayDict));
+
+    ObjString *seconds = copyString(vm, "seconds", 7);
+    push(vm, OBJ_VAL(seconds));
+    dictSet(vm, timeOfDayDict, OBJ_VAL(seconds), NUMBER_VAL(now.tv_sec));
+    pop(vm);
+
+    ObjString *microseconds = copyString(vm, "microseconds", 12);
+    push(vm, OBJ_VAL(microseconds));
+    dictSet(vm, timeOfDayDict, OBJ_VAL(microseconds), NUMBER_VAL(now.tv_usec));
+    pop(vm);
+    
+    pop(vm);
+
+    return OBJ_VAL(timeOfDayDict);
+}
+
+static Value subNative(DictuVM *vm, int argCount, Value *args) {
+    if (argCount != 2) {
+        runtimeError(vm, "sub() takes 2 arguments (%d given)", argCount);
+        return EMPTY_VAL;
+    }
+
+    if (!IS_DICT(args[0]) || !IS_DICT(args[1])) {
+        runtimeError(vm, "sub() arguments must be dictionaries");
+        return EMPTY_VAL;
+    }
+
+    struct timeval result;
+    ObjDict *tvA = AS_DICT(args[0]);
+    ObjDict *tvB = AS_DICT(args[1]);
+
+    timersub(a, b, &result);
+
+    ObjDict *resultDict = newDict(vm);
+    push(vm, OBJ_VAL(resultDict));
+
+    ObjString *seconds = copyString(vm, "seconds", 7);
+    push(vm, OBJ_VAL(seconds));
+    dictSet(vm, resultDict, OBJ_VAL(seconds), NUMBER_VAL(now.tv_sec));
+    pop(vm);
+
+    ObjString *microseconds = copyString(vm, "microseconds", 12);
+    push(vm, OBJ_VAL(microseconds));
+    dictSet(vm, resultDict, OBJ_VAL(microseconds), NUMBER_VAL(now.tv_usec));
+    pop(vm);
+    
+    pop(vm);
+
+    return OBJ_VAL(resultDict);
+}
+
 Value createDatetimeModule(DictuVM *vm) {
     ObjString *name = copyString(vm, "Datetime", 8);
     push(vm, OBJ_VAL(name));
@@ -166,6 +237,8 @@ Value createDatetimeModule(DictuVM *vm) {
     defineNative(vm, &module->values, "now", nowNative);
     defineNative(vm, &module->values, "nowUTC", nowUTCNative);
     defineNative(vm, &module->values, "strftime", strftimeNative);
+    defineNative(vm, &module->values, "gettimeofday", getTimeOfDayNative);
+    defineNative(vm, &module->values, "sub", subNative);
     #ifdef HAS_STRPTIME
     defineNative(vm, &module->values, "strptime", strptimeNative);
     #endif
