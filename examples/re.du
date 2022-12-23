@@ -1,0 +1,12 @@
+import RE;
+import System;
+
+{ // main 
+    const ssnValidation = "^(?!000|666)[0-8][0-9]{2}-(?!00)[0-9]{2}-(?!0000)[0-9]{4}$";
+
+    const pattern = RE.compile(ssnValidation);
+
+
+
+    System.exit(0);
+}

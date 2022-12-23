@@ -14,6 +14,7 @@
 #include "datetime.h"
 #include "socket.h"
 #include "random.h"
+#include "re.h"
 #include "base64.h"
 #include "hashlib.h"
 #include "sqlite.h"

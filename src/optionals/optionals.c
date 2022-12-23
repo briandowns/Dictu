@@ -10,6 +10,7 @@ BuiltinModules modules[] = {
     {"Datetime", &createDatetimeModule, false},
     {"Socket", &createSocketModule, false},
     {"Random", &createRandomModule, false},
+    {"RE", &createReModule, false},
     {"Base64", &createBase64Module, false},
     {"Hashlib", &createHashlibModule, false},
     {"Sqlite", &createSqliteModule, false},
