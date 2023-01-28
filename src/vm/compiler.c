@@ -1070,6 +1070,20 @@ static void rString(Compiler *compiler, bool canAssign) {
     consume(compiler, TOKEN_STRING, "Expected string after r delimiter");
 }
 
+static void bString(Compiler *compiler, bool canAssign) {
+    UNUSED(canAssign);
+
+    if (match(compiler, TOKEN_BYTES)) {
+        Parser *parser = compiler->parser;
+        emitConstant(compiler, OBJ_VAL(copyString(parser->vm, parser->previous.start + 1,
+                                                  parser->previous.length - 2)));
+
+        return;
+    }
+
+    consume(compiler, TOKEN_BYTES, "Expected string after b delimiter");
+}
+
 static Value parseString(Compiler *compiler, bool canAssign) {
     UNUSED(canAssign);
 
@@ -1498,6 +1512,7 @@ ParseRule rules[] = {
         {NULL,     binary,    PREC_COMPARISON},         // TOKEN_LESS
         {NULL,     binary,    PREC_COMPARISON},         // TOKEN_LESS_EQUAL
         {rString,  NULL,      PREC_NONE},               // TOKEN_R
+        {bString,  NULL,      PREC_NONE},               // TOKEN_B
         {NULL,     NULL,      PREC_NONE},               // TOKEN_ARROW
         {NULL,     NULL,      PREC_NONE},               // TOKEN_DOT_DOT_DOT
         {variable, NULL,      PREC_NONE},               // TOKEN_IDENTIFIER

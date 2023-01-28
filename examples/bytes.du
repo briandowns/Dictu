@@ -1,0 +1,2 @@
+var bytes = b'asdf';
+print(bytes);

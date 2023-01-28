@@ -26,7 +26,7 @@ typedef enum {
     TOKEN_EQUAL, TOKEN_EQUAL_EQUAL,
     TOKEN_GREATER, TOKEN_GREATER_EQUAL,
     TOKEN_LESS, TOKEN_LESS_EQUAL,
-    TOKEN_R, TOKEN_ARROW,
+    TOKEN_R, TOKEN_B, TOKEN_ARROW,
 
     // three or more character tokens.
     TOKEN_DOT_DOT_DOT,

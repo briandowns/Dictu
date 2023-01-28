@@ -154,6 +154,10 @@ static TokenType identifierType(Scanner *scanner) {
             }
             break;
         case 'b':
+            if (scanner->start[1] == '"' || scanner->start[1] == '\'') {
+                scanner->rawString = true;
+                return TOKEN_R;
+            }
             return checkKeyword(scanner, 1, 4, "reak", TOKEN_BREAK);
         case 'c':
             if (scanner->current - scanner->start > 1) {
