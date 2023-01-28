@@ -21,6 +21,7 @@
 #define AS_INSTANCE(value)      ((ObjInstance*)AS_OBJ(value))
 #define AS_NATIVE(value)        (((ObjNative*)AS_OBJ(value))->function)
 #define AS_STRING(value)        ((ObjString*)AS_OBJ(value))
+#define AS_BYTES(value)         ((ObjBytes*)AS_OBJ(value))
 #define AS_CSTRING(value)       (((ObjString*)AS_OBJ(value))->chars)
 #define AS_LIST(value)          ((ObjList*)AS_OBJ(value))
 #define AS_DICT(value)          ((ObjDict*)AS_OBJ(value))
@@ -57,6 +58,7 @@ typedef enum {
     OBJ_INSTANCE,
     OBJ_NATIVE,
     OBJ_STRING,
+    OBJ_BYTES,
     OBJ_LIST,
     OBJ_DICT,
     OBJ_SET,
@@ -130,6 +132,13 @@ struct sObjString {
     Obj obj;
     int length;
     char *chars;
+    uint32_t hash;
+};
+
+struct sObjBytes {
+    Obj obj;
+    int length;
+    char *bytes;
     uint32_t hash;
 };
 

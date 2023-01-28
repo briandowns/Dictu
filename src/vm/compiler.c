@@ -1090,8 +1090,32 @@ static Value parseString(Compiler *compiler, bool canAssign) {
     return OBJ_VAL(takeString(parser->vm, string, length));
 }
 
+static Value parseBytes(Compiler *compiler, bool canAssign) {
+    UNUSED(canAssign);
+
+    Parser *parser = compiler->parser;
+    int stringLength = parser->previous.length - 2;
+
+    char *string = ALLOCATE(parser->vm, char, stringLength + 1);
+
+    memcpy(string, parser->previous.start + 1, stringLength);
+    int length = parseEscapeSequences(string, stringLength);
+
+    // If there were escape chars and the string shrank, resize the buffer
+    if (length != stringLength) {
+        string = SHRINK_ARRAY(parser->vm, string, char, stringLength + 1, length + 1);
+    }
+    string[length] = '\0';
+
+    return OBJ_VAL(takeString(parser->vm, string, length));
+}
+
 static void string(Compiler *compiler, bool canAssign) {
     emitConstant(compiler, parseString(compiler, canAssign));
+}
+
+static void bytes(Compiler *compiler, bool canAssign) {
+    emitConstant(compiler, parseBytes(compiler, canAssign));
 }
 
 static void list(Compiler *compiler, bool canAssign) {
@@ -1478,6 +1502,7 @@ ParseRule rules[] = {
         {NULL,     NULL,      PREC_NONE},               // TOKEN_DOT_DOT_DOT
         {variable, NULL,      PREC_NONE},               // TOKEN_IDENTIFIER
         {string,   NULL,      PREC_NONE},               // TOKEN_STRING
+        {bytes,    NULL,      PREC_NONE},               // TOKEN_BYTES
         {number,   NULL,      PREC_NONE},               // TOKEN_NUMBER
         {NULL,     NULL,      PREC_NONE},               // TOKEN_ABSTRACT
         {NULL,     NULL,      PREC_NONE},               // TOKEN_CLASS

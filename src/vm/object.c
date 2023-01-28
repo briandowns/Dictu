@@ -654,6 +654,14 @@ char *objectToString(Value value) {
             return string;
         }
 
+        case OBJ_BYTES: {
+            ObjBytes *bytesObj = AS_BYTES(value);
+            char *bytes = malloc(sizeof(char) * bytesObj->length + 1);
+            memcpy(bytes, bytesObj->bytes, bytesObj->length);
+            bytes[bytesObj->length] = '\0';
+            return bytes;
+        }
+
         case OBJ_FILE: {
             ObjFile *file = AS_FILE(value);
             char *fileString = malloc(sizeof(char) * (strlen(file->path) + 8));

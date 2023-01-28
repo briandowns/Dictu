@@ -6,6 +6,7 @@
 
 typedef struct sObj Obj;
 typedef struct sObjString ObjString;
+typedef struct sObjBytes ObjBytes;
 typedef struct sObjList ObjList;
 typedef struct sObjDict ObjDict;
 typedef struct sObjSet  ObjSet;

@@ -184,27 +184,27 @@ static Value generateErrorResult(DictuVM *vm, int argCount, Value *args) {
 
 void defineAllNatives(DictuVM *vm) {
     char *nativeNames[] = {
-            "input",
-            "type",
-            "set",
-            "print",
-            "printError",
-            "assert",
-            "isDefined",
-            "Success",
-            "Error"
+        "input",
+        "type",
+        "set",
+        "print",
+        "printError",
+        "assert",
+        "isDefined",
+        "Success",
+        "Error"
     };
 
     NativeFn nativeFunctions[] = {
-            inputNative,
-            typeNative,
-            setNative,
-            printNative,
-            printErrorNative,
-            assertNative,
-            isDefinedNative,
-            generateSuccessResult,
-            generateErrorResult
+        inputNative,
+        typeNative,
+        setNative,
+        printNative,
+        printErrorNative,
+        assertNative,
+        isDefinedNative,
+        generateSuccessResult,
+        generateErrorResult
     };
 
     for (uint8_t i = 0; i < sizeof(nativeNames) / sizeof(nativeNames[0]); ++i) {

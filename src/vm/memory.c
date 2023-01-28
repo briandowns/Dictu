@@ -176,6 +176,7 @@ static void blackenObject(DictuVM *vm, Obj *object) {
 
         case OBJ_NATIVE:
         case OBJ_STRING:
+        case OBJ_BYTES:
         case OBJ_FILE:
             break;
     }
@@ -258,6 +259,13 @@ void freeObject(DictuVM *vm, Obj *object) {
             ObjString *string = (ObjString *) object;
             FREE_ARRAY(vm, char, string->chars, string->length + 1);
             FREE(vm, ObjString, object);
+            break;
+        }
+
+        case OBJ_BYTES: {
+            ObjBytes *bytes = (ObjBytes *) object;
+            FREE_ARRAY(vm, char, bytes->bytes, bytes->length + 1);
+            FREE(vm, ObjBytes, object);
             break;
         }
 

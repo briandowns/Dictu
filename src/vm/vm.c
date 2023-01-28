@@ -16,6 +16,7 @@
 #include "datatypes/bool.h"
 #include "datatypes/nil.h"
 #include "datatypes/strings.h"
+#include "datatypes/bytes.h"
 #include "datatypes/lists/lists.h"
 #include "datatypes/dicts/dicts.h"
 #include "datatypes/sets.h"
@@ -113,6 +114,7 @@ DictuVM *dictuInitVM(bool repl, int argc, char **argv) {
     initTable(&vm->boolMethods);
     initTable(&vm->nilMethods);
     initTable(&vm->stringMethods);
+    initTable(&vm->bytesMethods);
     initTable(&vm->listMethods);
     initTable(&vm->dictMethods);
     initTable(&vm->setMethods);
@@ -133,6 +135,7 @@ DictuVM *dictuInitVM(bool repl, int argc, char **argv) {
     declareBoolMethods(vm);
     declareNilMethods(vm);
     declareStringMethods(vm);
+    declareBytesMethods(vm);
     declareListMethods(vm);
     declareDictMethods(vm);
     declareSetMethods(vm);

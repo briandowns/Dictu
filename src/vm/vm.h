@@ -32,6 +32,7 @@ struct _vm {
     Table boolMethods;
     Table nilMethods;
     Table stringMethods;
+    Table bytesMethods;
     Table listMethods;
     Table dictMethods;
     Table setMethods;
