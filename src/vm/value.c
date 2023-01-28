@@ -421,6 +421,9 @@ char *valueTypeToString(DictuVM *vm, Value value, int *length) {
             case OBJ_STRING: {
                 CONVERT(string, 6);
             }
+            case OBJ_BYTES: {
+                CONVERT(bytes, 5);
+            }
             case OBJ_LIST: {
                 CONVERT(list, 4);
             }
