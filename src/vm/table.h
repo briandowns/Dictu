@@ -24,7 +24,7 @@ void freeTable(DictuVM *vm, Table *table);
 
 bool tableGet(Table *table, ObjString *key, Value *value);
 
-bool tableSet(DictuVM *vm, Table *table, ObjString *key, Value value);
+bool tableSet(DictuVM *vm, Table *table, Value *key, Value value);
 
 bool tableDelete(DictuVM *vm, Table *table, ObjString *key);
 

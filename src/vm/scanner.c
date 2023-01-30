@@ -156,7 +156,7 @@ static TokenType identifierType(Scanner *scanner) {
         case 'b':
             if (scanner->start[1] == '"' || scanner->start[1] == '\'') {
                 scanner->rawString = true;
-                return TOKEN_R;
+                return TOKEN_B;
             }
             return checkKeyword(scanner, 1, 4, "reak", TOKEN_BREAK);
         case 'c':
@@ -356,7 +356,24 @@ static Token string(Scanner *scanner, char stringToken) {
     // The closing " or '.
     advance(scanner);
     scanner->rawString = false;
-    return makeToken(scanner,TOKEN_STRING);
+    return makeToken(scanner, TOKEN_STRING);
+}
+
+static Token bytes(Scanner *scanner, char stringToken) {
+    while (peek(scanner) != stringToken && !isAtEnd(scanner)) {
+        if (peek(scanner) == '\n') {
+            scanner->line++;
+        } else if (peek(scanner) == '\\' && !scanner->rawString) {
+            scanner->current++;
+        }
+        advance(scanner);
+    }
+    if (isAtEnd(scanner)) return errorToken(scanner, "Unterminated string.");
+
+    // The closing " or '.
+    advance(scanner);
+    scanner->rawString = false;
+    return makeToken(scanner, TOKEN_BYTES);
 }
 
 void backTrack(Scanner *scanner) {
@@ -469,7 +486,7 @@ Token scanToken(Scanner *scanner) {
         case '"':
             return string(scanner, '"');
         case '\'':
-            return string(scanner, '\'');
+            return bytes(scanner, '\'');
     }
 
     return errorToken(scanner, "Unexpected character.");

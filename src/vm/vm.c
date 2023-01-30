@@ -170,6 +170,7 @@ void dictuFreeVM(DictuVM *vm) {
     freeTable(vm, &vm->boolMethods);
     freeTable(vm, &vm->nilMethods);
     freeTable(vm, &vm->stringMethods);
+    freeTable(vm, &vm->bytesMethods);
     freeTable(vm, &vm->listMethods);
     freeTable(vm, &vm->dictMethods);
     freeTable(vm, &vm->setMethods);
@@ -560,6 +561,16 @@ static bool invoke(DictuVM *vm, ObjString *name, int argCount, bool unpack) {
                 }
 
                 runtimeError(vm, "String has no method %s().", name->chars);
+                return false;
+            }
+
+            case OBJ_BYTES: {
+                Value value;
+                if (tableGet(&vm->bytesMethods, name, &value)) {
+                    return callNativeMethod(vm, value, argCount);
+                }
+
+                runtimeError(vm, "Bytes has no method %s().", name->chars);
                 return false;
             }
 
@@ -1812,6 +1823,24 @@ static DictuInterpretResult run(DictuVM *vm) {
                     }
 
                     RUNTIME_ERROR("String index out of bounds.");
+                }
+
+                case OBJ_BYTES: {
+                    ObjBytes *bytes = AS_BYTES(subscriptValue);
+                    int index = AS_NUMBER(indexValue);
+
+                    // Allow negative indexes
+                    if (index < 0)
+                        index = bytes->length + index;
+
+                    if (index >= 0 && index < bytes->length) {
+                        pop(vm);
+                        pop(vm);
+                        push(vm, OBJ_VAL(copyString(vm, &bytes->bytes[index], 1)));
+                        DISPATCH();
+                    }
+
+                    RUNTIME_ERROR("Bytes index out of bounds.");
                 }
 
                 case OBJ_DICT: {

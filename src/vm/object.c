@@ -157,6 +157,18 @@ static ObjString *allocateString(DictuVM *vm, char *chars, int length,
     return string;
 }
 
+static ObjBytes *allocateBytes(DictuVM *vm, char *bytes, int length,
+                               uint32_t hash) {
+    ObjBytes *string = ALLOCATE_OBJ(vm, ObjBytes, OBJ_BYTES);
+    string->length = length;
+    string->bytes = bytes;
+    string->hash = hash;
+    push(vm, OBJ_VAL(string));
+    tableSet(vm, &vm->strings, string, NIL_VAL);
+    pop(vm);
+    return string;
+}
+
 ObjList *newList(DictuVM *vm) {
     ObjList *list = ALLOCATE_OBJ(vm, ObjList, OBJ_LIST);
     initValueArray(&list->values);
@@ -251,6 +263,18 @@ ObjString *copyString(DictuVM *vm, const char *chars, int length) {
     memcpy(heapChars, chars, length);
     heapChars[length] = '\0';
     return allocateString(vm, heapChars, length, hash);
+}
+
+ObjBytes *copyBytes(DictuVM *vm, const char *chars, int length) {
+    uint32_t hash = hashString(chars, length);
+    ObjString *interned = tableFindString(&vm->strings, chars, length,
+                                          hash);
+    if (interned != NULL) return interned;
+
+    char *heapChars = ALLOCATE(vm, char, length + 1);
+    memcpy(heapChars, chars, length);
+    heapChars[length] = '\0';
+    return allocateBytes(vm, heapChars, length, hash);
 }
 
 ObjUpvalue *newUpvalue(DictuVM *vm, Value *slot) {
@@ -656,9 +680,8 @@ char *objectToString(Value value) {
 
         case OBJ_BYTES: {
             ObjBytes *bytesObj = AS_BYTES(value);
-            char *bytes = malloc(sizeof(char) * bytesObj->length + 1);
+            char *bytes = malloc(sizeof(char) * bytesObj->length);
             memcpy(bytes, bytesObj->bytes, bytesObj->length);
-            bytes[bytesObj->length] = '\0';
             return bytes;
         }
 

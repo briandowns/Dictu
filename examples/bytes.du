@@ -1,3 +1,4 @@
 var bytes = b'asdf';
 print(bytes);
+print(bytes.len());
 print(type(bytes));

@@ -1110,18 +1110,10 @@ static Value parseBytes(Compiler *compiler, bool canAssign) {
     Parser *parser = compiler->parser;
     int stringLength = parser->previous.length - 2;
 
-    char *string = ALLOCATE(parser->vm, char, stringLength + 1);
-
+    char *string = ALLOCATE(parser->vm, char, stringLength);
     memcpy(string, parser->previous.start + 1, stringLength);
-    int length = parseEscapeSequences(string, stringLength);
 
-    // If there were escape chars and the string shrank, resize the buffer
-    if (length != stringLength) {
-        string = SHRINK_ARRAY(parser->vm, string, char, stringLength + 1, length + 1);
-    }
-    string[length] = '\0';
-
-    return OBJ_VAL(takeString(parser->vm, string, length));
+    return OBJ_VAL(takeString(parser->vm, string, stringLength));
 }
 
 static void string(Compiler *compiler, bool canAssign) {

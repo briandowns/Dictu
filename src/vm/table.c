@@ -68,7 +68,7 @@ static void adjustCapacity(DictuVM *vm, Table *table, int capacityMask) {
     FREE_ARRAY(vm, Entry, oldEntries, oldMask + 1);
 }
 
-bool tableSet(DictuVM *vm, Table *table, ObjString *key, Value value) {
+bool tableSet(DictuVM *vm, Table *table, Value *key, Value value) {
     if (table->count + 1 > (table->capacityMask + 1) * TABLE_MAX_LOAD) {
         // Figure out the new table size.
         int capacityMask = GROW_CAPACITY(table->capacityMask + 1) - 1;
