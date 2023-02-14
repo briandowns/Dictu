@@ -180,6 +180,27 @@ static Value generateErrorResult(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(newResult(vm, ERR, args[0]));
 }
 
+static Value newListNative(DictuVM *vm, int argCount, Value *args) {
+    if (argCount != 1) {
+        runtimeError(vm, "newList() takes 1 argument (%d given).", argCount);
+        return EMPTY_VAL;
+    }
+
+    if (!IS_NUMBER(args[0])) {
+        runtimeError(vm, "newList() only takes a number as an argument");
+        return EMPTY_VAL;
+    }
+
+    ObjList *list = newList(vm);
+    push(vm, OBJ_VAL(list));
+
+    list->values.capacity = AS_NUMBER(args[0]);
+
+    pop(vm);
+
+    return OBJ_VAL(list);
+}
+
 // End of natives
 
 void defineAllNatives(DictuVM *vm) {
@@ -204,7 +225,8 @@ void defineAllNatives(DictuVM *vm) {
             assertNative,
             isDefinedNative,
             generateSuccessResult,
-            generateErrorResult
+            generateErrorResult,
+            newListNative,
     };
 
     for (uint8_t i = 0; i < sizeof(nativeNames) / sizeof(nativeNames[0]); ++i) {
