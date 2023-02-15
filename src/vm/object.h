@@ -271,6 +271,8 @@ ObjString *copyString(DictuVM *vm, const char *chars, int length);
 
 ObjList *newList(DictuVM *vm);
 
+ObjList *newListWithSize(DictuVM *vm, int size);
+
 ObjDict *newDict(DictuVM *vm);
 
 ObjSet *newSet(DictuVM *vm);

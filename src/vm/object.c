@@ -163,6 +163,12 @@ ObjList *newList(DictuVM *vm) {
     return list;
 }
 
+ObjList *newListWithSize(DictuVM *vm, int size) {
+    ObjList *list = ALLOCATE_OBJ(vm, ObjList, OBJ_LIST);
+    initValueArrayWithSize(vm, &list->values, size);
+    return list;
+}
+
 ObjDict *newDict(DictuVM *vm) {
     ObjDict *dict = ALLOCATE_OBJ(vm, ObjDict, OBJ_DICT);
     dict->count = 0;

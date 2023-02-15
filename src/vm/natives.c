@@ -191,10 +191,9 @@ static Value newListNative(DictuVM *vm, int argCount, Value *args) {
         return EMPTY_VAL;
     }
 
-    ObjList *list = newList(vm);
+    int size = AS_NUMBER(args[0]);
+    ObjList *list = newListWithSize(vm, size);
     push(vm, OBJ_VAL(list));
-
-    list->values.capacity = AS_NUMBER(args[0]);
 
     pop(vm);
 
@@ -213,7 +212,8 @@ void defineAllNatives(DictuVM *vm) {
             "assert",
             "isDefined",
             "Success",
-            "Error"
+            "Error",
+            "newList"
     };
 
     NativeFn nativeFunctions[] = {

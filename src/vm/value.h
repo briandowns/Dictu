@@ -81,6 +81,8 @@ bool valuesEqual(Value a, Value b);
 
 void initValueArray(ValueArray *array);
 
+void initValueArrayWithSize(DictuVM *vm, ValueArray *array, int size);
+
 void writeValueArray(DictuVM *vm, ValueArray *array, Value value);
 
 void freeValueArray(DictuVM *vm, ValueArray *array);

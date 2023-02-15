@@ -17,6 +17,7 @@ void initValueArray(ValueArray *array) {
 }
 
 void writeValueArray(DictuVM *vm, ValueArray *array, Value value) {
+    printf("cap: %d\n", array->capacity);
     if (array->capacity < array->count + 1) {
         int oldCapacity = array->capacity;
         array->capacity = GROW_CAPACITY(oldCapacity);
@@ -26,6 +27,20 @@ void writeValueArray(DictuVM *vm, ValueArray *array, Value value) {
 
     array->values[array->count] = value;
     array->count++;
+}
+
+void initValueArrayWithSize(DictuVM *vm, ValueArray *array, int size) {
+    UNUSED(vm);
+    array->values = NULL;
+    array->capacity = size;
+    array->count = 0;
+
+    Value value = 0;
+
+    array->values = ALLOCATE(vm, Value, size);
+    for (int i = 0; i < size; i++) {    
+        array->values[i] = value;
+    }
 }
 
 void freeValueArray(DictuVM *vm, ValueArray *array) {
