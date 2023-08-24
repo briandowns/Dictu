@@ -757,21 +757,42 @@ static void createClass(DictuVM *vm, ObjString *name, ObjClass *superclass, Clas
     ObjClass *klass = newClass(vm, name, superclass, type);
     push(vm, OBJ_VAL(klass));
 
-    // Inherit methods.
+    // Inherit class components.
     if (superclass != NULL) {
         tableAddAll(vm, &superclass->publicMethods, &klass->publicMethods);
         tableAddAll(vm, &superclass->abstractMethods, &klass->abstractMethods);
+
+        if (superclass->classAnnotations != NULL) {
+            if (klass->classAnnotations != NULL) {
+                copyDictInto(vm, klass->classAnnotations, superclass->classAnnotations, true);
+            } else {
+                ObjDict *dict = newDict(vm);
+                push(vm, OBJ_VAL(dict));
+                copyDictInto(vm, dict, superclass->classAnnotations, true);
+                klass->classAnnotations = dict;
+                pop(vm);
+                for (int i = 0; i <= klass->classAnnotations->capacityMask; ++i) {
+                    printf("XXX - in createClass: %s\n", AS_STRING(klass->classAnnotations->entries[i].key)->chars);
+                }
+            }
+        }
+        if (superclass->methodAnnotations != NULL) {
+            klass->methodAnnotations = copyDict(vm, superclass->methodAnnotations, true);
+        }
+        if (superclass->fieldAnnotations != NULL) {
+            klass->fieldAnnotations = copyDict(vm, superclass->fieldAnnotations, true);
+        }
     }
 }
 
 bool isFalsey(Value value) {
     return IS_NIL(value) ||
-           (IS_BOOL(value) && !AS_BOOL(value)) ||
-           (IS_NUMBER(value) && AS_NUMBER(value) == 0) ||
-           (IS_STRING(value) && AS_CSTRING(value)[0] == '\0') ||
-           (IS_LIST(value) && AS_LIST(value)->values.count == 0) ||
-           (IS_DICT(value) && AS_DICT(value)->count == 0) ||
-           (IS_SET(value) && AS_SET(value)->count == 0);
+        (IS_BOOL(value) && !AS_BOOL(value)) ||
+        (IS_NUMBER(value) && AS_NUMBER(value) == 0) ||
+        (IS_STRING(value) && AS_CSTRING(value)[0] == '\0') ||
+        (IS_LIST(value) && AS_LIST(value)->values.count == 0) ||
+        (IS_DICT(value) && AS_DICT(value)->count == 0) ||
+        (IS_SET(value) && AS_SET(value)->count == 0);
 }
 
 static void concatenate(DictuVM *vm) {
@@ -797,7 +818,6 @@ static void setReplVar(DictuVM *vm, Value value) {
 }
 
 static DictuInterpretResult run(DictuVM *vm) {
-
     CallFrame *frame = &vm->frames[vm->frameCount - 1];
     register uint8_t* ip = frame->ip;
 

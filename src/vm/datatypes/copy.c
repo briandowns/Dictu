@@ -34,6 +34,34 @@ ObjDict *copyDict(DictuVM* vm, ObjDict *oldDict, bool shallow) {
     return dict;
 }
 
+bool copyDictInto(DictuVM* vm, ObjDict *dstDict, ObjDict *srcDict, bool shallow) {
+    for (int i = 0; i <= srcDict->capacityMask; ++i) {
+        if (IS_EMPTY(srcDict->entries[i].key)) {
+            continue;
+        }
+
+        Value val = srcDict->entries[i].value;
+
+        if (!shallow) {
+            if (IS_DICT(val)) {
+                val = OBJ_VAL(copyDict(vm, AS_DICT(val), false));
+            } else if (IS_LIST(val)) {
+                val = OBJ_VAL(copyList(vm, AS_LIST(val), false));
+            } else if (IS_INSTANCE(val)) {
+                val = OBJ_VAL(copyInstance(vm, AS_INSTANCE(val), false));
+            }
+        }
+
+        printf("XXX - here\n");
+        printf("%s\n", AS_STRING(srcDict->entries[i].key)->chars);
+        push(vm, val);
+        dictSet(vm, dstDict, srcDict->entries[i].key, val);
+        pop(vm);
+    }
+
+    return true;
+}
+
 ObjList *copyList(DictuVM* vm, ObjList *oldList, bool shallow) {
     ObjList *list = newList(vm);
     // Push to stack to avoid GC

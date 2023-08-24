@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "datatypes/copy.h"
 #include "memory.h"
 #include "object.h"
 #include "table.h"
@@ -13,7 +14,7 @@
 
 static Obj *allocateObject(DictuVM *vm, size_t size, ObjType type) {
     Obj *object;
-    object = (Obj *) reallocate(vm, NULL, 0, size);
+    object = (Obj *)reallocate(vm, NULL, 0, size);
     object->type = type;
     object->isDark = false;
     object->next = vm->objects;
@@ -51,8 +52,7 @@ ObjModule *newModule(DictuVM *vm, ObjString *name) {
 }
 
 ObjBoundMethod *newBoundMethod(DictuVM *vm, Value receiver, ObjClosure *method) {
-    ObjBoundMethod *bound = ALLOCATE_OBJ(vm, ObjBoundMethod,
-                                         OBJ_BOUND_METHOD);
+    ObjBoundMethod *bound = ALLOCATE_OBJ(vm, ObjBoundMethod, OBJ_BOUND_METHOD);
 
     bound->receiver = receiver;
     bound->method = method;
@@ -69,9 +69,16 @@ ObjClass *newClass(DictuVM *vm, ObjString *name, ObjClass *superclass, ClassType
     initTable(&klass->publicMethods);
     initTable(&klass->variables);
     initTable(&klass->constants);
-    klass->classAnnotations = NULL;
-    klass->methodAnnotations = NULL;
-    klass->fieldAnnotations = NULL;
+
+    if (superclass != NULL) {
+        klass->classAnnotations = copyDict(vm, superclass->classAnnotations, true);
+        klass->methodAnnotations = copyDict(vm, superclass->methodAnnotations, true);
+        klass->fieldAnnotations = copyDict(vm, superclass->fieldAnnotations, true);
+    } else {
+        klass->classAnnotations = NULL;
+        klass->methodAnnotations = NULL;
+        klass->fieldAnnotations = NULL;
+    }
 
     push(vm, OBJ_VAL(klass));
     ObjString *nameString = copyString(vm, "_name", 5);
