@@ -763,21 +763,24 @@ static void createClass(DictuVM *vm, ObjString *name, ObjClass *superclass, Clas
         tableAddAll(vm, &superclass->abstractMethods, &klass->abstractMethods);
 
         if (superclass->classAnnotations != NULL) {
-            if (klass->classAnnotations != NULL) {
-                copyDictInto(vm, klass->classAnnotations, superclass->classAnnotations, true);
-            } else {
-                ObjDict *dict = newDict(vm);
-                push(vm, OBJ_VAL(dict));
-                copyDictInto(vm, dict, superclass->classAnnotations, true);
-                klass->classAnnotations = dict;
-                pop(vm);
-                for (int i = 0; i <= klass->classAnnotations->capacityMask; ++i) {
-                    printf("XXX - in createClass: %s\n", AS_STRING(klass->classAnnotations->entries[i].key)->chars);
+            for (int i = 0; i <= superclass->classAnnotations->capacityMask; ++i) {
+                DictItem *item = &superclass->classAnnotations->entries[i];
+                if (IS_EMPTY(item->key)) {
+                    continue;
+                }
+                
+                if (klass->classAnnotations == NULL) {
+                    printf("XXX - null\n");
+                    klass->classAnnotations = copyDictInto(vm, klass->classAnnotations, superclass->classAnnotations);
+                    pop(vm);
+                } else {
+                    printf("XXX - not null\n");
+                    klass->classAnnotations = copyDictInto(vm, klass->classAnnotations, superclass->classAnnotations);
                 }
             }
         }
         if (superclass->methodAnnotations != NULL) {
-            klass->methodAnnotations = copyDict(vm, superclass->methodAnnotations, true);
+            klass->methodAnnotations = copyDictInto(vm, klass->methodAnnotations, superclass->methodAnnotations);
         }
         if (superclass->fieldAnnotations != NULL) {
             klass->fieldAnnotations = copyDict(vm, superclass->fieldAnnotations, true);

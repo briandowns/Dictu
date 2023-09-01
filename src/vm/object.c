@@ -69,16 +69,9 @@ ObjClass *newClass(DictuVM *vm, ObjString *name, ObjClass *superclass, ClassType
     initTable(&klass->publicMethods);
     initTable(&klass->variables);
     initTable(&klass->constants);
-
-    if (superclass != NULL) {
-        klass->classAnnotations = copyDict(vm, superclass->classAnnotations, true);
-        klass->methodAnnotations = copyDict(vm, superclass->methodAnnotations, true);
-        klass->fieldAnnotations = copyDict(vm, superclass->fieldAnnotations, true);
-    } else {
-        klass->classAnnotations = NULL;
-        klass->methodAnnotations = NULL;
-        klass->fieldAnnotations = NULL;
-    }
+    klass->classAnnotations = NULL;
+    klass->methodAnnotations = NULL;
+    klass->fieldAnnotations = NULL;
 
     push(vm, OBJ_VAL(klass));
     ObjString *nameString = copyString(vm, "_name", 5);

@@ -11,7 +11,7 @@
 ObjList *copyList(DictuVM *vm, ObjList *oldList, bool shallow);
 
 ObjDict *copyDict(DictuVM *vm, ObjDict *oldDict, bool shallow);
-bool copyDictInto(DictuVM* vm, ObjDict *dstDict, ObjDict *srcDict, bool shallow);
+ObjDict *copyDictInto(DictuVM* vm, ObjDict *dstDict, ObjDict *srcDict);
 
 ObjInstance *copyInstance(DictuVM *vm, ObjInstance *oldInstance, bool shallow);
 
