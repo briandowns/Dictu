@@ -34,6 +34,10 @@ class TestSystemProcessFunctions < UnitTest {
     testSystemGetegid() {
         this.assertType(System.getegid(), "number");
     }
+
+    testSystemGetpgrp() {
+        this.assertType(System.getpgrp(), "number");
+    }
 }
 
 if (System.platform != "windows") {

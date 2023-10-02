@@ -63,6 +63,17 @@ static Value getppidNative(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(getppid());
 }
 
+static Value getpgrpNative(DictuVM *vm, int argCount, Value *args) {
+    UNUSED(args);
+
+    if (argCount != 0) {
+        runtimeError(vm, "getpgrp() doesn't take any argument (%d given)", argCount);
+        return EMPTY_VAL;
+    }
+
+    return NUMBER_VAL(getpgrp());
+}
+
 static Value getpidNative(DictuVM *vm, int argCount, Value *args) {
     UNUSED(args);
 
@@ -607,6 +618,7 @@ Value createSystemModule(DictuVM *vm) {
     defineNative(vm, &module->values, "getuid", getuidNative);
     defineNative(vm, &module->values, "geteuid", geteuidNative);
     defineNative(vm, &module->values, "getppid", getppidNative);
+    defineNative(vm, &module->values, "getpgrp", getpgrpNative);
     defineNative(vm, &module->values, "getpid", getpidNative);
     defineNative(vm, &module->values, "chown", chownNative);
     defineNative(vm, &module->values, "uname", unameNative);
