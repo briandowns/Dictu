@@ -131,6 +131,16 @@ Returns the process ID of the parent of the calling process as a number.
 System.getppid();
 ```
 
+### System.getpgrp() -> Number
+
+Returns the id of the current process group as a number.
+
+**Note:** This is not available on windows systems.
+
+```cs
+System.getpgrp();
+```
+
 ### System.getuid() -> Number
 
 Returns the real user ID of the calling process as a number.
