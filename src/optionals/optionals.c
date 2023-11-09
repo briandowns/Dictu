@@ -20,6 +20,7 @@ BuiltinModules modules[] = {
     {"Sqlite", &createSqliteModule, false},
     {"Process", &createProcessModule, false},
     {"System", &createSystemModule, false},
+    {"Time", &createTimeModule, false},
     {"Term", &createTermModule, false},
 #ifndef DISABLE_UUID
     {"UUID", &createUuidModule, false},
