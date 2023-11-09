@@ -1,10 +1,17 @@
 #define _POSIX_C_SOURCE 199309L
 
-#include <stdlib.h>
-#include <time.h>
+#ifdef __APPLE__
+#define _XOPEN_SOURCE 600
+#else
+#define _XOPEN_SOURCE 500
+#endif
 
-#include "optionals.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #include "time.h"
+#include "optionals.h" 
 #include "../vm/vm.h"
 
 #define ISO8601Format "%m/%d/%Y %H:%M:%S %Z"
@@ -75,6 +82,41 @@ static Value subTime(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(absT2);
 }
 
+// _mkgmtime for Windows...
+static Value utcTime(DictuVM *vm, int argCount, Value *args) {
+    if (argCount != 0) {
+        runtimeError(vm, "utc() takes 0 arguments (%d given)", argCount);
+        return EMPTY_VAL;
+    }
+
+    Time *t1 = AS_TIME(args[0]);
+    time_t tVal = t1->wall;
+
+    struct tm local;
+    localtime_r(&tVal, &local);
+    printf("%s\n", local.tm_zone);
+
+    // ObjAbstract* absT2 = newTimeObj(vm);
+    // Time *t2 = absT2->data;
+
+    return OBJ_VAL(NULL);
+}
+
+static Value getTZTime(DictuVM *vm, int argCount, Value *args) {
+    if (argCount != 0) {
+        runtimeError(vm, "getTZ() takes 0 arguments (%d given)", argCount);
+        return EMPTY_VAL;
+    }
+
+    Time *t1 = AS_TIME(args[0]);
+    time_t tVal = t1->wall;
+
+    struct tm local;
+    localtime_r(&tVal, &local);
+
+    return OBJ_VAL(copyString(vm, local.tm_zone, strlen(local.tm_zone)));
+}
+
 static Value formatTime(DictuVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "format() takes 1 argument (%d given)", argCount);
@@ -98,8 +140,23 @@ static Value formatTime(DictuVM *vm, int argCount, Value *args) {
 
     strftime(tmbuf, 64, format, &local);
     sprintf(buf, "%s", tmbuf);
+    ObjString *out = copyString(vm, buf, 64);
+
+    FREE_ARRAY(vm, char, tmbuf, 64);
+    FREE_ARRAY(vm, char, buf, 64);
     
-    return newResultSuccess(vm, OBJ_VAL(copyString(vm, buf, 64)));
+    return newResultSuccess(vm, OBJ_VAL(out));
+}
+
+static Value toNumberTime(DictuVM *vm, int argCount, Value *args) {
+    if (argCount != 0) {
+        runtimeError(vm, "toNumber() takes no arguments (%d given)", argCount);
+        return EMPTY_VAL;
+    }
+
+    Time *t1 = AS_TIME(args[0]);
+
+    return NUMBER_VAL(t1->wall);
 }
 
 ObjAbstract* newTimeObj(DictuVM *vm) {
@@ -120,7 +177,10 @@ ObjAbstract* newTimeObj(DictuVM *vm) {
      */
     defineNative(vm, &abstract->values, "add", addTime);
     defineNative(vm, &abstract->values, "sub", subTime);
+    defineNative(vm, &abstract->values, "utc", utcTime);
+    defineNative(vm, &abstract->values, "getTZ", getTZTime);
     defineNative(vm, &abstract->values, "format", formatTime);
+    defineNative(vm, &abstract->values, "toNumber", toNumberTime);
     // defineNative(vm, &abstract->values, "since", sinceTime);
     // defineNative(vm, &abstract->values, "addDate", addDateTime);
     // defineNative(vm, &abstract->values, "before", beforeTime);
@@ -160,10 +220,14 @@ Value createTimeModule(DictuVM *vm) {
     /**
      * Define Datetime properties
      */
-    defineNativeProperty(vm, &module->values, "SECONDS_IN_MINUTE", NUMBER_VAL(60));
-    defineNativeProperty(vm, &module->values, "SECONDS_IN_HOUR", NUMBER_VAL(3600));
-    defineNativeProperty(vm, &module->values, "SECONDS_IN_DAY", NUMBER_VAL(86400));
-    defineNativeProperty(vm, &module->values, "SECONDS_IN_WEEK", NUMBER_VAL(604800));
+    defineNativeProperty(vm, &module->values, "SECONDS_PER_MINUTE", NUMBER_VAL(60));
+    defineNativeProperty(vm, &module->values, "SECONDS_PER_HOUR", NUMBER_VAL(3600));
+    defineNativeProperty(vm, &module->values, "SECONDS_PER_DAY", NUMBER_VAL(86400));
+    defineNativeProperty(vm, &module->values, "SECONDS_PER_WEEK", NUMBER_VAL(604800));
+
+    defineNativeProperty(vm, &module->values, "DAYS_PER_400_YEARS", NUMBER_VAL(365*400 + 97));
+    defineNativeProperty(vm, &module->values, "DAYS_PER_100_YEARS", NUMBER_VAL(365*100 + 24));
+    defineNativeProperty(vm, &module->values, "DAYS_PER_4_YEARS", NUMBER_VAL(365*4 + 1));
 
     defineNativeProperty(vm, &module->values, "RFC3339", OBJ_VAL(copyString(vm, RFC3339Format, strlen(RFC3339Format))));
     defineNativeProperty(vm, &module->values, "ISO8601", OBJ_VAL(copyString(vm, ISO8601Format, strlen(ISO8601Format))));

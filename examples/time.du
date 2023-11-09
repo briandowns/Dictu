@@ -1,0 +1,15 @@
+import Time;
+
+{ // main
+    const t1 = Time.now();
+    print(t1.format(Time.ISO8601).unwrap());
+
+    const t2 = t1.add(70);
+    print(t2.format(Time.ISO8601).unwrap());
+
+    print(t1.toNumber());
+    print(t2.toNumber());
+
+    //t1.utc();
+    print(t1.getTZ());
+}
