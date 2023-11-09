@@ -16,7 +16,7 @@ nav_order: 13
 ---
 ## Modules
 
-Modularity is important in any project, and a project in Dictu is obviously no exception to this rule. Dictu solves this problem
+Modularity is important in any project, and a project in Camus is obviously no exception to this rule. Camus solves this problem
 by breaking files up into "modules". Every file is it's own module, and each module has it's own namespace, this means
 a variable defined in `file.du` will not overwrite a variable in `file1.du` if imported.
 
@@ -47,7 +47,7 @@ from JSON import parse, stringify;
 
 #### User created scripts
 
-When you wish to import another Dictu script, you use the import keyword. This takes an optional identifier which will be the
+When you wish to import another Camus script, you use the import keyword. This takes an optional identifier which will be the
 identifier of the module being imported. This is different to importing from the standard library as a string path is passed rather
 than an identifier. The path to the module is relative to the importing scripts location, not where the process is executed.
 

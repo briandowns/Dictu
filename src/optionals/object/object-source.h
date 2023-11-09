@@ -1,4 +1,4 @@
-#define DICTU_OBJECT_SOURCE "import Object;\n" \
+#define CAMUS_OBJECT_SOURCE "import Object;\n" \
 "\n" \
 "def createFrom(className, ...arguments) {\n" \
 "    return Object.__getClassRef(className).matchWrap(\n" \

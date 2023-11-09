@@ -19,7 +19,7 @@ class TestStatic < UnitTest {
     testStatic() {
         this.assertEquals(Test.func(), 10);
         this.assertEquals(Test.args(10, 20), 30);
-        this.assertEquals(Test.args("Dictu", " is great"), "Dictu is great");
+        this.assertEquals(Test.args("Camus", " is great"), "Camus is great");
     }
 }
 

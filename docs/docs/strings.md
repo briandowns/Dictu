@@ -17,7 +17,7 @@ nav_order: 4
 
 ## Strings
 
-Strings in Dictu are an immutable data type. This means that once a string has been created, there is no way to modify a string directly. Instead, a new string is created. Strings are indicated with quotation marks. In Dictu, you can use `'single'` or `"double"` quotes. They are treated the same.
+Strings in Camus are an immutable data type. This means that once a string has been created, there is no way to modify a string directly. Instead, a new string is created. Strings are indicated with quotation marks. In Camus, you can use `'single'` or `"double"` quotes. They are treated the same.
 
 ### Concatenation
 
@@ -32,7 +32,7 @@ Use a plus sign to join string together. This is called concatenation.
 You can access a specific letter in a string with the same syntax you would use to access an item in a list.
 
 ```cs
-var string = "Dictu";
+var string = "Camus";
 
 string[0]; // D
 string[-1]; // u
@@ -56,12 +56,12 @@ as long as one is provided.
 If you want to get only part of a string, you slice it! To slice a string, use square brackets with the range you want to slice. The starting index is inclusive, but the ending index is exclusive. You can also use negative numbers to get characters from the end of a string.
 
 ```cs
-"Dictu"[1:]; // ictu
-"Dictu"[:4]; // Dict
-"Dictu"[1:4]; // ict
-"Dictu"[2:4]; // ct
-"Dictu"[100:101]; // '' (empty string)
-"Dictu"[0:100]; // Dictu
+"Camus"[1:]; // ictu
+"Camus"[:4]; // Dict
+"Camus"[1:4]; // ict
+"Camus"[2:4]; // ct
+"Camus"[100:101]; // '' (empty string)
+"Camus"[0:100]; // Camus
 ```
 
 ### Escape codes
@@ -85,10 +85,10 @@ Sometimes, you wil need to ignore escape codes. Simply prefix your string with a
 
 ```cs
 // Normal Strings
-"Dictu\trocks!"; // 'Dictu  rocks!'
+"Camus\trocks!"; // 'Camus  rocks!'
 // Raw Strins
-r"Dictu\trocks!"; // 'Dictu\trocks!'
-r"Dictu\trocks!".len(); // 12
+r"Camus\trocks!"; // 'Camus\trocks!'
+r"Camus\trocks!".len(); // 12
 ```
 
 ### string.len() -> Number
@@ -104,9 +104,9 @@ Returns the length of the given string.
 Returns a lowercase version of the given string.
 
 ```cs
-"DICTU".lower(); // dictu
-"DiCtU".lower(); // dictu
-"dictu".lower(); // dictu
+"CAMUS".lower(); // camus
+"DiCtU".lower(); // camus
+"camus".lower(); // camus
 ```
 
 ### string.upper() -> String
@@ -114,9 +114,9 @@ Returns a lowercase version of the given string.
 Returns an uppercase version of the given string.
 
 ```cs
-"dictu".upper(); // DICTU
-"DiCtU".upper(); // DICTU
-"DICTU".upper(); // DICTU
+"camus".upper(); // CAMUS
+"DiCtU".upper(); // CAMUS
+"CAMUS".upper(); // CAMUS
 ```
 
 ### string.toNumber() -> Number
@@ -143,11 +143,11 @@ Casts a string to a boolean value. Any string except an empty string is consider
 Returns true if a string starts with a given string.
 
 ```cs
-"Dictu".startsWith("D"); // true
-"Dictu".startsWith("Dict"); // true
-"Dictu".startsWith("Dictu"); // true
-"Dictu".startsWith("q"); // false
-"Dictu".startsWith("d"); // false
+"Camus".startsWith("D"); // true
+"Camus".startsWith("Dict"); // true
+"Camus".startsWith("Camus"); // true
+"Camus".startsWith("q"); // false
+"Camus".startsWith("d"); // false
 ```
 
 ### string.endsWith(string) -> Boolean
@@ -155,12 +155,12 @@ Returns true if a string starts with a given string.
 Returns true if a string ends with a given string.
 
 ```cs
-"Dictu".endsWith("u"); // true
-"Dictu".endsWith("tu"); // true
-"Dictu".endsWith("Dictu"); // true
-"Dictu".endsWith("ut"); // false
-"Dictu".endsWith("q"); // false
-"Dictu".endsWith("U"); // false
+"Camus".endsWith("u"); // true
+"Camus".endsWith("tu"); // true
+"Camus".endsWith("Camus"); // true
+"Camus".endsWith("ut"); // false
+"Camus".endsWith("q"); // false
+"Camus".endsWith("U"); // false
 ```
 
 ### string.split(String: delimiter, Number: splitCount -> Optional) -> List
@@ -171,11 +171,11 @@ Returns a list of all characters in a string if an empty string is passed as del
 An optional second argument can be passed which will determine the amount of times a split occurs, if negative it's the same
 as not passing a value and will split by all occurrences of the delimiter.
 ```cs
-"Dictu is awesome!".split(" "); // ['Dictu', 'is', 'awesome!']
-"Dictu is awesome!".split(" ", -1); // ['Dictu', 'is', 'awesome!']
-"Dictu is awesome!".split(""); // ["D", "i", "c", "t", "u", " ", "i", "s", " ", "a", "w", "e", "s", "o", "m", "e", "!"]
-"Dictu is awesome!".split(" ", 0); // ['Dictu is awesome!']
-"Dictu is awesome!".split(" ", 1); // ['Dictu', 'is awesome!']
+"Camus is awesome!".split(" "); // ['Camus', 'is', 'awesome!']
+"Camus is awesome!".split(" ", -1); // ['Camus', 'is', 'awesome!']
+"Camus is awesome!".split(""); // ["D", "i", "c", "t", "u", " ", "i", "s", " ", "a", "w", "e", "s", "o", "m", "e", "!"]
+"Camus is awesome!".split(" ", 0); // ['Camus is awesome!']
+"Camus is awesome!".split(" ", 1); // ['Camus', 'is awesome!']
 ```
 
 ### string.replace(String: old, String: new) -> String
@@ -183,7 +183,7 @@ as not passing a value and will split by all occurrences of the delimiter.
 Replaces part (a substring) of a string with another string.
 
 ```cs
-"Dictu is okay...".replace("okay...", "awesome!"); // "Dictu is awesome!"
+"Camus is okay...".replace("okay...", "awesome!"); // "Camus is awesome!"
 ```
 
 ### string.contains(String) -> Boolean
@@ -191,8 +191,8 @@ Replaces part (a substring) of a string with another string.
 Returns true if a string contains another string.
 
 ```cs
-"Dictu is awesome!".contains("Dictu"); // true
-"Dictu is awesome!".contains("Dictu is awesome!"); // true
+"Camus is awesome!".contains("Camus"); // true
+"Camus is awesome!".contains("Camus is awesome!"); // true
 ```
 
 ### string.find(String, Number: skip -> Optional) -> Number
@@ -210,7 +210,7 @@ To find the index of a given substring, use the `.find()` method. This method ta
 Strips whitespace from the left side of a string and returns the result.
 
 ```cs
-"     Dictu".leftStrip(); // "Dictu"
+"     Camus".leftStrip(); // "Camus"
 ```
 
 ### string.rightStrip() -> String
@@ -218,7 +218,7 @@ Strips whitespace from the left side of a string and returns the result.
 Strips whitespace from the right side of a string and returns the result.
 
 ```cs
-"Dictu     ".rightStrip(); // "Dictu"
+"Camus     ".rightStrip(); // "Camus"
 ```
 
 ### string.strip() -> String
@@ -226,7 +226,7 @@ Strips whitespace from the right side of a string and returns the result.
 Strips whitespace from both sides of a string and returns the result.
 
 ```cs
-"     Dictu     ".strip(); // "Dictu"
+"     Camus     ".strip(); // "Camus"
 ```
 
 ### string.format(...value: args...) -> String
@@ -245,7 +245,7 @@ This method will replace any instances of `{}` with the provided parameters. It 
 Returns the number of occurrences of a given substring within another string.
 
 ```cs
-"Dictu is great!".count("Dictu"); // 1
+"Camus is great!".count("Camus"); // 1
 "This documentation".count("Good jokes"); // 0
 "Sooooooooooome characters".count("o"); // 11
 ```
@@ -255,7 +255,7 @@ Returns the number of occurrences of a given substring within another string.
 Returns a title cased version of string with first letter of each word capitalized.
 
 ```cs
-"dictu language".title(); // Dictu Language
+"camus language".title(); // Camus Language
 "this documentation".title(); // This Documentation
 "once upon a time".title(); // Once Upon A Time
 ```

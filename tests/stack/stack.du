@@ -33,7 +33,7 @@ class TestStack < UnitTest {
     }
 
     testStackPop() {
-        this.stack.push("dictu");
+        this.stack.push("camus");
         this.stack.push(this.testValue);
         this.stack.push(1009);
         const res = this.stack.pop();

@@ -17,7 +17,7 @@ parent: Collections
 ---
 ## Lists
 
-Lists in Dictu allow you to store mutliple values of any type. Lists automatically resize for you as data is added and removed. Lists are similar to arrays in languages like Python, JavaScript, and Ruby.
+Lists in Camus allow you to store mutliple values of any type. Lists automatically resize for you as data is added and removed. Lists are similar to arrays in languages like Python, JavaScript, and Ruby.
 
 ```cs
 var list = [1, 2.3, "Mango", false, nil];
@@ -199,7 +199,7 @@ var list2 = list1;
 list2[0] = 10;
 print(list1); // [10, 2]
 ```
-To get around this we can make copies of the list. Dictu offers the ability to both shallow and deep copy a list.
+To get around this we can make copies of the list. Camus offers the ability to both shallow and deep copy a list.
 ```cs
 var list1 = [1, 2];
 var list2 = list1.copy(); // shallow copy
@@ -292,7 +292,7 @@ print([1, 2, 3, 4, 5].reduce(def (accumulate, element) => accumulate + element))
 By default the initial value for `.reduce()` is 0, however we can change this to be any value.
 
 ```cs
-print(["Dictu ", "is", " great!"].reduce(def (accumulate, element) => accumulate + element, "")); // 'Dictu is great!'
+print(["Camus ", "is", " great!"].reduce(def (accumulate, element) => accumulate + element, "")); // 'Camus is great!'
 ```
 
 ### list.find(Func, Number: start -> Optional, Number: end -> Optional) -> List

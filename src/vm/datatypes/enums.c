@@ -1,6 +1,6 @@
 #include "enums.h"
 
-static Value values(DictuVM *vm, int argCount, Value *args) {
+static Value values(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "values() takes 0 arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -23,6 +23,6 @@ static Value values(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(dict);
 }
 
-void declareEnumMethods(DictuVM *vm) {
+void declareEnumMethods(CamusVM *vm) {
     defineNative(vm, &vm->enumMethods, "values", values);
 }

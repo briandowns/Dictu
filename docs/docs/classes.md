@@ -34,8 +34,8 @@ SomeClass(); // Object created!
 
 ## Access Levels
 A big part of the OOP paradigm is encapsulation, the fact that the outside interface only shows what it needs to show and things
-internal to the class do not need to be known to the user of the interface. Dictu manages this concept much the same as other languages 
-through access levels. Unlike other languages, Dictu only has two access levels, `public` or `private`. If a method or instance variable
+internal to the class do not need to be known to the user of the interface. Camus manages this concept much the same as other languages 
+through access levels. Unlike other languages, Camus only has two access levels, `public` or `private`. If a method or instance variable
 is marked as `private` it is only accessible from within the class itself. To mark an instance variable as private it can be done in two
 ways, via [implicit attributes](#implicit-attributes) or by marking the attribute as private (note this must be done before defining the
 attribute otherwise it will be publicly visible). To mark a method as private, preface the name with `private`.
@@ -59,7 +59,7 @@ print(SomeClass(10).x); // Cannot access private attribute 'x' on 'SomeClass' in
 
 ## Constructor
 
-`init()` is the method name for a constructor in Dictu. A constructor is a method that is called when an object is instantiated. Instantiating an object, is just like invoking a function, except you "invoke" the class. You can also pass arguments to the constructor to be used.
+`init()` is the method name for a constructor in Camus. A constructor is a method that is called when an object is instantiated. Instantiating an object, is just like invoking a function, except you "invoke" the class. You can also pass arguments to the constructor to be used.
 
 ```cs
 class SomeClass {
@@ -74,7 +74,7 @@ SomeClass("Object created!"); // Object created!
 
 ### Implicit Attributes
 
-Dictu actually has a way to define attributes on the object without explicitly setting each variable passed into the constructor on the object through `this`.
+Camus actually has a way to define attributes on the object without explicitly setting each variable passed into the constructor on the object through `this`.
 If `var` is used the instance variable has public visibility, if `private` is used the instance variable has private visibility.
 
 ```cs
@@ -109,7 +109,7 @@ print("{} {} {} {} {}".format(
 
 ## Methods
 
-Methods are functions defined within a class. When defining a method in Dictu, the `def` keyword is not used and instead its just the method name and parameter list.
+Methods are functions defined within a class. When defining a method in Camus, the `def` keyword is not used and instead its just the method name and parameter list.
 
 ```cs
 class SomeClass {
@@ -225,7 +225,7 @@ myObject.printMessage(); // Some text!
 
 ## Attributes
 
-Attributes in Dictu are instance attributes, and these attributes get defined either inside the methods or on the object directly.
+Attributes in Camus are instance attributes, and these attributes get defined either inside the methods or on the object directly.
 
 ```cs
 class Test {
@@ -261,7 +261,7 @@ print(myObject.z); // Undefined attribute 'z'.
 
 ### getAttribute(String) -> Value
 
-Sometimes in Dictu we may wish to access an attribute of an object without knowing the attribute until runtime. We can do this via the `getAttribute` method.
+Sometimes in Camus we may wish to access an attribute of an object without knowing the attribute until runtime. We can do this via the `getAttribute` method.
 This method takes a string and an optional default value and returns either the attribute value or the default value (if there is no attribute and no default value, nil is returned).
 
 Note: Will only retrieve attributes with public visibility.
@@ -501,7 +501,7 @@ class Test < AbstractClass {
 
 ## Traits
 
-Dictu only allows inheritance from a single parent class, which can cause complications when we need functionality from more than one class.
+Camus only allows inheritance from a single parent class, which can cause complications when we need functionality from more than one class.
 This is where traits come into play. A trait is like a class, in the fact it has methods, and can deal with object attributes however, differ in the fact
 a trait can not be instantiated on its own.
 

@@ -1,5 +1,5 @@
-#define DICTU_LIST_SOURCE "/**\n" \
-" * This file contains all the methods for Lists written in Dictu that\n" \
+#define CAMUS_LIST_SOURCE "/**\n" \
+" * This file contains all the methods for Lists written in Camus that\n" \
 " * are unable to be written in C due to re-enterability issues.\n" \
 " *\n" \
 " * We should always strive to write methods in C where possible.\n" \

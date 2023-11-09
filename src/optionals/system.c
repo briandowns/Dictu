@@ -8,7 +8,7 @@
 #endif
 
 #ifndef _WIN32
-static Value getgidNative(DictuVM *vm, int argCount, Value *args) {
+static Value getgidNative(CamusVM *vm, int argCount, Value *args) {
     UNUSED(args);
 
     if (argCount != 0) {
@@ -19,7 +19,7 @@ static Value getgidNative(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(getgid());
 }
 
-static Value getegidNative(DictuVM *vm, int argCount, Value *args) {
+static Value getegidNative(CamusVM *vm, int argCount, Value *args) {
     UNUSED(args);
 
     if (argCount != 0) {
@@ -30,7 +30,7 @@ static Value getegidNative(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(getegid());
 }
 
-static Value getuidNative(DictuVM *vm, int argCount, Value *args) {
+static Value getuidNative(CamusVM *vm, int argCount, Value *args) {
     UNUSED(args);
 
     if (argCount != 0) {
@@ -41,7 +41,7 @@ static Value getuidNative(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(getuid());
 }
 
-static Value geteuidNative(DictuVM *vm, int argCount, Value *args) {
+static Value geteuidNative(CamusVM *vm, int argCount, Value *args) {
     UNUSED(args);
 
     if (argCount != 0) {
@@ -52,7 +52,7 @@ static Value geteuidNative(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(geteuid());
 }
 
-static Value getppidNative(DictuVM *vm, int argCount, Value *args) {
+static Value getppidNative(CamusVM *vm, int argCount, Value *args) {
     UNUSED(args);
 
     if (argCount != 0) {
@@ -63,7 +63,7 @@ static Value getppidNative(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(getppid());
 }
 
-static Value getpidNative(DictuVM *vm, int argCount, Value *args) {
+static Value getpidNative(CamusVM *vm, int argCount, Value *args) {
     UNUSED(args);
 
     if (argCount != 0) {
@@ -74,7 +74,7 @@ static Value getpidNative(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(getpid());
 }
 
-static Value chownNative(DictuVM *vm, int argCount, Value *args) {
+static Value chownNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 3) {
         runtimeError(vm, "chown() takes 3 arguments (%d given).", argCount);
         return EMPTY_VAL;
@@ -101,7 +101,7 @@ static Value chownNative(DictuVM *vm, int argCount, Value *args) {
     return newResultSuccess(vm, EMPTY_VAL);
 }
 
-static Value unameNative(DictuVM *vm, int argCount, Value *args) {
+static Value unameNative(CamusVM *vm, int argCount, Value *args) {
     UNUSED(args);
 
     if (argCount != 0) {
@@ -163,7 +163,7 @@ static Value unameNative(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(unameDict);
 }
 
-static Value mkdirTempNative(DictuVM *vm, int argCount, Value *args) {
+static Value mkdirTempNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount > 1) {
         runtimeError(vm, "mkdirTemp() takes 0 or 1 argument(s) (%d given)", argCount);
         return EMPTY_VAL;
@@ -203,7 +203,7 @@ static Value mkdirTempNative(DictuVM *vm, int argCount, Value *args) {
 }
 #endif
 
-static Value rmdirNative(DictuVM *vm, int argCount, Value *args) {
+static Value rmdirNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "rmdir() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -225,7 +225,7 @@ static Value rmdirNative(DictuVM *vm, int argCount, Value *args) {
     return newResultSuccess(vm, NIL_VAL);
 }
 
-static Value mkdirNative(DictuVM *vm, int argCount, Value *args) {
+static Value mkdirNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount == 0 || argCount > 2) {
         runtimeError(vm, "mkdir() takes 1 or 2 arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -257,7 +257,7 @@ static Value mkdirNative(DictuVM *vm, int argCount, Value *args) {
     return newResultSuccess(vm, NIL_VAL);
 }
 
-static Value mkdirAllNative(DictuVM *vm, int argCount, Value *args) {
+static Value mkdirAllNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount == 0 || argCount > 2) {
         runtimeError(vm, "mkdirAll() takes 1 or 2 arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -316,7 +316,7 @@ static Value mkdirAllNative(DictuVM *vm, int argCount, Value *args) {
 }
 
 #ifdef HAS_ACCESS
-static Value accessNative(DictuVM *vm, int argCount, Value *args) {
+static Value accessNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 2) {
         runtimeError(vm, "access() takes 2 arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -346,7 +346,7 @@ static Value accessNative(DictuVM *vm, int argCount, Value *args) {
 }
 #endif
 
-static Value removeNative(DictuVM *vm, int argCount, Value *args) {
+static Value removeNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "remove() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -368,7 +368,7 @@ static Value removeNative(DictuVM *vm, int argCount, Value *args) {
     return newResultSuccess(vm, NIL_VAL);
 }
 
-static Value setCWDNative(DictuVM *vm, int argCount, Value *args) {
+static Value setCWDNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "setCWD() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -390,7 +390,7 @@ static Value setCWDNative(DictuVM *vm, int argCount, Value *args) {
     return newResultSuccess(vm, NIL_VAL);
 }
 
-static Value getCWDNative(DictuVM *vm, int argCount, Value *args) {
+static Value getCWDNative(CamusVM *vm, int argCount, Value *args) {
     UNUSED(argCount); UNUSED(args);
 
     char cwd[PATH_MAX];
@@ -402,26 +402,26 @@ static Value getCWDNative(DictuVM *vm, int argCount, Value *args) {
     ERROR_RESULT;
 }
 
-static Value timeNative(DictuVM *vm, int argCount, Value *args) {
+static Value timeNative(CamusVM *vm, int argCount, Value *args) {
     UNUSED(vm); UNUSED(argCount); UNUSED(args);
 
     return NUMBER_VAL((double) time(NULL));
 }
 
-static Value clockNative(DictuVM *vm, int argCount, Value *args) {
+static Value clockNative(CamusVM *vm, int argCount, Value *args) {
     UNUSED(vm); UNUSED(argCount); UNUSED(args);
 
     return NUMBER_VAL((double) clock() / CLOCKS_PER_SEC);
 }
 
-static Value collectNative(DictuVM *vm, int argCount, Value *args) {
+static Value collectNative(CamusVM *vm, int argCount, Value *args) {
     UNUSED(argCount); UNUSED(args);
 
     collectGarbage(vm);
     return NIL_VAL;
 }
 
-static Value sleepNative(DictuVM *vm, int argCount, Value *args) {
+static Value sleepNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "sleep() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -452,7 +452,7 @@ static Value sleepNative(DictuVM *vm, int argCount, Value *args) {
     return NIL_VAL;
 }
 
-static Value exitNative(DictuVM *vm, int argCount, Value *args) {
+static Value exitNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "exit() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -467,7 +467,7 @@ static Value exitNative(DictuVM *vm, int argCount, Value *args) {
     return EMPTY_VAL; /* satisfy the tcc compiler */
 }
 
-static Value chmodNative(DictuVM *vm, int argCount, Value *args) {
+static Value chmodNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 2) {
         runtimeError(vm, "chmod() takes 2 arguments (%d given).", argCount);
         return EMPTY_VAL;
@@ -490,7 +490,7 @@ static Value chmodNative(DictuVM *vm, int argCount, Value *args) {
     return newResultSuccess(vm, NIL_VAL);
 }
 
-void initArgv(DictuVM *vm, Table *table, int argc, char **argv) {
+void initArgv(CamusVM *vm, Table *table, int argc, char **argv) {
     ObjList *list = newList(vm);
     push(vm, OBJ_VAL(list));
 
@@ -505,7 +505,7 @@ void initArgv(DictuVM *vm, Table *table, int argc, char **argv) {
     pop(vm);
 }
 
-void initPlatform(DictuVM *vm, Table *table) {
+void initPlatform(CamusVM *vm, Table *table) {
 #ifdef _WIN32
     defineNativeProperty(vm, table, "platform", OBJ_VAL(copyString(vm, "windows", 7)));
 #else
@@ -522,13 +522,13 @@ void initPlatform(DictuVM *vm, Table *table) {
 #endif
 }
 
-void setVersion(DictuVM *vm, Table *table) {
+void setVersion(CamusVM *vm, Table *table) {
     ObjDict *versionDict = newDict(vm);
     push(vm, OBJ_VAL(versionDict));
 
     ObjString *major = copyString(vm, "major", 5);
     push(vm, OBJ_VAL(major));
-    ObjString *majorVersion = copyString(vm, DICTU_MAJOR_VERSION, strlen(DICTU_MAJOR_VERSION));
+    ObjString *majorVersion = copyString(vm, CAMUS_MAJOR_VERSION, strlen(CAMUS_MAJOR_VERSION));
     push(vm, OBJ_VAL(majorVersion));
     dictSet(vm, versionDict, OBJ_VAL(major), OBJ_VAL(majorVersion));
     pop(vm);
@@ -536,7 +536,7 @@ void setVersion(DictuVM *vm, Table *table) {
 
     ObjString *minor = copyString(vm, "minor", 5);
     push(vm, OBJ_VAL(minor));
-    ObjString *minorVersion = copyString(vm, DICTU_MINOR_VERSION, strlen(DICTU_MINOR_VERSION));
+    ObjString *minorVersion = copyString(vm, CAMUS_MINOR_VERSION, strlen(CAMUS_MINOR_VERSION));
     push(vm, OBJ_VAL(minorVersion));
     dictSet(vm, versionDict, OBJ_VAL(minor), OBJ_VAL(minorVersion));
     pop(vm);
@@ -544,7 +544,7 @@ void setVersion(DictuVM *vm, Table *table) {
 
     ObjString *patch = copyString(vm, "patch", 5);
     push(vm, OBJ_VAL(patch));
-    ObjString *patchVersion = copyString(vm, DICTU_PATCH_VERSION, strlen(DICTU_PATCH_VERSION));
+    ObjString *patchVersion = copyString(vm, CAMUS_PATCH_VERSION, strlen(CAMUS_PATCH_VERSION));
     push(vm, OBJ_VAL(patchVersion));
     dictSet(vm, versionDict, OBJ_VAL(patch), OBJ_VAL(patchVersion));
     pop(vm);
@@ -555,7 +555,7 @@ void setVersion(DictuVM *vm, Table *table) {
     pop(vm);
 }
 
-Value createSystemModule(DictuVM *vm) {
+Value createSystemModule(CamusVM *vm) {
     ObjString *name = copyString(vm, "System", 6);
     push(vm, OBJ_VAL(name));
     ObjModule *module = newModule(vm, name);

@@ -26,18 +26,18 @@ jobs:
         cmake --build ./build
     - name: Package
       run: |
-        ./dictu ops/pkgBuild.du
-        mv dictu dictu-linux-x86_64
+        ./camus ops/pkgBuild.du
+        mv camus camus-linux-x86_64
     - name: Release
       uses: SierraSoftworks/gh-releases@v1.0.7
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         overwrite: 'true'
         files: |
-          dictu-linux-x86_64
-          dictu_${{ github.ref_name }}_amd64.deb
-          dictu_${{ github.ref_name }}_x86_64.apk
-          dictu_${{ github.ref_name }}.x86_64.rpm
+          camus-linux-x86_64
+          camus_${{ github.ref_name }}_amd64.deb
+          camus_${{ github.ref_name }}_x86_64.apk
+          camus_${{ github.ref_name }}.x86_64.rpm
     - name: Docker Hub Login
       uses: docker/login-action@v2
       with:
@@ -47,6 +47,6 @@ jobs:
       uses: docker/build-push-action@v4
       with:
         push: true
-        tags: dictulang/dictu:${{ github.ref_name }}
-        file: ./Docker/DictuUbuntuDockerfile
+        tags: camuslang/camus:${{ github.ref_name }}
+        file: ./Docker/CamusUbuntuDockerfile
         context: .

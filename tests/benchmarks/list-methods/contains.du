@@ -1,8 +1,8 @@
 var start = System.clock();
-var x = ["Dictu is great!"];
+var x = ["Camus is great!"];
 
 for (var i = 0; i < 10000; i += 1) {
-    x.contains("Dictu is great!");
+    x.contains("Camus is great!");
 }
 
 print(System.clock() - start);

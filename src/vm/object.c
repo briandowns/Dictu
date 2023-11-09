@@ -11,7 +11,7 @@
 #define ALLOCATE_OBJ(vm, type, objectType) \
     (type*)allocateObject(vm, sizeof(type), objectType)
 
-static Obj *allocateObject(DictuVM *vm, size_t size, ObjType type) {
+static Obj *allocateObject(CamusVM *vm, size_t size, ObjType type) {
     Obj *object;
     object = (Obj *) reallocate(vm, NULL, 0, size);
     object->type = type;
@@ -26,7 +26,7 @@ static Obj *allocateObject(DictuVM *vm, size_t size, ObjType type) {
     return object;
 }
 
-ObjModule *newModule(DictuVM *vm, ObjString *name) {
+ObjModule *newModule(CamusVM *vm, ObjString *name) {
     Value moduleVal;
     if (tableGet(&vm->modules, name, &moduleVal)) {
         return AS_MODULE(moduleVal);
@@ -50,7 +50,7 @@ ObjModule *newModule(DictuVM *vm, ObjString *name) {
     return module;
 }
 
-ObjBoundMethod *newBoundMethod(DictuVM *vm, Value receiver, ObjClosure *method) {
+ObjBoundMethod *newBoundMethod(CamusVM *vm, Value receiver, ObjClosure *method) {
     ObjBoundMethod *bound = ALLOCATE_OBJ(vm, ObjBoundMethod,
                                          OBJ_BOUND_METHOD);
 
@@ -59,7 +59,7 @@ ObjBoundMethod *newBoundMethod(DictuVM *vm, Value receiver, ObjClosure *method) 
     return bound;
 }
 
-ObjClass *newClass(DictuVM *vm, ObjString *name, ObjClass *superclass, ClassType type) {
+ObjClass *newClass(CamusVM *vm, ObjString *name, ObjClass *superclass, ClassType type) {
     ObjClass *klass = ALLOCATE_OBJ(vm, ObjClass, OBJ_CLASS);
     klass->name = name;
     klass->superclass = superclass;
@@ -83,14 +83,14 @@ ObjClass *newClass(DictuVM *vm, ObjString *name, ObjClass *superclass, ClassType
     return klass;
 }
 
-ObjEnum *newEnum(DictuVM *vm, ObjString *name) {
+ObjEnum *newEnum(CamusVM *vm, ObjString *name) {
     ObjEnum *enumObj = ALLOCATE_OBJ(vm, ObjEnum , OBJ_ENUM);
     enumObj->name = name;
     initTable(&enumObj->values);
     return enumObj;
 }
 
-ObjClosure *newClosure(DictuVM *vm, ObjFunction *function) {
+ObjClosure *newClosure(CamusVM *vm, ObjFunction *function) {
     ObjUpvalue **upvalues = ALLOCATE(vm, ObjUpvalue*, function->upvalueCount);
     for (int i = 0; i < function->upvalueCount; i++) {
         upvalues[i] = NULL;
@@ -103,7 +103,7 @@ ObjClosure *newClosure(DictuVM *vm, ObjFunction *function) {
     return closure;
 }
 
-ObjFunction *newFunction(DictuVM *vm, ObjModule *module, FunctionType type, AccessLevel level) {
+ObjFunction *newFunction(CamusVM *vm, ObjModule *module, FunctionType type, AccessLevel level) {
     ObjFunction *function = ALLOCATE_OBJ(vm, ObjFunction, OBJ_FUNCTION);
     function->arity = 0;
     function->arityOptional = 0;
@@ -124,7 +124,7 @@ ObjFunction *newFunction(DictuVM *vm, ObjModule *module, FunctionType type, Acce
     return function;
 }
 
-ObjInstance *newInstance(DictuVM *vm, ObjClass *klass) {
+ObjInstance *newInstance(CamusVM *vm, ObjClass *klass) {
     ObjInstance *instance = ALLOCATE_OBJ(vm, ObjInstance, OBJ_INSTANCE);
     instance->klass = klass;
     initTable(&instance->publicAttributes);
@@ -140,13 +140,13 @@ ObjInstance *newInstance(DictuVM *vm, ObjClass *klass) {
     return instance;
 }
 
-ObjNative *newNative(DictuVM *vm, NativeFn function) {
+ObjNative *newNative(CamusVM *vm, NativeFn function) {
     ObjNative *native = ALLOCATE_OBJ(vm, ObjNative, OBJ_NATIVE);
     native->function = function;
     return native;
 }
 
-static ObjString *allocateString(DictuVM *vm, char *chars, int length,
+static ObjString *allocateString(CamusVM *vm, char *chars, int length,
                                  uint32_t hash) {
     ObjString *string = ALLOCATE_OBJ(vm, ObjString, OBJ_STRING);
     string->length = length;
@@ -158,13 +158,13 @@ static ObjString *allocateString(DictuVM *vm, char *chars, int length,
     return string;
 }
 
-ObjList *newList(DictuVM *vm) {
+ObjList *newList(CamusVM *vm) {
     ObjList *list = ALLOCATE_OBJ(vm, ObjList, OBJ_LIST);
     initValueArray(&list->values);
     return list;
 }
 
-ObjDict *newDict(DictuVM *vm) {
+ObjDict *newDict(CamusVM *vm) {
     ObjDict *dict = ALLOCATE_OBJ(vm, ObjDict, OBJ_DICT);
     dict->count = 0;
     dict->capacityMask = -1;
@@ -172,7 +172,7 @@ ObjDict *newDict(DictuVM *vm) {
     return dict;
 }
 
-ObjSet *newSet(DictuVM *vm) {
+ObjSet *newSet(CamusVM *vm) {
     ObjSet *set = ALLOCATE_OBJ(vm, ObjSet, OBJ_SET);
     set->count = 0;
     set->capacityMask = -1;
@@ -180,11 +180,11 @@ ObjSet *newSet(DictuVM *vm) {
     return set;
 }
 
-ObjFile *newFile(DictuVM *vm) {
+ObjFile *newFile(CamusVM *vm) {
     return ALLOCATE_OBJ(vm, ObjFile, OBJ_FILE);
 }
 
-ObjAbstract *newAbstract(DictuVM *vm, AbstractFreeFn func, AbstractTypeFn type) {
+ObjAbstract *newAbstract(CamusVM *vm, AbstractFreeFn func, AbstractTypeFn type) {
     ObjAbstract *abstract = ALLOCATE_OBJ(vm, ObjAbstract, OBJ_ABSTRACT);
     abstract->data = NULL;
     abstract->func = func;
@@ -195,7 +195,7 @@ ObjAbstract *newAbstract(DictuVM *vm, AbstractFreeFn func, AbstractTypeFn type) 
     return abstract;
 }
 
-ObjResult *newResult(DictuVM *vm, ResultStatus status, Value value) {
+ObjResult *newResult(CamusVM *vm, ResultStatus status, Value value) {
     ObjResult *result = ALLOCATE_OBJ(vm, ObjResult, OBJ_RESULT);
     result->status = status;
     result->value = value;
@@ -203,14 +203,14 @@ ObjResult *newResult(DictuVM *vm, ResultStatus status, Value value) {
     return result;
 }
 
-Value newResultSuccess(DictuVM *vm, Value value) {
+Value newResultSuccess(CamusVM *vm, Value value) {
     push(vm, value);
     ObjResult *result = newResult(vm, SUCCESS, value);
     pop(vm);
     return OBJ_VAL(result);
 }
 
-Value newResultError(DictuVM *vm, char *errorMsg) {
+Value newResultError(CamusVM *vm, char *errorMsg) {
     Value error = OBJ_VAL(copyString(vm, errorMsg, strlen(errorMsg)));
     push(vm, error);
     ObjResult *result = newResult(vm, ERR, error);
@@ -229,7 +229,7 @@ static uint32_t hashString(const char *key, int length) {
     return hash;
 }
 
-ObjString *takeString(DictuVM *vm, char *chars, int length) {
+ObjString *takeString(CamusVM *vm, char *chars, int length) {
     uint32_t hash = hashString(chars, length);
     ObjString *interned = tableFindString(&vm->strings, chars, length,
                                           hash);
@@ -243,7 +243,7 @@ ObjString *takeString(DictuVM *vm, char *chars, int length) {
     return allocateString(vm, chars, length, hash);
 }
 
-ObjString *copyString(DictuVM *vm, const char *chars, int length) {
+ObjString *copyString(CamusVM *vm, const char *chars, int length) {
     uint32_t hash = hashString(chars, length);
     ObjString *interned = tableFindString(&vm->strings, chars, length,
                                           hash);
@@ -255,7 +255,7 @@ ObjString *copyString(DictuVM *vm, const char *chars, int length) {
     return allocateString(vm, heapChars, length, hash);
 }
 
-ObjUpvalue *newUpvalue(DictuVM *vm, Value *slot) {
+ObjUpvalue *newUpvalue(CamusVM *vm, Value *slot) {
     ObjUpvalue *upvalue = ALLOCATE_OBJ(vm, ObjUpvalue, OBJ_UPVALUE);
     upvalue->closed = NIL_VAL;
     upvalue->value = slot;
@@ -534,7 +534,7 @@ static bool listContains(ObjList *list, Value value) {
     return false;
 }
 
-ObjDict *classToDict(DictuVM *vm, Value value) {
+ObjDict *classToDict(CamusVM *vm, Value value) {
     ObjClass *klass = AS_CLASS(value);
 
     ObjDict *classDict = newDict(vm);

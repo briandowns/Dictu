@@ -1,5 +1,5 @@
-#ifndef dictu_process_h
-#define dictu_process_h
+#ifndef camus_process_h
+#define camus_process_h
 
 #ifndef _WIN32
 #include <sys/wait.h>
@@ -7,6 +7,6 @@
 
 #include "optionals.h"
 
-Value createProcessModule(DictuVM *vm);
+Value createProcessModule(CamusVM *vm);
 
-#endif //dictu_process_h
+#endif //camus_process_h

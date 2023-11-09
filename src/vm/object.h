@@ -1,10 +1,10 @@
-#ifndef dictu_object_h
-#define dictu_object_h
+#ifndef camus_object_h
+#define camus_object_h
 
 #include <stdint.h>
 #include <stdio.h>
 
-#include "../include/dictu_include.h"
+#include "../include/camus_include.h"
 #include "common.h"
 #include "chunk.h"
 #include "table.h"
@@ -119,7 +119,7 @@ typedef struct {
     int *privatePropertyIndexes;
 } ObjFunction;
 
-typedef Value (*NativeFn)(DictuVM *vm, int argCount, Value *args);
+typedef Value (*NativeFn)(CamusVM *vm, int argCount, Value *args);
 
 typedef struct {
     Obj obj;
@@ -169,8 +169,8 @@ struct sObjFile {
     char *openType;
 };
 
-typedef void (*AbstractFreeFn)(DictuVM *vm, ObjAbstract *abstract);
-typedef void (*AbstractGrayFn)(DictuVM *vm, ObjAbstract *abstract);
+typedef void (*AbstractFreeFn)(CamusVM *vm, ObjAbstract *abstract);
+typedef void (*AbstractGrayFn)(CamusVM *vm, ObjAbstract *abstract);
 typedef char* (*AbstractTypeFn)(ObjAbstract *abstract);
 
 struct sObjAbstract {
@@ -251,49 +251,49 @@ typedef struct {
     ObjClosure *method;
 } ObjBoundMethod;
 
-ObjModule *newModule(DictuVM *vm, ObjString *name);
+ObjModule *newModule(CamusVM *vm, ObjString *name);
 
-ObjBoundMethod *newBoundMethod(DictuVM *vm, Value receiver, ObjClosure *method);
+ObjBoundMethod *newBoundMethod(CamusVM *vm, Value receiver, ObjClosure *method);
 
-ObjClass *newClass(DictuVM *vm, ObjString *name, ObjClass *superclass, ClassType type);
+ObjClass *newClass(CamusVM *vm, ObjString *name, ObjClass *superclass, ClassType type);
 
-ObjEnum *newEnum(DictuVM *vm, ObjString *name);
+ObjEnum *newEnum(CamusVM *vm, ObjString *name);
 
-ObjClosure *newClosure(DictuVM *vm, ObjFunction *function);
+ObjClosure *newClosure(CamusVM *vm, ObjFunction *function);
 
-ObjFunction *newFunction(DictuVM *vm, ObjModule *module, FunctionType type, AccessLevel level);
+ObjFunction *newFunction(CamusVM *vm, ObjModule *module, FunctionType type, AccessLevel level);
 
-ObjInstance *newInstance(DictuVM *vm, ObjClass *klass);
+ObjInstance *newInstance(CamusVM *vm, ObjClass *klass);
 
-ObjNative *newNative(DictuVM *vm, NativeFn function);
+ObjNative *newNative(CamusVM *vm, NativeFn function);
 
-ObjString *takeString(DictuVM *vm, char *chars, int length);
+ObjString *takeString(CamusVM *vm, char *chars, int length);
 
-ObjString *copyString(DictuVM *vm, const char *chars, int length);
+ObjString *copyString(CamusVM *vm, const char *chars, int length);
 
-ObjList *newList(DictuVM *vm);
+ObjList *newList(CamusVM *vm);
 
-ObjDict *newDict(DictuVM *vm);
+ObjDict *newDict(CamusVM *vm);
 
-ObjSet *newSet(DictuVM *vm);
+ObjSet *newSet(CamusVM *vm);
 
-ObjFile *newFile(DictuVM *vm);
+ObjFile *newFile(CamusVM *vm);
 
-ObjAbstract *newAbstract(DictuVM *vm, AbstractFreeFn func, AbstractTypeFn type);
+ObjAbstract *newAbstract(CamusVM *vm, AbstractFreeFn func, AbstractTypeFn type);
 
-ObjResult *newResult(DictuVM *vm, ResultStatus status, Value value);
+ObjResult *newResult(CamusVM *vm, ResultStatus status, Value value);
 
-Value newResultSuccess(DictuVM *vm, Value value);
+Value newResultSuccess(CamusVM *vm, Value value);
 
-Value newResultError(DictuVM *vm, char *errorMsg);
+Value newResultError(CamusVM *vm, char *errorMsg);
 
-ObjUpvalue *newUpvalue(DictuVM *vm, Value *slot);
+ObjUpvalue *newUpvalue(CamusVM *vm, Value *slot);
 
 char *setToString(Value value);
 char *dictToString(Value value);
 char *listToString(Value value);
 char *classToString(Value value);
-ObjDict *classToDict(DictuVM *vm, Value value);
+ObjDict *classToDict(CamusVM *vm, Value value);
 char *instanceToString(Value value);
 char *objectToString(Value value);
 

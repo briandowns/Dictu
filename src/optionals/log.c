@@ -26,7 +26,7 @@ static struct tm* timeNow() {
     return ptm;
 }
 
-static Value printLog(DictuVM *vm, int argCount, Value *args) {
+static Value printLog(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "print() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -42,7 +42,7 @@ static Value printLog(DictuVM *vm, int argCount, Value *args) {
     return NIL_VAL;
 }
 
-static Value printlnLog(DictuVM *vm, int argCount, Value *args) {
+static Value printlnLog(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "println() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -58,7 +58,7 @@ static Value printlnLog(DictuVM *vm, int argCount, Value *args) {
     return NIL_VAL;
 }
 
-static Value fatalLog(DictuVM *vm, int argCount, Value *args) {
+static Value fatalLog(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "fatal() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -74,7 +74,7 @@ static Value fatalLog(DictuVM *vm, int argCount, Value *args) {
     exit(1);
 }
 
-static Value fatallnLog(DictuVM *vm, int argCount, Value *args) {
+static Value fatallnLog(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "fatalln() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -90,7 +90,7 @@ static Value fatallnLog(DictuVM *vm, int argCount, Value *args) {
     exit(1);
 }
 
-void freeLog(DictuVM *vm, ObjAbstract *abstract) {
+void freeLog(CamusVM *vm, ObjAbstract *abstract) {
     Log *log = (Log*)abstract->data;
     
     if (log->prefix != NULL) {
@@ -100,7 +100,7 @@ void freeLog(DictuVM *vm, ObjAbstract *abstract) {
     FREE(vm, Log, abstract->data);
 }
 
-static Value logObjSetPrefix(DictuVM *vm, int argCount, Value *args) {
+static Value logObjSetPrefix(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "setPrefix() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -118,7 +118,7 @@ static Value logObjSetPrefix(DictuVM *vm, int argCount, Value *args) {
     return NIL_VAL;
 }
 
-static Value logObjUnsetPrefix(DictuVM *vm, int argCount, Value *args) {
+static Value logObjUnsetPrefix(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "unsetPrefix() takes 0 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -133,7 +133,7 @@ static Value logObjUnsetPrefix(DictuVM *vm, int argCount, Value *args) {
     return NIL_VAL;
 }
 
-static Value logObjPrint(DictuVM *vm, int argCount, Value *args) {
+static Value logObjPrint(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "print() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -159,7 +159,7 @@ static Value logObjPrint(DictuVM *vm, int argCount, Value *args) {
     return NIL_VAL;
 }
 
-static Value logObjPrintln(DictuVM *vm, int argCount, Value *args) {
+static Value logObjPrintln(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "println() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -185,7 +185,7 @@ static Value logObjPrintln(DictuVM *vm, int argCount, Value *args) {
     return NIL_VAL;
 }
 
-static Value logObjFatal(DictuVM *vm, int argCount, Value *args) {
+static Value logObjFatal(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "fatal() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -203,7 +203,7 @@ static Value logObjFatal(DictuVM *vm, int argCount, Value *args) {
     exit(1);
 }
 
-static Value logObjFatalln(DictuVM *vm, int argCount, Value *args) {
+static Value logObjFatalln(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "fatalln() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -229,7 +229,7 @@ char *logToString(ObjAbstract *abstract) {
     return logString;
 }
 
-ObjAbstract* newLogObj(DictuVM *vm) {
+ObjAbstract* newLogObj(CamusVM *vm) {
     ObjAbstract *abstract = newAbstract(vm, freeLog, logToString);
     push(vm, OBJ_VAL(abstract));
 
@@ -254,7 +254,7 @@ ObjAbstract* newLogObj(DictuVM *vm) {
     return abstract;
 }
 
-static Value newLog(DictuVM *vm, int argCount, Value *args) {
+static Value newLog(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "new() takes 1 argument (%d given).", argCount);
         return EMPTY_VAL;
@@ -283,7 +283,7 @@ static Value newLog(DictuVM *vm, int argCount, Value *args) {
     return success;
 }
 
-Value createLogModule(DictuVM *vm) {
+Value createLogModule(CamusVM *vm) {
     ObjString *name = copyString(vm, "Log", 3);
     push(vm, OBJ_VAL(name));
     ObjModule *module = newModule(vm, name);

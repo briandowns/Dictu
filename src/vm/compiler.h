@@ -1,5 +1,5 @@
-#ifndef dictu_compiler_h
-#define dictu_compiler_h
+#ifndef camus_compiler_h
+#define camus_compiler_h
 
 #include <math.h>
 
@@ -74,7 +74,7 @@ typedef struct Loop {
 } Loop;
 
 typedef struct {
-    DictuVM *vm;
+    CamusVM *vm;
     Scanner scanner;
     LangToken current;
     LangToken previous;
@@ -115,8 +115,8 @@ typedef struct {
     Precedence precedence;
 } ParseRule;
 
-ObjFunction *compile(DictuVM *vm, ObjModule *module, const char *source);
+ObjFunction *compile(CamusVM *vm, ObjModule *module, const char *source);
 
-void grayCompilerRoots(DictuVM *vm);
+void grayCompilerRoots(CamusVM *vm);
 
 #endif

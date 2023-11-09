@@ -12,7 +12,7 @@
 
 #define GC_HEAP_GROW_FACTOR 2
 
-void *reallocate(DictuVM *vm, void *previous, size_t oldSize, size_t newSize) {
+void *reallocate(CamusVM *vm, void *previous, size_t oldSize, size_t newSize) {
     vm->bytesAllocated += newSize - oldSize;
 
 #ifdef DEBUG_TRACE_MEM
@@ -37,7 +37,7 @@ void *reallocate(DictuVM *vm, void *previous, size_t oldSize, size_t newSize) {
     return realloc(previous, newSize);
 }
 
-void grayObject(DictuVM *vm, Obj *object) {
+void grayObject(CamusVM *vm, Obj *object) {
     if (object == NULL) return;
 
     // Don't get caught in cycle.
@@ -63,18 +63,18 @@ void grayObject(DictuVM *vm, Obj *object) {
     vm->grayStack[vm->grayCount++] = object;
 }
 
-void grayValue(DictuVM *vm, Value value) {
+void grayValue(CamusVM *vm, Value value) {
     if (!IS_OBJ(value)) return;
     grayObject(vm, AS_OBJ(value));
 }
 
-static void grayArray(DictuVM *vm, ValueArray *array) {
+static void grayArray(CamusVM *vm, ValueArray *array) {
     for (int i = 0; i < array->count; i++) {
         grayValue(vm, array->values[i]);
     }
 }
 
-static void blackenObject(DictuVM *vm, Obj *object) {
+static void blackenObject(CamusVM *vm, Obj *object) {
 #ifdef DEBUG_TRACE_GC
     printf("%p blacken ", (void *)object);
     printValue(OBJ_VAL(object));
@@ -187,7 +187,7 @@ static void blackenObject(DictuVM *vm, Obj *object) {
     }
 }
 
-void freeObject(DictuVM *vm, Obj *object) {
+void freeObject(CamusVM *vm, Obj *object) {
 #ifdef DEBUG_TRACE_GC
     printf("%p free type %d\n", (void*)object, object->type);
 #endif
@@ -313,7 +313,7 @@ void freeObject(DictuVM *vm, Obj *object) {
     }
 }
 
-void collectGarbage(DictuVM *vm) {
+void collectGarbage(CamusVM *vm) {
 #ifdef DEBUG_TRACE_GC
     printf("-- gc begin\n");
     size_t before = vm->bytesAllocated;
@@ -392,7 +392,7 @@ void collectGarbage(DictuVM *vm) {
 #endif
 }
 
-void freeObjects(DictuVM *vm) {
+void freeObjects(CamusVM *vm) {
     Obj *object = vm->objects;
     while (object != NULL) {
         Obj *next = object->next;

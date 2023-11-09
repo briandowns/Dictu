@@ -1,6 +1,6 @@
 #include "inspect.h"
 
-static Value getLine(DictuVM *vm, int argCount, Value *args) {
+static Value getLine(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0 && argCount != 1) {
         runtimeError(vm, "getLine() takes takes 0 or 1 arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -34,7 +34,7 @@ static Value getLine(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(function->chunk.lines[instruction]);
 }
 
-static Value getFile(DictuVM *vm, int argCount, Value *args) {
+static Value getFile(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0 && argCount != 1) {
         runtimeError(vm, "getFile() takes takes 0 or 1 arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -67,7 +67,7 @@ static Value getFile(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(function->module->name);
 }
 
-static Value getFrameCount(DictuVM *vm, int argCount, Value *args) {
+static Value getFrameCount(CamusVM *vm, int argCount, Value *args) {
     UNUSED(args);
 
     if (argCount != 0) {
@@ -79,7 +79,7 @@ static Value getFrameCount(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(vm->frameCount - 1);
 }
 
-Value createInspectModule(DictuVM *vm) {
+Value createInspectModule(CamusVM *vm) {
     ObjString *name = copyString(vm, "Inspect", 7);
     push(vm, OBJ_VAL(name));
     ObjModule *module = newModule(vm, name);

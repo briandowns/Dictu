@@ -23,7 +23,7 @@ The path name of the compilation unit.
 
 ## Built-in functions
 
-Global functions which are built into Dictu.
+Global functions which are built into Camus.
 
 ### print(...values)
 

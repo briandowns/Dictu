@@ -1,9 +1,9 @@
-#ifndef dictu_bool_h
-#define dictu_bool_h
+#ifndef camus_bool_h
+#define camus_bool_h
 
 #include "../common.h"
 #include "../util.h"
 
-void declareBoolMethods(DictuVM *vm);
+void declareBoolMethods(CamusVM *vm);
 
-#endif //dictu_bool_h
+#endif //camus_bool_h

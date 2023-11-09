@@ -1,5 +1,5 @@
-#ifndef dictu_optionals_h
-#define dictu_optionals_h
+#ifndef camus_optionals_h
+#define camus_optionals_h
 
 #include "../vm/util.h"
 #include "c.h"
@@ -30,16 +30,16 @@
 #include "object/object.h"
 #include "unittest/unittest.h"
 
-typedef Value (*BuiltinModule)(DictuVM *vm);
+typedef Value (*BuiltinModule)(CamusVM *vm);
 
 typedef struct {
     char *name;
     BuiltinModule module;
-    bool dictuSource;
+    bool camusSource;
 } BuiltinModules;
 
-Value importBuiltinModule(DictuVM *vm, int index);
+Value importBuiltinModule(CamusVM *vm, int index);
 
-int findBuiltinModule(char *name, int length, bool *dictuSource);
+int findBuiltinModule(char *name, int length, bool *camusSource);
 
-#endif //dictu_optionals_h
+#endif //camus_optionals_h

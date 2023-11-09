@@ -2,7 +2,7 @@
 
 #include "result-source.h"
 
-static Value unwrap(DictuVM *vm, int argCount, Value *args) {
+static Value unwrap(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "unwrap() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -18,7 +18,7 @@ static Value unwrap(DictuVM *vm, int argCount, Value *args) {
     return result->value;
 }
 
-static Value unwrapError(DictuVM *vm, int argCount, Value *args) {
+static Value unwrapError(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "unwrapError() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -34,7 +34,7 @@ static Value unwrapError(DictuVM *vm, int argCount, Value *args) {
     return result->value;
 }
 
-static Value success(DictuVM *vm, int argCount, Value *args) {
+static Value success(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "success() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -44,12 +44,12 @@ static Value success(DictuVM *vm, int argCount, Value *args) {
     return BOOL_VAL(result->status == SUCCESS);
 }
 
-void declareResultMethods(DictuVM *vm) {
+void declareResultMethods(CamusVM *vm) {
     defineNative(vm, &vm->resultMethods, "unwrap", unwrap);
     defineNative(vm, &vm->resultMethods, "unwrapError", unwrapError);
     defineNative(vm, &vm->resultMethods, "success", success);
 
-    dictuInterpret(vm, "Result", DICTU_RESULT_SOURCE);
+    camusInterpret(vm, "Result", CAMUS_RESULT_SOURCE);
 
     Value Result;
     tableGet(&vm->modules, copyString(vm, "Result", 6), &Result);

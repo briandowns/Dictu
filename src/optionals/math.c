@@ -2,7 +2,7 @@
 #include "../vm/vm.h"
 #include <math.h>
 
-static Value averageNative(DictuVM *vm, int argCount, Value *args) {
+static Value averageNative(CamusVM *vm, int argCount, Value *args) {
     double average = 0;
 
     if (argCount == 0) {
@@ -25,7 +25,7 @@ static Value averageNative(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(average / argCount);
 }
 
-static Value floorNative(DictuVM *vm, int argCount, Value *args) {
+static Value floorNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "floor() takes 1 argument (%d given).", argCount);
         return EMPTY_VAL;
@@ -39,7 +39,7 @@ static Value floorNative(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(floor(AS_NUMBER(args[0])));
 }
 
-static Value roundNative(DictuVM *vm, int argCount, Value *args) {
+static Value roundNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "round() takes 1 argument (%d given).", argCount);
         return EMPTY_VAL;
@@ -53,7 +53,7 @@ static Value roundNative(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(round(AS_NUMBER(args[0])));
 }
 
-static Value ceilNative(DictuVM *vm, int argCount, Value *args) {
+static Value ceilNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "ceil() takes 1 argument (%d given).", argCount);
         return EMPTY_VAL;
@@ -67,7 +67,7 @@ static Value ceilNative(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(ceil(AS_NUMBER(args[0])));
 }
 
-static Value absNative(DictuVM *vm, int argCount, Value *args) {
+static Value absNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "abs() takes 1 argument (%d given).", argCount);
         return EMPTY_VAL;
@@ -86,7 +86,7 @@ static Value absNative(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(absValue);
 }
 
-static Value maxNative(DictuVM *vm, int argCount, Value *args) {
+static Value maxNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount == 0) {
         return NUMBER_VAL(0);
     } else if (argCount == 1 && IS_LIST(args[0])) {
@@ -114,7 +114,7 @@ static Value maxNative(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(maximum);
 }
 
-static Value minNative(DictuVM *vm, int argCount, Value *args) {
+static Value minNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount == 0) {
         return NUMBER_VAL(0);
     } else if (argCount == 1 && IS_LIST(args[0])) {
@@ -142,7 +142,7 @@ static Value minNative(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(minimum);
 }
 
-static Value sumNative(DictuVM *vm, int argCount, Value *args) {
+static Value sumNative(CamusVM *vm, int argCount, Value *args) {
     double sum = 0;
 
     if (argCount == 0) {
@@ -165,7 +165,7 @@ static Value sumNative(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(sum);
 }
 
-static Value sqrtNative(DictuVM *vm, int argCount, Value *args) {
+static Value sqrtNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "sqrt() takes 1 argument (%d given).", argCount);
         return EMPTY_VAL;
@@ -179,7 +179,7 @@ static Value sqrtNative(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(sqrt(AS_NUMBER(args[0])));
 }
 
-static Value sinNative(DictuVM *vm, int argCount, Value *args) {
+static Value sinNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "sin() takes 1 argument (%d given).", argCount);
         return EMPTY_VAL;
@@ -193,7 +193,7 @@ static Value sinNative(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(sin(AS_NUMBER(args[0])));
 }
 
-static Value cosNative(DictuVM *vm, int argCount, Value *args) {
+static Value cosNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "cos() takes 1 argument (%d given).", argCount);
         return EMPTY_VAL;
@@ -207,7 +207,7 @@ static Value cosNative(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(cos(AS_NUMBER(args[0])));
 }
 
-static Value tanNative(DictuVM *vm, int argCount, Value *args) {
+static Value tanNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "tan() takes 1 argument (%d given).", argCount);
         return EMPTY_VAL;
@@ -231,7 +231,7 @@ static long long gcd(long long a, long long b) {
     return a;
 }
 
-static Value gcdNative(DictuVM *vm, int argCount, Value *args) {
+static Value gcdNative(CamusVM *vm, int argCount, Value *args) {
     char* argCountError = "gcd() requires 2 or more arguments (%d given).";
     char* nonNumberError = "gcd() argument at index %d is not a number";
     char* notWholeError = "gcd() argument (%f) at index %d is not a whole number";
@@ -281,7 +281,7 @@ long long lcm(long long a, long long b) {
     return (a * b) / gcd(a, b);
 }
 
-static Value lcmNative(DictuVM *vm, int argCount, Value *args) {
+static Value lcmNative(CamusVM *vm, int argCount, Value *args) {
     char* argCountError = "lcm() requires 2 or more arguments (%d given).";
     char* nonNumberError = "lcm() argument at index %d is not a number";
     char* notWholeError = "lcm() argument (%f) at index %d is not a whole number";
@@ -327,7 +327,7 @@ static Value lcmNative(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(result);
 }
 
-Value createMathsModule(DictuVM *vm) {
+Value createMathsModule(CamusVM *vm) {
     ObjString *name = copyString(vm, "Math", 4);
     push(vm, OBJ_VAL(name));
     ObjModule *module = newModule(vm, name);

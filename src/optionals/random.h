@@ -1,5 +1,5 @@
-#ifndef dictu_random_h
-#define dictu_random_h
+#ifndef camus_random_h
+#define camus_random_h
 
 #include <stdlib.h>
 #include <time.h>
@@ -7,6 +7,6 @@
 #include "optionals.h"
 #include "../vm/vm.h"
 
-Value createRandomModule(DictuVM *vm);
+Value createRandomModule(CamusVM *vm);
 
-#endif //dictu_random_h
+#endif //camus_random_h

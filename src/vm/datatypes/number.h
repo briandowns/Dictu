@@ -1,9 +1,9 @@
-#ifndef dictu_number_h
-#define dictu_number_h
+#ifndef camus_number_h
+#define camus_number_h
 
 #include "../common.h"
 #include "../util.h"
 
-void declareNumberMethods(DictuVM *vm);
+void declareNumberMethods(CamusVM *vm);
 
-#endif //dictu_number_h
+#endif //camus_number_h

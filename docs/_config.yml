@@ -1,15 +1,15 @@
-title: Dictu
+title: Camus
 description: >-
-  Dictu is a high-level dynamically typed, multi-paradigm, interpreted programming language.
+  Camus is a high-level dynamically typed, multi-paradigm, interpreted programming language.
 
-color_scheme: "dictu" # Custom theme
-logo: "/assets/images/dictu-logo/dictu-wordmark.svg"
+color_scheme: "camus" # Custom theme
+logo: "/assets/images/camus-logo/camus-wordmark.svg"
 
 version: "0.29.0"
-github_username:  dictu-lang
+github_username:  camus-lang
 search_enabled: true
 
-url: "https://dictu-lang.com"
+url: "https://camus-lang.com"
 # theme: "just-the-docs"
 footer_content: "This site uses Just The Docs, with modifications."
 
@@ -17,7 +17,7 @@ ga_tracking: "UA-109828853-2"
 
 aux_links:
   "Contribute on GitHub":
-    - "//github.com/dictu-lang/Dictu"
+    - "//github.com/camus-lang/Camus"
 
 # Don't touch anything beyond this point
 

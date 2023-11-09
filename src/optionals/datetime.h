@@ -1,5 +1,5 @@
-#ifndef dictu_datetime_h
-#define dictu_datetime_h
+#ifndef camus_datetime_h
+#define camus_datetime_h
 
 #ifndef _XOPEN_SOURCE
 #define _XOPEN_SOURCE
@@ -12,6 +12,6 @@
 
 #include "optionals.h"
 
-Value createDatetimeModule(DictuVM *vm);
+Value createDatetimeModule(CamusVM *vm);
 
-#endif //dictu_datetime_h
+#endif //camus_datetime_h

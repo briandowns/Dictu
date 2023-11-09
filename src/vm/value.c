@@ -16,7 +16,7 @@ void initValueArray(ValueArray *array) {
     array->count = 0;
 }
 
-void writeValueArray(DictuVM *vm, ValueArray *array, Value value) {
+void writeValueArray(CamusVM *vm, ValueArray *array, Value value) {
     if (array->capacity < array->count + 1) {
         int oldCapacity = array->capacity;
         array->capacity = GROW_CAPACITY(oldCapacity);
@@ -28,7 +28,7 @@ void writeValueArray(DictuVM *vm, ValueArray *array, Value value) {
     array->count++;
 }
 
-void freeValueArray(DictuVM *vm, ValueArray *array) {
+void freeValueArray(CamusVM *vm, ValueArray *array) {
     FREE_ARRAY(vm, Value, array->values, array->capacity);
     initValueArray(array);
 }
@@ -110,7 +110,7 @@ bool dictGet(ObjDict *dict, Value key, Value *value) {
     return true;
 }
 
-static void adjustDictCapacity(DictuVM *vm, ObjDict *dict, int capacityMask) {
+static void adjustDictCapacity(CamusVM *vm, ObjDict *dict, int capacityMask) {
     DictItem *entries = ALLOCATE(vm, DictItem, capacityMask + 1);
     for (int i = 0; i <= capacityMask; i++) {
         entries[i].key = EMPTY_VAL;
@@ -134,7 +134,7 @@ static void adjustDictCapacity(DictuVM *vm, ObjDict *dict, int capacityMask) {
     dict->capacityMask = capacityMask;
 }
 
-bool dictSet(DictuVM *vm, ObjDict *dict, Value key, Value value) {
+bool dictSet(CamusVM *vm, ObjDict *dict, Value key, Value value) {
     if (dict->count + 1 > (dict->capacityMask + 1) * TABLE_MAX_LOAD) {
         // Figure out the new table size.
         int capacityMask = GROW_CAPACITY(dict->capacityMask + 1) - 1;
@@ -152,7 +152,7 @@ bool dictSet(DictuVM *vm, ObjDict *dict, Value key, Value value) {
     return isNewKey;
 }
 
-bool dictDelete(DictuVM *vm, ObjDict *dict, Value key) {
+bool dictDelete(CamusVM *vm, ObjDict *dict, Value key) {
     if (dict->count == 0) return false;
 
     DictItem *entry = findDictEntry(dict->entries, dict->capacityMask, key);
@@ -172,7 +172,7 @@ bool dictDelete(DictuVM *vm, ObjDict *dict, Value key) {
     return true;
 }
 
-void grayDict(DictuVM *vm, ObjDict *dict) {
+void grayDict(CamusVM *vm, ObjDict *dict) {
     for (int i = 0; i <= dict->capacityMask; i++) {
         DictItem *entry = &dict->entries[i];
         grayValue(vm, entry->key);
@@ -214,7 +214,7 @@ bool setGet(ObjSet *set, Value value) {
     return true;
 }
 
-static void adjustSetCapacity(DictuVM *vm, ObjSet *set, int capacityMask) {
+static void adjustSetCapacity(CamusVM *vm, ObjSet *set, int capacityMask) {
     SetItem *entries = ALLOCATE(vm, SetItem, capacityMask + 1);
     for (int i = 0; i <= capacityMask; i++) {
         entries[i].value = EMPTY_VAL;
@@ -237,7 +237,7 @@ static void adjustSetCapacity(DictuVM *vm, ObjSet *set, int capacityMask) {
     set->capacityMask = capacityMask;
 }
 
-bool setInsert(DictuVM *vm, ObjSet *set, Value value) {
+bool setInsert(CamusVM *vm, ObjSet *set, Value value) {
     if (set->count + 1 > (set->capacityMask + 1) * TABLE_MAX_LOAD) {
         // Figure out the new table size.
         int capacityMask = GROW_CAPACITY(set->capacityMask + 1) - 1;
@@ -254,7 +254,7 @@ bool setInsert(DictuVM *vm, ObjSet *set, Value value) {
     return isNewKey;
 }
 
-bool setDelete(DictuVM *vm, ObjSet *set, Value value) {
+bool setDelete(CamusVM *vm, ObjSet *set, Value value) {
     if (set->count == 0) return false;
 
     SetItem *entry = findSetEntry(set->entries, set->capacityMask, value);
@@ -273,7 +273,7 @@ bool setDelete(DictuVM *vm, ObjSet *set, Value value) {
     return true;
 }
 
-void graySet(DictuVM *vm, ObjSet *set) {
+void graySet(CamusVM *vm, ObjSet *set) {
     for (int i = 0; i <= set->capacityMask; i++) {
         SetItem *entry = &set->entries[i];
         grayValue(vm, entry->value);
@@ -307,7 +307,7 @@ char *valueToString(Value value) {
 }
 
 // Calling function needs to free memory
-char *valueTypeToString(DictuVM *vm, Value value, int *length) {
+char *valueTypeToString(CamusVM *vm, Value value, int *length) {
 #define CONVERT(typeString, size)                     \
     do {                                              \
         char *string = ALLOCATE(vm, char, size + 1);  \

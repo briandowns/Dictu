@@ -1,6 +1,6 @@
 #include "random.h"
 
-static Value randomRandom(DictuVM *vm, int argCount, Value *args) {
+static Value randomRandom(CamusVM *vm, int argCount, Value *args) {
     UNUSED(args);
     if (argCount > 0) {
         runtimeError(vm, "random() takes 0 arguments (%d given)", argCount);
@@ -13,7 +13,7 @@ static Value randomRandom(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(random_double);
 }
 
-static Value randomRange(DictuVM *vm, int argCount, Value *args) {
+static Value randomRange(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 2) {
         runtimeError(vm, "range() takes 2 arguments (%0d given)", argCount);
         return EMPTY_VAL;
@@ -30,7 +30,7 @@ static Value randomRange(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(random_val);
 }
 
-static Value randomSelect(DictuVM *vm, int argCount, Value *args) {
+static Value randomSelect(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "select() takes one argument (%d provided)", argCount);
         return EMPTY_VAL;
@@ -49,7 +49,7 @@ static Value randomSelect(DictuVM *vm, int argCount, Value *args) {
     return args[index];
 }
 
-Value createRandomModule(DictuVM *vm) {
+Value createRandomModule(CamusVM *vm) {
     ObjString *name = copyString(vm, "Random", 6);
     push(vm, OBJ_VAL(name));
     ObjModule *module = newModule(vm, name);

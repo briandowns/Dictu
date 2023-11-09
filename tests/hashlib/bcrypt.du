@@ -9,12 +9,12 @@ import Hashlib;
 
 class TestHashlibBcrypt < UnitTest {
     testHaslibBcrypt() {
-        const hash = Hashlib.bcrypt("Dictu");
+        const hash = Hashlib.bcrypt("Camus");
 
         this.assertType(hash, "string");
         this.assertTruthy(hash.len() > 56);
 
-        this.assertTruthy(Hashlib.bcryptVerify("Dictu", hash));
+        this.assertTruthy(Hashlib.bcryptVerify("Camus", hash));
         this.assertFalsey(Hashlib.bcryptVerify("WRONG!", hash));
     }
 }

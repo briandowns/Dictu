@@ -22,7 +22,7 @@ class TestModuleFunctions < UnitTest {
         this.assertEquals(ArrowFuncModule.func1(), 30);
         this.assertEquals(ArrowFuncModule.func1(10, 20), 30);
         this.assertEquals(ArrowFuncModule.func1(1.5, 2.5), 4);
-        this.assertEquals(ArrowFuncModule.func1("Dictu ", "is great!"), "Dictu is great!");
+        this.assertEquals(ArrowFuncModule.func1("Camus ", "is great!"), "Camus is great!");
     }
 
     /**
@@ -40,7 +40,7 @@ class TestModuleFunctions < UnitTest {
                 this.assertEquals(NestedArrowFuncModule.func1(), 30);
                 this.assertEquals(NestedArrowFuncModule.func1(10, 20), 30);
                 this.assertEquals(NestedArrowFuncModule.func1(1.5, 2.5), 4);
-                this.assertEquals(NestedArrowFuncModule.func1("Dictu ", "is great!"), "Dictu is great!");
+                this.assertEquals(NestedArrowFuncModule.func1("Camus ", "is great!"), "Camus is great!");
                 {
                     {
                         import JSON;

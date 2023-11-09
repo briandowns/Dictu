@@ -13,29 +13,29 @@ class TestStringFind < UnitTest {
         this.assertEquals("hello".find("hello"), 0);
         this.assertEquals("hello".find("l"), 2);
         this.assertEquals("hello".find("l", 2), 3);
-        this.assertEquals("Dictu is great! Dictu is great!".find("Dictu"), 0);
+        this.assertEquals("Camus is great! Camus is great!".find("Camus"), 0);
     }
 
     testStringFindSecond() {
-        this.assertEquals("Dictu is great! Dictu is great!".find("Dictu", 2), 16);
+        this.assertEquals("Camus is great! Camus is great!".find("Camus", 2), 16);
     }
 
     testStringFindThird() {
-        this.assertEquals("Dictu is great! Dictu is great! Dictu is great!".find("Dictu", 3), 37);
+        this.assertEquals("Camus is great! Camus is great! Camus is great!".find("Camus", 3), 37);
     }
 
     testStringFindDoesntExist() {
-        this.assertEquals("Dictu is great!".find("hello"), -1);
-        this.assertEquals("Dictu is great!".find("l"), -1);
-        this.assertEquals("Dictu is great!".find("hello"), -1);
+        this.assertEquals("Camus is great!".find("hello"), -1);
+        this.assertEquals("Camus is great!".find("l"), -1);
+        this.assertEquals("Camus is great!".find("hello"), -1);
     }
 
     testStringFindDoesntExistSecond() {
-        this.assertEquals("Dictu is great!".find("Dictu", 2), -1);
+        this.assertEquals("Camus is great!".find("Camus", 2), -1);
     }
 
     testStringFindDoesntExistThird() {
-        this.assertEquals("Dictu is great!Dictu is great!".find("Dictu", 3) , -1);
+        this.assertEquals("Camus is great!Camus is great!".find("Camus", 3) , -1);
     }
 }
 

@@ -1,8 +1,8 @@
 #include "optionals.h"
 #include "../vm/vm.h"
 
-#ifndef dictu_c_h
-#define dictu_c_h
+#ifndef camus_c_h
+#define camus_c_h
 
 #ifndef _GNU_SOURCE
 #ifndef _POSIX_C_SOURCE
@@ -35,12 +35,12 @@
 #endif
 
 #include "optionals.h"
-#include "../include/dictu_include.h"
+#include "../include/camus_include.h"
 #include "../vm/vm.h"
 #include "../vm/memory.h"
 
-Value createCModule(DictuVM *vm);
+Value createCModule(CamusVM *vm);
 
 void getStrerror(char *buf, int error);
 
-#endif //dictu_c_h
+#endif //camus_c_h

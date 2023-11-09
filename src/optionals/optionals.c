@@ -34,14 +34,14 @@ BuiltinModules modules[] = {
     {NULL, NULL, false}
 };
 
-Value importBuiltinModule(DictuVM *vm, int index) {
+Value importBuiltinModule(CamusVM *vm, int index) {
     return modules[index].module(vm);
 }
 
-int findBuiltinModule(char *name, int length, bool *dictuSource) {
+int findBuiltinModule(char *name, int length, bool *camusSource) {
     for (int i = 0; modules[i].module != NULL; ++i) {
         if (strncmp(modules[i].name, name, length) == 0) {
-            *dictuSource = modules[i].dictuSource;
+            *camusSource = modules[i].camusSource;
 
             return i;
         }

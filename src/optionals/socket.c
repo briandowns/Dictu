@@ -33,9 +33,9 @@ typedef struct {
 
 #define AS_SOCKET(v) ((SocketData*)AS_ABSTRACT(v)->data)
 
-ObjAbstract *newSocket(DictuVM *vm, int sock, int socketFamily, int socketType, int socketProtocol);
+ObjAbstract *newSocket(CamusVM *vm, int sock, int socketFamily, int socketType, int socketProtocol);
 
-static Value createSocket(DictuVM *vm, int argCount, Value *args) {
+static Value createSocket(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 2) {
         runtimeError(vm, "create() takes 2 arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -58,7 +58,7 @@ static Value createSocket(DictuVM *vm, int argCount, Value *args) {
     return newResultSuccess(vm, OBJ_VAL(s));
 }
 
-static Value bindSocket(DictuVM *vm, int argCount, Value *args) {
+static Value bindSocket(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 2) {
         runtimeError(vm, "bind() takes 2 arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -91,7 +91,7 @@ static Value bindSocket(DictuVM *vm, int argCount, Value *args) {
     return newResultSuccess(vm, NIL_VAL);
 }
 
-static Value listenSocket(DictuVM *vm, int argCount, Value *args) {
+static Value listenSocket(CamusVM *vm, int argCount, Value *args) {
     if (argCount > 1) {
         runtimeError(vm, "listen() takes 0 or 1 arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -116,7 +116,7 @@ static Value listenSocket(DictuVM *vm, int argCount, Value *args) {
     return newResultSuccess(vm, NIL_VAL);
 }
 
-static Value acceptSocket(DictuVM *vm, int argCount, Value *args) {
+static Value acceptSocket(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "accept() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -155,7 +155,7 @@ static Value acceptSocket(DictuVM *vm, int argCount, Value *args) {
     return newResultSuccess(vm, OBJ_VAL(list));
 }
 
-static Value writeSocket(DictuVM *vm, int argCount, Value *args) {
+static Value writeSocket(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "write() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -178,7 +178,7 @@ static Value writeSocket(DictuVM *vm, int argCount, Value *args) {
     return newResultSuccess(vm, NUMBER_VAL(writeRet));
 }
 
-static Value recvSocket(DictuVM *vm, int argCount, Value *args) {
+static Value recvSocket(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "recv() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -216,7 +216,7 @@ static Value recvSocket(DictuVM *vm, int argCount, Value *args) {
     return newResultSuccess(vm, OBJ_VAL(rString));
 }
 
-static Value connectSocket(DictuVM *vm, int argCount, Value *args) {
+static Value connectSocket(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 2) {
         runtimeError(vm, "connect() takes two arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -247,7 +247,7 @@ static Value connectSocket(DictuVM *vm, int argCount, Value *args) {
     return newResultSuccess(vm, NIL_VAL);
 }
 
-static Value closeSocket(DictuVM *vm, int argCount, Value *args) {
+static Value closeSocket(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "close() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -259,7 +259,7 @@ static Value closeSocket(DictuVM *vm, int argCount, Value *args) {
     return NIL_VAL;
 }
 
-static Value setSocketOpt(DictuVM *vm, int argCount, Value *args) {
+static Value setSocketOpt(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 2) {
         runtimeError(vm, "setsocketopt() takes 2 arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -281,7 +281,7 @@ static Value setSocketOpt(DictuVM *vm, int argCount, Value *args) {
     return newResultSuccess(vm, NIL_VAL);
 }
 
-void freeSocket(DictuVM *vm, ObjAbstract *abstract) {
+void freeSocket(CamusVM *vm, ObjAbstract *abstract) {
     FREE(vm, SocketData, abstract->data);
 }
 
@@ -293,7 +293,7 @@ char *socketToString(ObjAbstract *abstract) {
     return socketString;
 }
 
-ObjAbstract *newSocket(DictuVM *vm, int sock, int socketFamily, int socketType, int socketProtocol) {
+ObjAbstract *newSocket(CamusVM *vm, int sock, int socketFamily, int socketType, int socketProtocol) {
     ObjAbstract *abstract = newAbstract(vm, freeSocket, socketToString);
     push(vm, OBJ_VAL(abstract));
 
@@ -329,7 +329,7 @@ void cleanupSockets(void) {
 }
 #endif
 
-Value createSocketModule(DictuVM *vm) {
+Value createSocketModule(CamusVM *vm) {
     #ifdef _WIN32
     #include "windowsapi.h"
 

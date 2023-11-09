@@ -1,4 +1,4 @@
-#define DICTU_ARGPARSE_SOURCE "import System;\n" \
+#define CAMUS_ARGPARSE_SOURCE "import System;\n" \
 "\n" \
 "class Args {\n" \
 "    init(private name, private desc) {}\n" \

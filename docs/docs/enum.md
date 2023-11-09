@@ -18,7 +18,7 @@ nav_order: 11
 ## Enums
 
 Enums are a collection of constants which can be accessed via a name rather than
-an index to document intent. Unlike other languages, enums in Dictu do not generate a value
+an index to document intent. Unlike other languages, enums in Camus do not generate a value
 based on the previous entry, instead if no value is assigned it will be given it's position
 within the enum, 0-based, as a value.
 
@@ -40,8 +40,8 @@ enum Test {
 print(Test.a); // 10
 ```
 
-Enums in Dictu also do not care about the value being stored within the enum, so
-if you wanted to create a heterogeneous enum, Dictu will not stop you.
+Enums in Camus also do not care about the value being stored within the enum, so
+if you wanted to create a heterogeneous enum, Camus will not stop you.
 
 ```cs
 enum HeterogeneousEnum {

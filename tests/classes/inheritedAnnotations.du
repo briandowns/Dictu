@@ -30,7 +30,7 @@ class C < A {
     @FieldA(99)
     var a = "qwert4321";
 
-    @MethodA("dictu")
+    @MethodA("camus")
     methodA() {}
 }
 
@@ -43,7 +43,7 @@ class TestClassInheritAnnotations < UnitTest {
 
     testClassInheritAnnotationsOverrides() {
         this.assertEquals(C()._class.fieldAnnotations["a"]["FieldA"], 99);
-        this.assertEquals(C()._class.methodAnnotations["methodA"]["MethodA"], "dictu");
+        this.assertEquals(C()._class.methodAnnotations["methodA"]["MethodA"], "camus");
 
         const c = C();
         const a = A();

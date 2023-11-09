@@ -19,7 +19,7 @@ parent: Standard Library
 ## UnitTest
 
 Unit testing is a very important part of software development and something we as developers
-should always strive to complete. Dictu aims to make this slightly easier by having a unit test
+should always strive to complete. Camus aims to make this slightly easier by having a unit test
 framework built within the language.
 
 The framework works by first inheriting from the abstract `UnitTest` class provided
@@ -424,7 +424,7 @@ This helper method ensures that the value passed in is not equal to nil.
 This helper method checks the type of the first value is equal to the type as a string.
 
 ```cs
-this.assertType("Dictu", "string");
+this.assertType("Camus", "string");
 this.assertType(10, "number");
 ```
 
@@ -484,7 +484,7 @@ from UnitTest import mock;
 
 class ExternalApi {
     someExternalCall() {
-        const response = HTTP.get("https://dictu-lang.com/").unwrap();
+        const response = HTTP.get("https://camus-lang.com/").unwrap();
         print("Calling API!");
 
         return response.statusCode;

@@ -1,5 +1,5 @@
-#ifndef dictu_class_h
-#define dictu_class_h
+#ifndef camus_class_h
+#define camus_class_h
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -8,6 +8,6 @@
 
 #include "../util.h"
 
-void declareClassMethods(DictuVM *vm);
+void declareClassMethods(CamusVM *vm);
 
-#endif //dictu_class_h
+#endif //camus_class_h

@@ -24,12 +24,12 @@ class TestClassConstructor < UnitTest {
 
         class AnotherTest {
             init(a, b="test") {
-                assertEquals(a, "dictu");
+                assertEquals(a, "camus");
                 assertEquals(b, "test");
             }
         }
 
-        AnotherTest("dictu");
+        AnotherTest("camus");
     }
 
     testClassConstructorProperty() {

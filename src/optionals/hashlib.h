@@ -1,5 +1,5 @@
-#ifndef dictu_hashlib_h
-#define dictu_hashlib_h
+#ifndef camus_hashlib_h
+#define camus_hashlib_h
 
 #include "optionals.h"
 #include "hashlib/utils.h"
@@ -7,6 +7,6 @@
 #include "hashlib/hmac.h"
 #include "hashlib/bcrypt/bcrypt.h"
 
-Value createHashlibModule(DictuVM *vm);
+Value createHashlibModule(CamusVM *vm);
 
-#endif //dictu_hashlib_h
+#endif //camus_hashlib_h

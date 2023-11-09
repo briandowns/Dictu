@@ -2,7 +2,7 @@
 
 #include "object-source.h"
 
-static Value objectGetClassRefImpl(DictuVM *vm, int argCount, Value *args, bool internal) {
+static Value objectGetClassRefImpl(CamusVM *vm, int argCount, Value *args, bool internal) {
     if (argCount != 1) {
         runtimeError(vm, "getClassRef() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -40,15 +40,15 @@ static Value objectGetClassRefImpl(DictuVM *vm, int argCount, Value *args, bool 
     return result;
 }
 
-static Value objectGetClassRef(DictuVM *vm, int argCount, Value *args) {
+static Value objectGetClassRef(CamusVM *vm, int argCount, Value *args) {
     return objectGetClassRefImpl(vm, argCount, args, false);
 }
 
-static Value objectGetClassRefInternal(DictuVM *vm, int argCount, Value *args) {
+static Value objectGetClassRefInternal(CamusVM *vm, int argCount, Value *args) {
     return objectGetClassRefImpl(vm, argCount, args, true);
 }
 
-static Value objectHash(DictuVM *vm, int argCount, Value *args) {
+static Value objectHash(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "hash() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -59,8 +59,8 @@ static Value objectHash(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(copyString(vm, (char *)str, 21));
 }
 
-Value createObjectModule(DictuVM *vm) {
-    ObjClosure *closure = compileModuleToClosure(vm, "Object", DICTU_OBJECT_SOURCE);
+Value createObjectModule(CamusVM *vm) {
+    ObjClosure *closure = compileModuleToClosure(vm, "Object", CAMUS_OBJECT_SOURCE);
 
     if (closure == NULL) {
         return EMPTY_VAL;

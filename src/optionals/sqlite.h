@@ -1,5 +1,5 @@
-#ifndef dictu_sqlite_h
-#define dictu_sqlite_h
+#ifndef camus_sqlite_h
+#define camus_sqlite_h
 
 #ifdef INCLUDE_SQLITE_LIB
 #include <sqlite3.h>
@@ -11,6 +11,6 @@
 #include "optionals.h"
 #include "../vm/vm.h"
 
-Value createSqliteModule(DictuVM *vm);
+Value createSqliteModule(CamusVM *vm);
 
-#endif //dictu_sqlite_h
+#endif //camus_sqlite_h

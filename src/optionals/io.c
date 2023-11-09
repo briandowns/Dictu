@@ -11,7 +11,7 @@
 #include "io.h"
 
 
-static Value printIO(DictuVM *vm, int argCount, Value *args) {
+static Value printIO(CamusVM *vm, int argCount, Value *args) {
     if (argCount == 0) {
         runtimeError(vm, "print() takes 1 or more arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -24,7 +24,7 @@ static Value printIO(DictuVM *vm, int argCount, Value *args) {
     return NIL_VAL;
 }
 
-static Value printlnIO(DictuVM *vm, int argCount, Value *args) {
+static Value printlnIO(CamusVM *vm, int argCount, Value *args) {
     if (argCount == 0) {
         runtimeError(vm, "println() takes 1 or more arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -39,7 +39,7 @@ static Value printlnIO(DictuVM *vm, int argCount, Value *args) {
 }
 
 #ifdef _WIN32
-static Value copyFileIO(DictuVM *vm, int argCount, Value *args) {
+static Value copyFileIO(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 2) {
         runtimeError(vm, "copyFile() takes 2 arguments (%d given).", argCount);
         return EMPTY_VAL;
@@ -78,7 +78,7 @@ static Value copyFileIO(DictuVM *vm, int argCount, Value *args) {
 #endif
 
 #ifndef _WIN32
-static Value copyFileIO(DictuVM *vm, int argCount, Value *args) {
+static Value copyFileIO(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 2) {
         runtimeError(vm, "copyFile() takes 2 arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -118,7 +118,7 @@ static Value copyFileIO(DictuVM *vm, int argCount, Value *args) {
 }
 #endif
 
-Value createIOModule(DictuVM *vm) {
+Value createIOModule(CamusVM *vm) {
     ObjString *name = copyString(vm, "IO", 2);
     push(vm, OBJ_VAL(name));
     ObjModule *module = newModule(vm, name);

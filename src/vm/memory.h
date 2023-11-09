@@ -1,5 +1,5 @@
-#ifndef dictu_memory_h
-#define dictu_memory_h
+#ifndef camus_memory_h
+#define camus_memory_h
 
 #include "object.h"
 #include "common.h"
@@ -27,16 +27,16 @@
 #define FREE_ARRAY(vm, type, pointer, oldCount) \
     reallocate(vm, pointer, sizeof(type) * (oldCount), 0)
 
-void *reallocate(DictuVM *vm, void *previous, size_t oldSize, size_t newSize);
+void *reallocate(CamusVM *vm, void *previous, size_t oldSize, size_t newSize);
 
-void grayObject(DictuVM *vm, Obj *object);
+void grayObject(CamusVM *vm, Obj *object);
 
-void grayValue(DictuVM *vm, Value value);
+void grayValue(CamusVM *vm, Value value);
 
-void collectGarbage(DictuVM *vm);
+void collectGarbage(CamusVM *vm);
 
-void freeObjects(DictuVM *vm);
+void freeObjects(CamusVM *vm);
 
-void freeObject(DictuVM *vm, Obj *object);
+void freeObject(CamusVM *vm, Obj *object);
 
 #endif

@@ -5,7 +5,7 @@
 #endif
 
 #ifdef HAS_REALPATH
-static Value realpathNative(DictuVM *vm, int argCount, Value *args) {
+static Value realpathNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "realpath() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -27,7 +27,7 @@ static Value realpathNative(DictuVM *vm, int argCount, Value *args) {
 }
 #endif
 
-static Value isAbsoluteNative(DictuVM *vm, int argCount, Value *args) {
+static Value isAbsoluteNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "isAbsolute() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -43,7 +43,7 @@ static Value isAbsoluteNative(DictuVM *vm, int argCount, Value *args) {
     return (IS_DIR_SEPARATOR(path[0]) ? TRUE_VAL : FALSE_VAL);
 }
 
-static Value basenameNative(DictuVM *vm, int argCount, Value *args) {
+static Value basenameNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "basename() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -68,7 +68,7 @@ static Value basenameNative(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(copyString(vm, p, (len - (p - path))));
 }
 
-static Value extnameNative(DictuVM *vm, int argCount, Value *args) {
+static Value extnameNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "extname() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -100,7 +100,7 @@ static Value extnameNative(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(copyString(vm, p, len - (p - path)));
 }
 
-static Value dirnameNative(DictuVM *vm, int argCount, Value *args) {
+static Value dirnameNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "dirname() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -115,7 +115,7 @@ static Value dirnameNative(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(dirname(vm, PathString->chars, PathString->length));
 }
 
-static Value existsNative(DictuVM *vm, int argCount, Value *args) {
+static Value existsNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "exists() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -133,7 +133,7 @@ static Value existsNative(DictuVM *vm, int argCount, Value *args) {
     return BOOL_VAL(stat(path, &buffer) == 0);
 }
 
-static Value isdirNative(DictuVM *vm, int argCount, Value *args) {
+static Value isdirNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "isDir() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -155,7 +155,7 @@ static Value isdirNative(DictuVM *vm, int argCount, Value *args) {
 
 }
 
-static Value listDirNative(DictuVM *vm, int argCount, Value *args) {
+static Value listDirNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount > 1) {
         runtimeError(vm, "listDir() takes 0 or 1 arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -233,7 +233,7 @@ static Value listDirNative(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(dir_contents);
 }
 
-static Value joinNative(DictuVM *vm, int argCount, Value *args) {
+static Value joinNative(CamusVM *vm, int argCount, Value *args) {
     char* argCountError = "join() requires 1 or more arguments (%d given).";
     char* nonStringError = "join() argument at index %d is not a string";
 
@@ -312,7 +312,7 @@ static Value joinNative(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(takeString(vm, str, resultSize));
 }
 
-Value createPathModule(DictuVM *vm) {
+Value createPathModule(CamusVM *vm) {
     ObjString *name = copyString(vm, "Path", 4);
     push(vm, OBJ_VAL(name));
     ObjModule *module = newModule(vm, name);

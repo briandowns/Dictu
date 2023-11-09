@@ -1,5 +1,5 @@
-#ifndef _dictu_log_h
-#define _dictu_log_h
+#ifndef _camus_log_h
+#define _camus_log_h
 
 #include "../vm/vm.h"
 
@@ -9,6 +9,6 @@
 #define	STDERR_FILENO	2	/* standard error file descriptor */
 #endif
 
-Value createLogModule(DictuVM *vm);
+Value createLogModule(CamusVM *vm);
 
-#endif //_dictu_log_h
+#endif //_camus_log_h

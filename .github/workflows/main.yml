@@ -11,14 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Make dictu and run checkTests and orderDocs
+      - name: Make camus and run checkTests and orderDocs
         run: |
           sudo apt-get update
           sudo apt-get install -y libcurl4-openssl-dev uuid-dev
           cmake -DCMAKE_BUILD_TYPE=Debug -DDISABLE_HTTP=1 -B ./build
           cmake --build ./build
-          ./dictu ops/checkTests.du ci
-          ./dictu ops/orderDocs.du --ci
+          ./camus ops/checkTests.du ci
+          ./camus ops/orderDocs.du --ci
   test-ubuntu-cmake:
     name: Test on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
@@ -28,21 +28,21 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Make dictu and run tests (No HTTP)
+      - name: Make camus and run tests (No HTTP)
         run: |
           cmake -DCMAKE_BUILD_TYPE=Debug -DDISABLE_HTTP=1 -B ./build
           cmake --build ./build
-          ./dictu tests/runTests.du ci | tee /dev/stderr | grep -q 'Total bytes lost: 0'
+          ./camus tests/runTests.du ci | tee /dev/stderr | grep -q 'Total bytes lost: 0'
       - name: Remove build directory
         run: |
           rm -rf build
-      - name: Make dictu and run tests (HTTP)
+      - name: Make camus and run tests (HTTP)
         run: |
           sudo apt-get update
           sudo apt-get install -y libcurl4-openssl-dev uuid-dev
           cmake -DCMAKE_BUILD_TYPE=Debug -B ./build
           cmake --build ./build
-          ./dictu tests/runTests.du ci | tee /dev/stderr | grep -q 'Total bytes lost: 0'
+          ./camus tests/runTests.du ci | tee /dev/stderr | grep -q 'Total bytes lost: 0'
   test-mac-cmake:
     name: Test on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
@@ -52,19 +52,19 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Make dictu and run tests (No HTTP)
+      - name: Make camus and run tests (No HTTP)
         run: |
           cmake -DCMAKE_BUILD_TYPE=Debug -DDISABLE_HTTP=1 -B ./build
           cmake --build ./build
-          ./dictu tests/runTests.du ci | tee /dev/stderr | grep -q 'Total bytes lost: 0'
+          ./camus tests/runTests.du ci | tee /dev/stderr | grep -q 'Total bytes lost: 0'
       - name: Remove build directory
         run: |
           rm -rf build
-      - name: Make dictu and run tests
+      - name: Make camus and run tests
         run: |
           cmake -DCMAKE_BUILD_TYPE=Debug -B ./build
           cmake --build ./build
-          ./dictu tests/runTests.du ci | tee /dev/stderr | grep -q 'Total bytes lost: 0'
+          ./camus tests/runTests.du ci | tee /dev/stderr | grep -q 'Total bytes lost: 0'
   test-windows-cmake:
     name: Test on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
@@ -74,20 +74,20 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Make dictu and run tests (No HTTP)
+      - name: Make camus and run tests (No HTTP)
         run: |
           cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_SYSTEM_VERSION="10.0.18362.0" -DCICD=1 -DDISABLE_HTTP=1 -B build
           cmake --build build
-          Debug\dictu.exe tests/runTests.du ci
+          Debug\camus.exe tests/runTests.du ci
   run-examples:
     name: Test Examples
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Make dictu and run examples
+      - name: Make camus and run examples
         run: |
           sudo apt-get update
           sudo apt-get install -y libcurl4-openssl-dev uuid-dev
           cmake -DCMAKE_BUILD_TYPE=Debug -B ./build
           cmake --build ./build
-          ./dictu examples/runExamples.du ci | tee /dev/stderr | grep -q 'Total bytes lost: 0'
+          ./camus examples/runExamples.du ci | tee /dev/stderr | grep -q 'Total bytes lost: 0'

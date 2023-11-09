@@ -4,7 +4,7 @@
 #define isatty(fd) _isatty(fd)
 #endif
 
-static Value termIsattyNative(DictuVM *vm, int argCount, Value *args) {
+static Value termIsattyNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "isatty() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -22,7 +22,7 @@ static Value termIsattyNative(DictuVM *vm, int argCount, Value *args) {
     return BOOL_VAL(false);
 }
 
-static Value getSizeNative(DictuVM *vm, int argCount, Value *args) {
+static Value getSizeNative(CamusVM *vm, int argCount, Value *args) {
     UNUSED(args);
 
     if (argCount != 0) {
@@ -79,7 +79,7 @@ static Value getSizeNative(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(terminalSizeDict);
 }
 
-Value createTermModule(DictuVM *vm) {
+Value createTermModule(CamusVM *vm) {
     ObjString *name = copyString(vm, "Term", 4);
     push(vm, OBJ_VAL(name));
     ObjModule *module = newModule(vm, name);

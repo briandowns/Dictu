@@ -5,7 +5,7 @@ static uuid_t uuid;
 
 #define UUID_STRING_LEN 37
 
-static Value uuidGenerateNative(DictuVM *vm, int argCount, Value *args) {
+static Value uuidGenerateNative(CamusVM *vm, int argCount, Value *args) {
     UNUSED(args);
 
     if (argCount != 0) {
@@ -27,7 +27,7 @@ static Value uuidGenerateNative(DictuVM *vm, int argCount, Value *args) {
     return newResultSuccess(vm, OBJ_VAL(copyString(vm, out, UUID_STRING_LEN)));
 }
 
-static Value uuidGenRandomNative(DictuVM *vm, int argCount, Value *args) {
+static Value uuidGenRandomNative(CamusVM *vm, int argCount, Value *args) {
     UNUSED(args);
 
     if (argCount != 0) {
@@ -49,7 +49,7 @@ static Value uuidGenRandomNative(DictuVM *vm, int argCount, Value *args) {
     return newResultSuccess(vm, OBJ_VAL(copyString(vm, out, UUID_STRING_LEN)));
 }
 
-static Value uuidGenTimeNative(DictuVM *vm, int argCount, Value *args) {
+static Value uuidGenTimeNative(CamusVM *vm, int argCount, Value *args) {
     UNUSED(args);
 
     if (argCount != 0) {
@@ -72,7 +72,7 @@ static Value uuidGenTimeNative(DictuVM *vm, int argCount, Value *args) {
 }
 #endif
 
-Value createUuidModule(DictuVM *vm) {
+Value createUuidModule(CamusVM *vm) {
     ObjString *name = copyString(vm, "UUID", 4);
     push(vm, OBJ_VAL(name));
     ObjModule *module = newModule(vm, name);

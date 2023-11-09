@@ -25,17 +25,17 @@ class TestFileWrite < UnitTest {
     testFileWrite() {
         with("tests/files/read.txt", "w") {
             // Save contents to reset the file
-            var count = file.write("Dictu is great!");
+            var count = file.write("Camus is great!");
             this.assertEquals(count, 15);
-            count = file.write("Dictu is great!");
+            count = file.write("Camus is great!");
             this.assertEquals(count, 15);
-            count = file.write("Dictu is great!");
+            count = file.write("Camus is great!");
             this.assertEquals(count, 15);
         }
 
         with("tests/files/read.txt", "r") {
             // Save contents to reset the file
-            this.assertEquals(file.read(), "Dictu is great!Dictu is great!Dictu is great!");
+            this.assertEquals(file.read(), "Camus is great!Camus is great!Camus is great!");
         }
     }
 }

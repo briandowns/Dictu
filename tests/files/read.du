@@ -6,18 +6,18 @@
 from UnitTest import UnitTest;
 
 class TestFileReading < UnitTest {
-    const EXPECTED = "Dictu is great!\n" +
-        "Dictu is great!\n" +
-        "Dictu is great!\n" +
-        "Dictu is great!\n" +
-        "Dictu is great!\n" +
+    const EXPECTED = "Camus is great!\n" +
+        "Camus is great!\n" +
+        "Camus is great!\n" +
+        "Camus is great!\n" +
+        "Camus is great!\n" +
         "\n" +
         "\n" +
-        "Dictu is great!\n" +
-        "Dictu is great!\n" +
-        "Dictu is great!\n" +
-        "Dictu is great!\n" +
-        "Dictu is great!";
+        "Camus is great!\n" +
+        "Camus is great!\n" +
+        "Camus is great!\n" +
+        "Camus is great!\n" +
+        "Camus is great!";
 
     testFileRead() {
         var contents;

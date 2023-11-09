@@ -1,4 +1,4 @@
-#define DICTU_HTTP_SOURCE "class Response {\n" \
+#define CAMUS_HTTP_SOURCE "class Response {\n" \
 "    // content, headers and statusCode set via C\n" \
 "    init() {}\n" \
 "\n" \

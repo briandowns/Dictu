@@ -20,7 +20,7 @@ void getStrerror(char *buf, int error) {
 #endif
 }
 
-Value createCModule(DictuVM *vm) {
+Value createCModule(CamusVM *vm) {
     ObjString *name = copyString(vm, "C", 1);
     push(vm, OBJ_VAL(name));
     ObjModule *module = newModule(vm, name);

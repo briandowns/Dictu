@@ -1,8 +1,8 @@
-#ifndef DICTU_API_UNITTEST_H
-#define DICTU_API_UNITTEST_H
+#ifndef CAMUS_API_UNITTEST_H
+#define CAMUS_API_UNITTEST_H
 
 #include "../optionals.h"
 
-Value createUnitTestModule(DictuVM *vm);
+Value createUnitTestModule(CamusVM *vm);
 
-#endif //DICTU_API_UNITTEST_H
+#endif //CAMUS_API_UNITTEST_H

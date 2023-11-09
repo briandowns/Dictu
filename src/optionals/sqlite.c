@@ -12,7 +12,7 @@ typedef struct {
 
 #define AS_SQLITE_DATABASE(v) ((Database*)AS_ABSTRACT(v)->data)
 
-ObjAbstract *newSqlite(DictuVM *vm);
+ObjAbstract *newSqlite(CamusVM *vm);
 
 static int countParameters(char *query) {
     int length = strlen(query);
@@ -42,7 +42,7 @@ void bindValue(sqlite3_stmt *stmt, int index, Value value) {
     }
 }
 
-static Value execute(DictuVM *vm, int argCount, Value *args) {
+static Value execute(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1 && argCount != 2) {
         runtimeError(vm, "execute() takes 1 or 2 arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -158,7 +158,7 @@ static Value execute(DictuVM *vm, int argCount, Value *args) {
     return newResultSuccess(vm, NIL_VAL);
 }
 
-static Value closeConnection(DictuVM *vm, int argCount, Value *args) {
+static Value closeConnection(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "close() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -174,7 +174,7 @@ static Value closeConnection(DictuVM *vm, int argCount, Value *args) {
     return NIL_VAL;
 }
 
-static Value connectSqlite(DictuVM *vm, int argCount, Value *args) {
+static Value connectSqlite(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1 && argCount != 2) {
         runtimeError(vm, "connect() takes 1 or 2 arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -222,7 +222,7 @@ static Value connectSqlite(DictuVM *vm, int argCount, Value *args) {
     return newResultSuccess(vm, OBJ_VAL(abstract));
 }
 
-void freeSqlite(DictuVM *vm, ObjAbstract *abstract) {
+void freeSqlite(CamusVM *vm, ObjAbstract *abstract) {
     Database *db = (Database*)abstract->data;
     if (db->open) {
         sqlite3_close(db->db);
@@ -239,7 +239,7 @@ char *sqliteToString(ObjAbstract *abstract) {
     return sqliteString;
 }
 
-ObjAbstract *newSqlite(DictuVM *vm) {
+ObjAbstract *newSqlite(CamusVM *vm) {
     ObjAbstract *abstract = newAbstract(vm, freeSqlite, sqliteToString);
     push(vm, OBJ_VAL(abstract));
 
@@ -258,7 +258,7 @@ ObjAbstract *newSqlite(DictuVM *vm) {
     return abstract;
 }
 
-Value createSqliteModule(DictuVM *vm) {
+Value createSqliteModule(CamusVM *vm) {
     ObjString *name = copyString(vm, "Sqlite", 6);
     push(vm, OBJ_VAL(name));
     ObjModule *module = newModule(vm, name);

@@ -26,7 +26,7 @@ import JSON;
 
 ### JSON.parse(String) -> Result\<Value>
 
-Parses a JSON string and turns it into a valid Dictu datatype.
+Parses a JSON string and turns it into a valid Camus datatype.
 Returns a Result type and unwraps to <any> datatype.
 
 ```cs
@@ -38,7 +38,7 @@ JSON.parse('null'); // nil
 
 ### JSON.stringify(value, String: indent -> Optional) -> Result\<String>
 
-Stringify converts a Dictu value into a valid JSON string.
+Stringify converts a Camus value into a valid JSON string.
 Returns a Result type and unwraps to string.
 
 ```cs

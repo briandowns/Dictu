@@ -10,8 +10,8 @@ import Base64;
 class TestBase64Module < UnitTest {
     testBase64Encode() {
         this.assertEquals(Base64.encode("test"), "dGVzdA==");
-        this.assertEquals(Base64.encode("Dictu"), "RGljdHU=");
-        this.assertEquals(Base64.encode("123456789Dictu123456789"), "MTIzNDU2Nzg5RGljdHUxMjM0NTY3ODk=");
+        this.assertEquals(Base64.encode("Camus"), "RGljdHU=");
+        this.assertEquals(Base64.encode("123456789Camus123456789"), "MTIzNDU2Nzg5RGljdHUxMjM0NTY3ODk=");
     }
 }
 

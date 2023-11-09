@@ -1,5 +1,5 @@
-#ifndef dictu_env_h
-#define dictu_env_h
+#ifndef camus_env_h
+#define camus_env_h
 
 #include <stdlib.h>
 #include <string.h>
@@ -7,6 +7,6 @@
 #include "../optionals.h"
 #include "../../vm/vm.h"
 
-Value createEnvModule(DictuVM *vm);
+Value createEnvModule(CamusVM *vm);
 
-#endif //dictu_env_h
+#endif //camus_env_h

@@ -15,7 +15,7 @@ class TestStringReplace < UnitTest {
         this.assertEquals("aaaa".replace("aaaa", "b"), "b");
         this.assertEquals("ab".replace("ab", "ab"), "ab");
         this.assertEquals("abcabc".replace("abc", "b"), "bb");
-        this.assertEquals("hellohello".replace("hello", "Dictu!"), "Dictu!Dictu!");
+        this.assertEquals("hellohello".replace("hello", "Camus!"), "Camus!Camus!");
         this.assertEquals("test".replace("nowords", "b"), "test");
         this.assertEquals("test".replace("12345", "b"), "test");
         this.assertEquals("test".replace("t", "123456789123456789123456789123456789"),

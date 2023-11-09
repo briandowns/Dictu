@@ -1,5 +1,5 @@
-#ifndef dictu_strings_h
-#define dictu_strings_h
+#ifndef camus_strings_h
+#define camus_strings_h
 
 #include <stdbool.h>
 #include <stdlib.h>
@@ -10,6 +10,6 @@
 #include "../common.h"
 #include "../util.h"
 
-void declareStringMethods(DictuVM *vm);
+void declareStringMethods(CamusVM *vm);
 
-#endif //dictu_strings_h
+#endif //camus_strings_h

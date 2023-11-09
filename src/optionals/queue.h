@@ -1,8 +1,8 @@
-#ifndef dictu_queue_h
-#define dictu_queue_h
+#ifndef camus_queue_h
+#define camus_queue_h
 
 #include "optionals.h"
 
-Value createQueueModule(DictuVM *vm);
+Value createQueueModule(CamusVM *vm);
 
-#endif //dictu_queue_h
+#endif //camus_queue_h

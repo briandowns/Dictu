@@ -1,6 +1,6 @@
 #include "json.h"
 
-static Value parseJson(DictuVM *vm, json_value *json) {
+static Value parseJson(CamusVM *vm, json_value *json) {
     switch (json->type) {
         case json_none:
         case json_null: {
@@ -67,7 +67,7 @@ static Value parseJson(DictuVM *vm, json_value *json) {
     }
 }
 
-static Value parse(DictuVM *vm, int argCount, Value *args) {
+static Value parse(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "parse() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -96,7 +96,7 @@ static Value parse(DictuVM *vm, int argCount, Value *args) {
     return newResultSuccess(vm, val);
 }
 
-json_value* stringifyJson(DictuVM *vm, Value value) {
+json_value* stringifyJson(CamusVM *vm, Value value) {
     if (IS_NIL(value)) {
         return json_null_new();
     } else if (IS_BOOL(value)) {
@@ -171,7 +171,7 @@ json_value* stringifyJson(DictuVM *vm, Value value) {
     return NULL;
 }
 
-static Value stringify(DictuVM *vm, int argCount, Value *args) {
+static Value stringify(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1 && argCount != 2) {
         runtimeError(vm, "stringify() takes 1 or 2 arguments (%d given).", argCount);
         return EMPTY_VAL;
@@ -221,7 +221,7 @@ static Value stringify(DictuVM *vm, int argCount, Value *args) {
     return newResultSuccess(vm, OBJ_VAL(string));
 }
 
-Value createJSONModule(DictuVM *vm) {
+Value createJSONModule(CamusVM *vm) {
     ObjString *name = copyString(vm, "JSON", 4);
     push(vm, OBJ_VAL(name));
     ObjModule *module = newModule(vm, name);

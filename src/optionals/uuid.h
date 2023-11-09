@@ -1,5 +1,5 @@
-#ifndef dictu_uuid_h
-#define dictu_uuid_h
+#ifndef camus_uuid_h
+#define camus_uuid_h
 
 #include "optionals.h"
 #include "../vm/vm.h"
@@ -9,6 +9,6 @@
 #include <uuid/uuid.h>
 #endif 
 
-Value createUuidModule(DictuVM *vm);
+Value createUuidModule(CamusVM *vm);
 
-#endif //dictu_uuid_h
+#endif //camus_uuid_h

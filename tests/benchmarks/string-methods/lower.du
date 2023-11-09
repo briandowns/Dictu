@@ -2,7 +2,7 @@ var start = System.clock();
 var x;
 
 for (var i = 0; i < 10000; i += 1) {
-    x = "DICTU IS GREAT!".lower();
+    x = "CAMUS IS GREAT!".lower();
 }
 
 print(System.clock() - start);

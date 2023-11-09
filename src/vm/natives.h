@@ -1,9 +1,9 @@
-#ifndef dictu_natives_h
-#define dictu_natives_h
+#ifndef camus_natives_h
+#define camus_natives_h
 
 #include "common.h"
 #include "util.h"
 
-void defineAllNatives(DictuVM *vm);
+void defineAllNatives(CamusVM *vm);
 
-#endif //dictu_natives_h
+#endif //camus_natives_h

@@ -1,5 +1,5 @@
-#ifndef dictu_socket_h
-#define dictu_socket_h
+#ifndef camus_socket_h
+#define camus_socket_h
 
 #include "optionals.h"
 #include "../vm/vm.h"
@@ -10,6 +10,6 @@
 #include <netinet/in.h>
 #endif
 
-Value createSocketModule(DictuVM *vm);
+Value createSocketModule(CamusVM *vm);
 
-#endif //dictu_socket_h
+#endif //camus_socket_h

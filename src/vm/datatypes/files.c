@@ -1,7 +1,7 @@
 #include "files.h"
 #include "../memory.h"
 
-static Value writeFile(DictuVM *vm, int argCount, Value *args) {
+static Value writeFile(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "write() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -32,7 +32,7 @@ static Value writeFile(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(charsWrote);
 }
 
-static Value writeLineFile(DictuVM *vm, int argCount, Value *args) {
+static Value writeLineFile(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "writeLine() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -57,7 +57,7 @@ static Value writeLineFile(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(charsWrote);
 }
 
-static Value readFullFile(DictuVM *vm, int argCount, Value *args) {
+static Value readFullFile(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "read() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -93,7 +93,7 @@ static Value readFullFile(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(takeString(vm, buffer, bytesRead));
 }
 
-static Value readLineFile(DictuVM *vm, int argCount, Value *args) {
+static Value readLineFile(CamusVM *vm, int argCount, Value *args) {
     if (argCount > 1) {
         runtimeError(vm, "readLine() takes at most 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -134,7 +134,7 @@ static Value readLineFile(DictuVM *vm, int argCount, Value *args) {
     return NIL_VAL;
 }
 
-static Value seekFile(DictuVM *vm, int argCount, Value *args) {
+static Value seekFile(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1 && argCount != 2) {
         runtimeError(vm, "seek() takes 1 or 2 arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -184,7 +184,7 @@ static Value seekFile(DictuVM *vm, int argCount, Value *args) {
     return NIL_VAL;
 }
 
-void declareFileMethods(DictuVM *vm) {
+void declareFileMethods(CamusVM *vm) {
     defineNative(vm, &vm->fileMethods, "write", writeFile);
     defineNative(vm, &vm->fileMethods, "writeLine", writeLineFile);
     defineNative(vm, &vm->fileMethods, "read", readFullFile);

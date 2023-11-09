@@ -29,7 +29,7 @@ import System;
 | --------------- | ------------------------------------------------------------------------------------------------- |
 | System.argv     | The list of command line arguments. The first element of the argv list is always the script name. |
 | System.platform | This string identifies the underlying system platform.                                            |
-| System.version  | Dictionary containing Dictu major, minor and patch versions.                                      |
+| System.version  | Dictionary containing Camus major, minor and patch versions.                                      |
 | System.S_IRWXU  | Read, write, and execute by owner.                                                                |
 | System.S_IRUSR  | Read by owner.                                                                                    |
 | System.S_IWUSR  | Write by owner.                                                                                   |
@@ -173,7 +173,7 @@ System.getegid();
 
 ### System.getCWD() -> Result\<String>
 
-Get the current working directory of the Dictu process.
+Get the current working directory of the Camus process.
 
 Returns a Result type and on success will unwrap a string.
 
@@ -183,7 +183,7 @@ System.getCWD().unwrap(); // '/Some/Path/To/A/Directory'
 
 ### System.setCWD(String) -> Result\<Nil>
 
-Set current working directory of the Dictu process.
+Set current working directory of the Camus process.
 
 Returns a Result type and on success will unwrap nil.
 

@@ -9,9 +9,9 @@ from UnitTest import UnitTest;
 
 class TestSetRemove < UnitTest {
     testSetRemove() {
-        var mySet = set("dictu", "is", "great!", true, false, 10, 10.5, nil);
+        var mySet = set("camus", "is", "great!", true, false, 10, 10.5, nil);
 
-        this.assertTruthy(mySet.contains("dictu"));
+        this.assertTruthy(mySet.contains("camus"));
         this.assertTruthy(mySet.contains("is"));
         this.assertTruthy(mySet.contains("great!"));
         this.assertTruthy(mySet.contains(true));
@@ -22,11 +22,11 @@ class TestSetRemove < UnitTest {
 
         this.assertEquals(mySet.len(), 8);
 
-        mySet.remove("dictu");
+        mySet.remove("camus");
 
         this.assertEquals(mySet.len(), 7);
 
-        this.assertFalsey(mySet.contains("dictu"));
+        this.assertFalsey(mySet.contains("camus"));
         this.assertTruthy(mySet.contains("is"));
         this.assertTruthy(mySet.contains("great!"));
 
@@ -53,7 +53,7 @@ class TestSetRemove < UnitTest {
     testSetRemoveAfterAdd() {
         const mySet = set();
 
-        mySet.add("dictu");
+        mySet.add("camus");
         mySet.add("is");
         mySet.add("great!");
         mySet.add(true);
@@ -62,7 +62,7 @@ class TestSetRemove < UnitTest {
         mySet.add(10.5);
         mySet.add(nil);
 
-        this.assertTruthy(mySet.contains("dictu"));
+        this.assertTruthy(mySet.contains("camus"));
         this.assertTruthy(mySet.contains("is"));
         this.assertTruthy(mySet.contains("great!"));
         this.assertTruthy(mySet.contains(true));
@@ -73,11 +73,11 @@ class TestSetRemove < UnitTest {
 
         this.assertEquals(mySet.len(), 8);
 
-        mySet.remove("dictu");
+        mySet.remove("camus");
 
         this.assertEquals(mySet.len(), 7);
 
-        this.assertFalsey(mySet.contains("dictu"));
+        this.assertFalsey(mySet.contains("camus"));
         this.assertTruthy(mySet.contains("is"));
         this.assertTruthy(mySet.contains("great!"));
 

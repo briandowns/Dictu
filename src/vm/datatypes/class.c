@@ -2,7 +2,7 @@
 #include "../vm.h"
 #include "../memory.h"
 
-static Value toString(DictuVM *vm, int argCount, Value *args) {
+static Value toString(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "toString() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -16,7 +16,7 @@ static Value toString(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(string);
 }
 
-static Value toDict(DictuVM *vm, int argCount, Value *args) {
+static Value toDict(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "toDict() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -27,7 +27,7 @@ static Value toDict(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(dict);
 }
 
-static Value methods(DictuVM *vm, int argCount, Value *args) {
+static Value methods(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "methods() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -50,7 +50,7 @@ static Value methods(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(list);
 }
 
-void declareClassMethods(DictuVM *vm) {
+void declareClassMethods(CamusVM *vm) {
     defineNative(vm, &vm->classMethods, "toString", toString);
     defineNative(vm, &vm->classMethods, "toDict", toDict);
     defineNative(vm, &vm->classMethods, "methods", methods);

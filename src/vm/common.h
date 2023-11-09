@@ -1,5 +1,5 @@
-#ifndef dictu_common_h
-#define dictu_common_h
+#ifndef camus_common_h
+#define camus_common_h
 
 #include <stdbool.h>
 #include <stddef.h>

@@ -5,14 +5,14 @@
 /*
  * Note: We should try to implement everything we can in C
  *       rather than in the host language as C will always
- *       be faster than Dictu, and there will be extra work
- *       at startup running the Dictu code, however compromises
+ *       be faster than Camus, and there will be extra work
+ *       at startup running the Camus code, however compromises
  *       must be made due to the fact the VM is not re-enterable
  */
 
 #include "list-source.h"
 
-static Value toStringList(DictuVM *vm, int argCount, Value *args) {
+static Value toStringList(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "toString() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -26,7 +26,7 @@ static Value toStringList(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(string);
 }
 
-static Value lenList(DictuVM *vm, int argCount, Value *args) {
+static Value lenList(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "len() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -36,7 +36,7 @@ static Value lenList(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(list->values.count);
 }
 
-static Value extendList(DictuVM *vm, int argCount, Value *args) {
+static Value extendList(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "extend() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -57,7 +57,7 @@ static Value extendList(DictuVM *vm, int argCount, Value *args) {
     return NIL_VAL;
 }
 
-static Value pushListItem(DictuVM *vm, int argCount, Value *args) {
+static Value pushListItem(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "push() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -69,7 +69,7 @@ static Value pushListItem(DictuVM *vm, int argCount, Value *args) {
     return NIL_VAL;
 }
 
-static Value insertListItem(DictuVM *vm, int argCount, Value *args) {
+static Value insertListItem(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 2) {
         runtimeError(vm, "insert() takes 2 arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -107,7 +107,7 @@ static Value insertListItem(DictuVM *vm, int argCount, Value *args) {
     return NIL_VAL;
 }
 
-static Value popListItem(DictuVM *vm, int argCount, Value *args) {
+static Value popListItem(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0 && argCount != 1) {
         runtimeError(vm, "pop() takes either 0 or 1 arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -149,7 +149,7 @@ static Value popListItem(DictuVM *vm, int argCount, Value *args) {
     return element;
 }
 
-static Value removeListItem(DictuVM *vm, int argCount, Value *args) {
+static Value removeListItem(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "remove() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -195,7 +195,7 @@ static Value removeListItem(DictuVM *vm, int argCount, Value *args) {
     return EMPTY_VAL;
 }
 
-static Value containsListItem(DictuVM *vm, int argCount, Value *args) {
+static Value containsListItem(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "contains() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -213,7 +213,7 @@ static Value containsListItem(DictuVM *vm, int argCount, Value *args) {
     return FALSE_VAL;
 }
 
-static Value joinListItem(DictuVM *vm, int argCount, Value *args) {
+static Value joinListItem(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0 && argCount != 1) {
         runtimeError(vm, "join() takes 1 optional argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -281,7 +281,7 @@ static Value joinListItem(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(takeString(vm, fullString, length));
 }
 
-static Value copyListShallow(DictuVM *vm, int argCount, Value *args) {
+static Value copyListShallow(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "copy() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -292,7 +292,7 @@ static Value copyListShallow(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(list);
 }
 
-static Value copyListDeep(DictuVM *vm, int argCount, Value *args) {
+static Value copyListDeep(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "deepCopy() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -407,7 +407,7 @@ bool isStringList(ObjList *list) {
     return true;
 }
 
-static Value sortList(DictuVM *vm, int argCount, Value *args) {
+static Value sortList(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "sort() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -430,7 +430,7 @@ static Value sortList(DictuVM *vm, int argCount, Value *args) {
     return EMPTY_VAL;
 }
 
-static Value reverseList(DictuVM *vm, int argCount, Value *args) {
+static Value reverseList(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "reverse() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -448,7 +448,7 @@ static Value reverseList(DictuVM *vm, int argCount, Value *args) {
     return NIL_VAL;
 }
 
-void declareListMethods(DictuVM *vm) {
+void declareListMethods(CamusVM *vm) {
     defineNative(vm, &vm->listMethods, "toString", toStringList);
     defineNative(vm, &vm->listMethods, "len", lenList);
     defineNative(vm, &vm->listMethods, "extend", extendList);
@@ -464,7 +464,7 @@ void declareListMethods(DictuVM *vm) {
     defineNative(vm, &vm->listMethods, "sort", sortList);
     defineNative(vm, &vm->listMethods, "reverse", reverseList);
 
-    dictuInterpret(vm, "List", DICTU_LIST_SOURCE);
+    camusInterpret(vm, "List", CAMUS_LIST_SOURCE);
 
     Value List;
     tableGet(&vm->modules, copyString(vm, "List", 4), &List);

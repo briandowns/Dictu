@@ -1,8 +1,8 @@
-#ifndef dictu_inspect_h
-#define dictu_inspect_h
+#ifndef camus_inspect_h
+#define camus_inspect_h
 
 #include "optionals.h"
 
-Value createInspectModule(DictuVM *vm);
+Value createInspectModule(CamusVM *vm);
 
-#endif //dictu_inspect_h
+#endif //camus_inspect_h

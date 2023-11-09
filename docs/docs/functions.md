@@ -39,7 +39,7 @@ def someFunctionWithReturn() {
 print(someFunctionWithReturn()); // 10
 ```
 
-`def` is a keyword in Dictu which defines a function. `def` needs to be followed by the function name and then the function parameters. The body of the function is then enclosed within braces.
+`def` is a keyword in Camus which defines a function. `def` needs to be followed by the function name and then the function parameters. The body of the function is then enclosed within braces.
 
 Variables defined in a function are local to the scope of the function.
 
@@ -132,7 +132,7 @@ func(100); // 100
 ## Variadic Functions
 
 Variadic functions are simply functions which accepts a variable number of arguments.
-In Dictu, variadic functions typically have a spread formal parameter which can accept multiple arguments when the function is called.
+In Camus, variadic functions typically have a spread formal parameter which can accept multiple arguments when the function is called.
 Also, the spread parameter must come last in the function parameter list.
 
 Here's an example:

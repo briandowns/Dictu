@@ -1,9 +1,9 @@
-#ifndef dictu_api_enums_h
-#define dictu_api_enums_h
+#ifndef camus_api_enums_h
+#define camus_api_enums_h
 
 #include "../common.h"
 #include "../util.h"
 
-void declareEnumMethods(DictuVM *vm);
+void declareEnumMethods(CamusVM *vm);
 
-#endif //dictu_api_enums_h
+#endif //camus_api_enums_h

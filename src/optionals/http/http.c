@@ -235,7 +235,7 @@
 
 #define DEFAULT_REQUEST_TIMEOUT 20
 
-static void createResponse(DictuVM *vm, Response *response) {
+static void createResponse(CamusVM *vm, Response *response) {
     response->vm = vm;
     response->headers = newList(vm);
     // Push to stack to avoid GC
@@ -337,7 +337,7 @@ static char *dictToPostArgs(ObjDict *dict) {
     return ret;
 }
 
-static bool setRequestHeaders(DictuVM *vm, struct curl_slist *list, CURL *curl, ObjList *headers) {
+static bool setRequestHeaders(CamusVM *vm, struct curl_slist *list, CURL *curl, ObjList *headers) {
     if (headers->values.count == 0) {
         return true;
     }
@@ -356,7 +356,7 @@ static bool setRequestHeaders(DictuVM *vm, struct curl_slist *list, CURL *curl, 
     return true;
 }
 
-static ObjInstance *endRequest(DictuVM *vm, CURL *curl, Response response, bool cleanup) {
+static ObjInstance *endRequest(CamusVM *vm, CURL *curl, Response response, bool cleanup) {
     // Get status code
     curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &response.statusCode);
     ObjString *content;
@@ -410,7 +410,7 @@ static ObjInstance *endRequest(DictuVM *vm, CURL *curl, Response response, bool 
     return responseInstance;
 }
 
-static Value get(DictuVM *vm, int argCount, Value *args) {
+static Value get(CamusVM *vm, int argCount, Value *args) {
     if (argCount < 0 || argCount > 3) {
         runtimeError(vm, "get() takes between 1 and 3 arguments (%d given).", argCount);
         return EMPTY_VAL;
@@ -502,7 +502,7 @@ static Value get(DictuVM *vm, int argCount, Value *args) {
     return newResultError(vm, errorString);
 }
 
-static Value post(DictuVM *vm, int argCount, Value *args) {
+static Value post(CamusVM *vm, int argCount, Value *args) {
     if (argCount < 1 || argCount > 4) {
         runtimeError(vm, "post() takes between 1 and 4 arguments (%d given).", argCount);
         return EMPTY_VAL;
@@ -619,7 +619,7 @@ static Value post(DictuVM *vm, int argCount, Value *args) {
     return newResultError(vm, errorString);
 }
 
-static Value put(DictuVM *vm, int argCount, Value *args) {
+static Value put(CamusVM *vm, int argCount, Value *args) {
     if (argCount < 1 || argCount > 4) {
         runtimeError(vm, "put() takes between 1 and 4 arguments (%d given).", argCount);
         return EMPTY_VAL;
@@ -737,7 +737,7 @@ static Value put(DictuVM *vm, int argCount, Value *args) {
     return newResultError(vm, errorString);
 }
 
-static Value head(DictuVM *vm, int argCount, Value *args) {
+static Value head(CamusVM *vm, int argCount, Value *args) {
     if (argCount < 0 || argCount > 3) {
         runtimeError(vm, "head() takes between 1 and 3 arguments (%d given).", argCount);
         return EMPTY_VAL;
@@ -836,7 +836,7 @@ typedef struct {
 
 struct curl_slist *headerChunk = NULL;
 
-void freeHttpClient(DictuVM *vm, ObjAbstract *abstract) {
+void freeHttpClient(CamusVM *vm, ObjAbstract *abstract) {
     HttpClient *httpClient = (HttpClient*)abstract->data;
     
     curl_easy_cleanup(httpClient->curl);
@@ -853,7 +853,7 @@ char *httpClientToString(ObjAbstract *abstract) {
     return httpClientString;
 }
 
-static Value httpClientSetTimeout(DictuVM *vm, int argCount, Value *args) {
+static Value httpClientSetTimeout(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "setTimeout() takes 1 argument (%d given).", argCount);
         return EMPTY_VAL;
@@ -871,7 +871,7 @@ static Value httpClientSetTimeout(DictuVM *vm, int argCount, Value *args) {
     return NIL_VAL;
 }
 
-static Value httpClientSetInsecure(DictuVM *vm, int argCount, Value *args) {
+static Value httpClientSetInsecure(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "setInsecure() takes 1 argument (%d given).", argCount);
         return EMPTY_VAL;
@@ -897,7 +897,7 @@ static Value httpClientSetInsecure(DictuVM *vm, int argCount, Value *args) {
     return NIL_VAL;
 }
 
-static Value httpClientSetFollowRedirects(DictuVM *vm, int argCount, Value *args) {
+static Value httpClientSetFollowRedirects(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "setFollowRedirects() takes 1 argument (%d given).", argCount);
         return EMPTY_VAL;
@@ -919,7 +919,7 @@ static Value httpClientSetFollowRedirects(DictuVM *vm, int argCount, Value *args
     return NIL_VAL;
 }
 
-static Value httpClientSetHeaders(DictuVM *vm, int argCount, Value *args) {
+static Value httpClientSetHeaders(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "setHeaders() takes 1 argument (%d given).", argCount);
         return EMPTY_VAL;
@@ -949,7 +949,7 @@ static Value httpClientSetHeaders(DictuVM *vm, int argCount, Value *args) {
     return NIL_VAL;
 }
 
-static Value httpClientSetKeyFile(DictuVM *vm, int argCount, Value *args) {
+static Value httpClientSetKeyFile(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "setKeyFile() takes 1 argument (%d given).", argCount);
         return EMPTY_VAL;
@@ -967,7 +967,7 @@ static Value httpClientSetKeyFile(DictuVM *vm, int argCount, Value *args) {
     return NIL_VAL;
 }
 
-static Value httpClientSetCertFile(DictuVM *vm, int argCount, Value *args) {
+static Value httpClientSetCertFile(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "setCertFile() takes 1 argument (%d given).", argCount);
         return EMPTY_VAL;
@@ -985,7 +985,7 @@ static Value httpClientSetCertFile(DictuVM *vm, int argCount, Value *args) {
     return NIL_VAL;
 }
 
-static Value httpClientSetKeyPass(DictuVM *vm, int argCount, Value *args) {
+static Value httpClientSetKeyPass(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "setKeyPasswd() takes 1 argument (%d given).", argCount);
         return EMPTY_VAL;
@@ -1003,7 +1003,7 @@ static Value httpClientSetKeyPass(DictuVM *vm, int argCount, Value *args) {
     return NIL_VAL;
 }
 
-static Value httpClientGet(DictuVM *vm, int argCount, Value *args) {
+static Value httpClientGet(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "get() takes 1 argument (%d given).", argCount);
         return EMPTY_VAL;
@@ -1047,7 +1047,7 @@ static Value httpClientGet(DictuVM *vm, int argCount, Value *args) {
     return newResultError(vm, errorString);
 }
 
-static Value httpClientPost(DictuVM *vm, int argCount, Value *args) {
+static Value httpClientPost(CamusVM *vm, int argCount, Value *args) {
     if (argCount < 1 || argCount > 2) {
         runtimeError(vm, "post() takes at least 1 argument (%d given).", argCount);
         return EMPTY_VAL;
@@ -1117,7 +1117,7 @@ static Value httpClientPost(DictuVM *vm, int argCount, Value *args) {
     return newResultError(vm, errorString);
 }
 
-static Value httpClientPut(DictuVM *vm, int argCount, Value *args) {
+static Value httpClientPut(CamusVM *vm, int argCount, Value *args) {
     if (argCount < 1 || argCount > 2) {
         runtimeError(vm, "put() takes at least 1 argument (%d given).", argCount);
         return EMPTY_VAL;
@@ -1188,7 +1188,7 @@ static Value httpClientPut(DictuVM *vm, int argCount, Value *args) {
     return newResultError(vm, errorString);
 }
 
-static Value httpClientHead(DictuVM *vm, int argCount, Value *args) {
+static Value httpClientHead(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "head() takes 1 argument (%d given).", argCount);
         return EMPTY_VAL;
@@ -1231,7 +1231,7 @@ static Value httpClientHead(DictuVM *vm, int argCount, Value *args) {
     return newResultError(vm, errorString);
 }
 
-Value newHttpClient(DictuVM *vm, ObjDict *opts) {
+Value newHttpClient(CamusVM *vm, ObjDict *opts) {
     ObjAbstract *abstract = newAbstract(vm, freeHttpClient, httpClientToString);
     push(vm, OBJ_VAL(abstract));
 
@@ -1386,7 +1386,7 @@ Value newHttpClient(DictuVM *vm, ObjDict *opts) {
     return OBJ_VAL(abstract);
 }
 
-static Value newClient(DictuVM *vm, int argCount, Value *args) {
+static Value newClient(CamusVM *vm, int argCount, Value *args) {
     if (argCount > 1) {
         runtimeError(vm, "newClient() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -1402,8 +1402,8 @@ static Value newClient(DictuVM *vm, int argCount, Value *args) {
     return newHttpClient(vm, opts);
 }
 
-Value createHTTPModule(DictuVM *vm) {
-    ObjClosure *closure = compileModuleToClosure(vm, "HTTP", DICTU_HTTP_SOURCE);
+Value createHTTPModule(CamusVM *vm) {
+    ObjClosure *closure = compileModuleToClosure(vm, "HTTP", CAMUS_HTTP_SOURCE);
 
     if (closure == NULL) {
         return EMPTY_VAL;

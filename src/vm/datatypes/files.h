@@ -1,5 +1,5 @@
-#ifndef dictu_files_h
-#define dictu_files_h
+#ifndef camus_files_h
+#define camus_files_h
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -9,6 +9,6 @@
 #include "../common.h"
 #include "../util.h"
 
-void declareFileMethods(DictuVM *vm);
+void declareFileMethods(CamusVM *vm);
 
-#endif //dictu_files_h
+#endif //camus_files_h

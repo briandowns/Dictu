@@ -1,5 +1,5 @@
-#ifndef dictu_system_h
-#define dictu_system_h
+#ifndef camus_system_h
+#define camus_system_h
 
 #include <time.h>
 #include <limits.h>
@@ -25,6 +25,6 @@
 #include "../vm/vm.h"
 #include "../vm/memory.h"
 
-Value createSystemModule(DictuVM *vm);
+Value createSystemModule(CamusVM *vm);
 
-#endif //dictu_system_h
+#endif //camus_system_h

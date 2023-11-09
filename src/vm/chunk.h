@@ -1,5 +1,5 @@
-#ifndef dictu_chunk_h
-#define dictu_chunk_h
+#ifndef camus_chunk_h
+#define camus_chunk_h
 
 #include "common.h"
 #include "value.h"
@@ -18,12 +18,12 @@ typedef enum {
     #undef OPCODE
 } OpCode;
 
-void initChunk(DictuVM *vm, Chunk *chunk);
+void initChunk(CamusVM *vm, Chunk *chunk);
 
-void freeChunk(DictuVM *vm, Chunk *chunk);
+void freeChunk(CamusVM *vm, Chunk *chunk);
 
-void writeChunk(DictuVM *vm, Chunk *chunk, uint8_t byte, int line);
+void writeChunk(CamusVM *vm, Chunk *chunk, uint8_t byte, int line);
 
-int addConstant(DictuVM *vm, Chunk *chunk, Value value);
+int addConstant(CamusVM *vm, Chunk *chunk, Value value);
 
 #endif

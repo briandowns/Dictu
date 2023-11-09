@@ -1,8 +1,8 @@
 #include "copy.h"
 
-ObjList *copyList(DictuVM* vm, ObjList *oldList, bool shallow);
+ObjList *copyList(CamusVM* vm, ObjList *oldList, bool shallow);
 
-ObjDict *copyDict(DictuVM* vm, ObjDict *oldDict, bool shallow) {
+ObjDict *copyDict(CamusVM* vm, ObjDict *oldDict, bool shallow) {
     ObjDict *dict = newDict(vm);
     // Push to stack to avoid GC
     push(vm, OBJ_VAL(dict));
@@ -34,7 +34,7 @@ ObjDict *copyDict(DictuVM* vm, ObjDict *oldDict, bool shallow) {
     return dict;
 }
 
-ObjList *copyList(DictuVM* vm, ObjList *oldList, bool shallow) {
+ObjList *copyList(CamusVM* vm, ObjList *oldList, bool shallow) {
     ObjList *list = newList(vm);
     // Push to stack to avoid GC
     push(vm, OBJ_VAL(list));
@@ -62,7 +62,7 @@ ObjList *copyList(DictuVM* vm, ObjList *oldList, bool shallow) {
     return list;
 }
 
-ObjInstance *copyInstance(DictuVM* vm, ObjInstance *oldInstance, bool shallow) {
+ObjInstance *copyInstance(CamusVM* vm, ObjInstance *oldInstance, bool shallow) {
     ObjInstance *instance = newInstance(vm, oldInstance->klass);
     // Push to stack to avoid GC
     push(vm, OBJ_VAL(instance));

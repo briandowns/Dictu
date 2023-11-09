@@ -1,6 +1,6 @@
 #include "sets.h"
 
-static Value toStringSet(DictuVM *vm, int argCount, Value *args) {
+static Value toStringSet(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "toString() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -14,7 +14,7 @@ static Value toStringSet(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(string);
 }
 
-static Value lenSet(DictuVM *vm, int argCount, Value *args) {
+static Value lenSet(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "len() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -24,7 +24,7 @@ static Value lenSet(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(set->count);
 }
 
-static Value addSetItem(DictuVM *vm, int argCount, Value *args) {
+static Value addSetItem(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "add() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -41,7 +41,7 @@ static Value addSetItem(DictuVM *vm, int argCount, Value *args) {
     return NIL_VAL;
 }
 
-static Value removeSetItem(DictuVM *vm, int argCount, Value *args) {
+static Value removeSetItem(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "remove() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -59,7 +59,7 @@ static Value removeSetItem(DictuVM *vm, int argCount, Value *args) {
     return NIL_VAL;
 }
 
-static Value containsSetItem(DictuVM *vm, int argCount, Value *args) {
+static Value containsSetItem(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "contains() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -70,7 +70,7 @@ static Value containsSetItem(DictuVM *vm, int argCount, Value *args) {
     return setGet(set, args[1]) ? TRUE_VAL : FALSE_VAL;
 }
 
-static Value containsAllSet(DictuVM *vm, int argCount, Value *args) {
+static Value containsAllSet(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "containsAll() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -93,7 +93,7 @@ static Value containsAllSet(DictuVM *vm, int argCount, Value *args) {
     return TRUE_VAL;
 }
 
-void declareSetMethods(DictuVM *vm) {
+void declareSetMethods(CamusVM *vm) {
     defineNative(vm, &vm->setMethods, "toString", toStringSet);
     defineNative(vm, &vm->setMethods, "len", lenSet);
     defineNative(vm, &vm->setMethods, "add", addSetItem);

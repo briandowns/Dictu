@@ -1,5 +1,5 @@
-#ifndef dictu_table_h
-#define dictu_table_h
+#ifndef camus_table_h
+#define camus_table_h
 
 #include <stdio.h>
 
@@ -20,21 +20,21 @@ typedef struct {
 
 void initTable(Table *table);
 
-void freeTable(DictuVM *vm, Table *table);
+void freeTable(CamusVM *vm, Table *table);
 
 bool tableGet(Table *table, ObjString *key, Value *value);
 
-bool tableSet(DictuVM *vm, Table *table, ObjString *key, Value value);
+bool tableSet(CamusVM *vm, Table *table, ObjString *key, Value value);
 
-bool tableDelete(DictuVM *vm, Table *table, ObjString *key);
+bool tableDelete(CamusVM *vm, Table *table, ObjString *key);
 
-void tableAddAll(DictuVM *vm, Table *from, Table *to);
+void tableAddAll(CamusVM *vm, Table *from, Table *to);
 
 ObjString *tableFindString(Table *table, const char *chars, int length,
                            uint32_t hash);
 
-void tableRemoveWhite(DictuVM *vm, Table *table);
+void tableRemoveWhite(CamusVM *vm, Table *table);
 
-void grayTable(DictuVM *vm, Table *table);
+void grayTable(CamusVM *vm, Table *table);
 
 #endif

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16.3)
-project(dictu_api C)
+project(camus_api C)
 
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)

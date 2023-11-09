@@ -1,5 +1,5 @@
-#ifndef dictu_debug_h
-#define dictu_debug_h
+#ifndef camus_debug_h
+#define camus_debug_h
 
 #include "chunk.h"
 

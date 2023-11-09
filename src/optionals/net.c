@@ -13,7 +13,7 @@
 #define IP4_LEN 4
 #define IP6_LEN 16
 
-static Value parseIp4(DictuVM *vm, int argCount, Value *args) {
+static Value parseIp4(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "parseIp4() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -62,7 +62,7 @@ static Value parseIp4(DictuVM *vm, int argCount, Value *args) {
     return newResultSuccess(vm, OBJ_VAL(list));
 }
 
-Value createNetModule(DictuVM *vm) {
+Value createNetModule(CamusVM *vm) {
     ObjString *name = copyString(vm, "Net", 3);
     push(vm, OBJ_VAL(name));
     ObjModule *module = newModule(vm, name);

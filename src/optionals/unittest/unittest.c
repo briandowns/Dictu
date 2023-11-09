@@ -2,7 +2,7 @@
 
 #include "unittest-source.h"
 
-static Value mockNative(DictuVM *vm, int argCount, Value *args) {
+static Value mockNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount > 2) {
         runtimeError(vm, "mock() takes 1 or 2 arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -70,8 +70,8 @@ static Value mockNative(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(mockInstance);
 }
 
-Value createUnitTestModule(DictuVM *vm) {
-    ObjClosure *closure = compileModuleToClosure(vm, "UnitTest", DICTU_UNITTEST_SOURCE);
+Value createUnitTestModule(CamusVM *vm) {
+    ObjClosure *closure = compileModuleToClosure(vm, "UnitTest", CAMUS_UNITTEST_SOURCE);
 
     if (closure == NULL) {
         return EMPTY_VAL;

@@ -1,5 +1,5 @@
-#ifndef dictu_vm_h
-#define dictu_vm_h
+#ifndef camus_vm_h
+#define camus_vm_h
 
 #include "object.h"
 #include "table.h"
@@ -57,16 +57,16 @@ struct _vm {
 #define OK     0
 #define NOTOK -1
 
-void push(DictuVM *vm, Value value);
+void push(CamusVM *vm, Value value);
 
-Value peek(DictuVM *vm, int distance);
+Value peek(CamusVM *vm, int distance);
 
-void runtimeError(DictuVM *vm, const char *format, ...);
+void runtimeError(CamusVM *vm, const char *format, ...);
 
-Value pop(DictuVM *vm);
+Value pop(CamusVM *vm);
 
 bool isFalsey(Value value);
 
-ObjClosure *compileModuleToClosure(DictuVM *vm, char *name, char *source);
+ObjClosure *compileModuleToClosure(CamusVM *vm, char *name, char *source);
 
 #endif

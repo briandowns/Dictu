@@ -8,7 +8,7 @@
 #include "../optionals/optionals.h"
 
 // Native functions
-static Value typeNative(DictuVM *vm, int argCount, Value *args) {
+static Value typeNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "type() takes 1 argument (%d given).", argCount);
         return EMPTY_VAL;
@@ -19,7 +19,7 @@ static Value typeNative(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(takeString(vm, type, length));
 }
 
-static Value setNative(DictuVM *vm, int argCount, Value *args) {
+static Value setNative(CamusVM *vm, int argCount, Value *args) {
     ObjSet *set = newSet(vm);
     push(vm, OBJ_VAL(set));
 
@@ -31,7 +31,7 @@ static Value setNative(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(set);
 }
 
-static Value inputNative(DictuVM *vm, int argCount, Value *args) {
+static Value inputNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount > 1) {
         runtimeError(vm, "input() takes either 0 or 1 arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -82,7 +82,7 @@ static Value inputNative(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(takeString(vm, line, length));
 }
 
-static Value printNative(DictuVM *vm, int argCount, Value *args) {
+static Value printNative(CamusVM *vm, int argCount, Value *args) {
     UNUSED(vm);
 
     if (argCount == 0) {
@@ -98,7 +98,7 @@ static Value printNative(DictuVM *vm, int argCount, Value *args) {
     return NIL_VAL;
 }
 
-static Value printErrorNative(DictuVM *vm, int argCount, Value *args) {
+static Value printErrorNative(CamusVM *vm, int argCount, Value *args) {
     UNUSED(vm);
 
     if (argCount == 0) {
@@ -114,7 +114,7 @@ static Value printErrorNative(DictuVM *vm, int argCount, Value *args) {
     return NIL_VAL;
 }
 
-static Value assertNative(DictuVM *vm, int argCount, Value *args) {
+static Value assertNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "assert() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -128,7 +128,7 @@ static Value assertNative(DictuVM *vm, int argCount, Value *args) {
     return NIL_VAL;
 }
 
-static Value isDefinedNative(DictuVM *vm, int argCount, Value *args) {
+static Value isDefinedNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "isDefined() takes 1 argument (%d given).", argCount);
         return EMPTY_VAL;
@@ -157,7 +157,7 @@ static Value isDefinedNative(DictuVM *vm, int argCount, Value *args) {
     return FALSE_VAL;
 }
 
-static Value generateSuccessResult(DictuVM *vm, int argCount, Value *args) {
+static Value generateSuccessResult(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "Success() takes 1 argument (%d given).", argCount);
         return EMPTY_VAL;
@@ -166,7 +166,7 @@ static Value generateSuccessResult(DictuVM *vm, int argCount, Value *args) {
     return newResultSuccess(vm, args[0]);
 }
 
-static Value generateErrorResult(DictuVM *vm, int argCount, Value *args) {
+static Value generateErrorResult(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "Error() takes 1 argument (%d given).", argCount);
         return EMPTY_VAL;
@@ -182,7 +182,7 @@ static Value generateErrorResult(DictuVM *vm, int argCount, Value *args) {
 
 // End of natives
 
-void defineAllNatives(DictuVM *vm) {
+void defineAllNatives(CamusVM *vm) {
     char *nativeNames[] = {
             "input",
             "type",

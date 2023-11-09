@@ -1,5 +1,5 @@
-#ifndef dictu_math_h
-#define dictu_math_h
+#ifndef camus_math_h
+#define camus_math_h
 
 #include <string.h>
 #include <math.h>
@@ -9,6 +9,6 @@
 
 #define FLOAT_TOLERANCE 0.00001
 
-Value createMathsModule(DictuVM *vm);
+Value createMathsModule(CamusVM *vm);
 
-#endif //dictu_math_h
+#endif //camus_math_h

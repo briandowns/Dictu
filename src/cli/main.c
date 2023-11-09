@@ -8,7 +8,7 @@
 #include <sys/param.h>
 #endif
 
-#include "../include/dictu_include.h"
+#include "../include/camus_include.h"
 #include "argparse.h"
 
 #include "linenoise/linenoise.h"
@@ -68,8 +68,8 @@ static void memcpyAndAppendNul(char* dst, char* src, int len)
     dst[len] = '\0';
 }
 
-static void repl(DictuVM *vm) {
-    printf(DICTU_STRING_VERSION);
+static void repl(CamusVM *vm) {
+    printf(CAMUS_STRING_VERSION);
     char *line;
     linenoiseHistoryLoad("history.txt");
 
@@ -106,7 +106,7 @@ static void repl(DictuVM *vm) {
             linenoiseHistorySave("history.txt");
         }
 
-        dictuInterpret(vm, "repl", statement);
+        camusInterpret(vm, "repl", statement);
 
         free(line);
         free(statement);
@@ -141,7 +141,7 @@ static char *readFile(const char *path) {
     return buffer;
 }
 
-static void runFile(DictuVM *vm, char *filename) {
+static void runFile(CamusVM *vm, char *filename) {
     char *source = readFile(filename);
 
     if (source == NULL) {
@@ -149,7 +149,7 @@ static void runFile(DictuVM *vm, char *filename) {
         exit(74);
     }
 
-    DictuInterpretResult result = dictuInterpret(vm, filename, source);
+    CamusInterpretResult result = camusInterpret(vm, filename, source);
     free(source);
 
     if (result == INTERPRET_COMPILE_ERROR) exit(65);
@@ -157,8 +157,8 @@ static void runFile(DictuVM *vm, char *filename) {
 }
 
 static const char *const usage[] = {
-        "dictu [options] [[--] args]",
-        "dictu [options]",
+        "camus [options] [[--] args]",
+        "camus [options]",
         NULL,
 };
 
@@ -168,7 +168,7 @@ int main(int argc, char *argv[]) {
 
     struct argparse_option options[] = {
             OPT_HELP(),
-            OPT_BOOLEAN('v', "version", &version, "Display Dictu version"),
+            OPT_BOOLEAN('v', "version", &version, "Display Camus version"),
             OPT_STRING('c', "cmd", &cmd, "Run program passed in as string"),
             OPT_END(),
     };
@@ -178,27 +178,27 @@ int main(int argc, char *argv[]) {
     argc = argparse_parse(&argparse, argc, (const char **)argv);
 
     if (version) {
-        printf(DICTU_STRING_VERSION);
+        printf(CAMUS_STRING_VERSION);
         return 0;
     }
 
-    DictuVM *vm = dictuInitVM(argc == 0, argc, argv);
+    CamusVM *vm = camusInitVM(argc == 0, argc, argv);
 
     if (cmd != NULL) {
-        DictuInterpretResult result = dictuInterpret(vm, "repl", cmd);
+        CamusInterpretResult result = camusInterpret(vm, "repl", cmd);
         if (result == INTERPRET_COMPILE_ERROR) exit(65);
         if (result == INTERPRET_RUNTIME_ERROR) exit(70);
-        dictuFreeVM(vm);
+        camusFreeVM(vm);
         return 0;
     }
 
     if (argc == 0) {
         repl(vm);
-        dictuFreeVM(vm);
+        camusFreeVM(vm);
         return 0;
     }
 
     runFile(vm, argv[0]);
-    dictuFreeVM(vm);
+    camusFreeVM(vm);
     return 0;
 }

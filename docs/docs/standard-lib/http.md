@@ -84,7 +84,7 @@ const opts = {
     "headers": [
         "Content-Type: application/json", 
         "Accept: application/json",
-        "User-Agent: Dictu"
+        "User-Agent: Camus"
     ],
     "insecure": false,
     "keyFile": "",

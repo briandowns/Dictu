@@ -17,7 +17,7 @@ int setenv(const char *name, const char *value, int overwrite) {
 }
 #endif
 
-static Value get(DictuVM *vm, int argCount, Value *args) {
+static Value get(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1 && argCount != 2 ) {
         runtimeError(vm, "get() takes either 1 or 2 arguments (%d given).", argCount);
         return EMPTY_VAL;
@@ -50,7 +50,7 @@ static Value get(DictuVM *vm, int argCount, Value *args) {
     return NIL_VAL;
 }
 
-static Value set(DictuVM *vm, int argCount, Value *args) {
+static Value set(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 2) {
         runtimeError(vm, "set() takes 2 arguments (%d given).", argCount);
         return EMPTY_VAL;
@@ -79,7 +79,7 @@ static Value set(DictuVM *vm, int argCount, Value *args) {
 }
 
 #ifndef _WIN32
-static Value clearAll(DictuVM *vm, int argCount, Value *args) {
+static Value clearAll(CamusVM *vm, int argCount, Value *args) {
     UNUSED(args);
 
     if (argCount != 0) {
@@ -101,8 +101,8 @@ static Value clearAll(DictuVM *vm, int argCount, Value *args) {
 }
 #endif
 
-Value createEnvModule(DictuVM *vm) {
-    ObjClosure *closure = compileModuleToClosure(vm, "Env", DICTU_ENV_SOURCE);
+Value createEnvModule(CamusVM *vm) {
+    ObjClosure *closure = compileModuleToClosure(vm, "Env", CAMUS_ENV_SOURCE);
 
     if (closure == NULL) {
         return EMPTY_VAL;

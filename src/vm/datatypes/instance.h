@@ -1,5 +1,5 @@
-#ifndef dictu_instance_h
-#define dictu_instance_h
+#ifndef camus_instance_h
+#define camus_instance_h
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -9,6 +9,6 @@
 #include "copy.h"
 #include "../util.h"
 
-void declareInstanceMethods(DictuVM *vm);
+void declareInstanceMethods(CamusVM *vm);
 
-#endif //dictu_instance_h
+#endif //camus_instance_h

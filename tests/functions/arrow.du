@@ -29,7 +29,7 @@ class TestArrowFunctions < UnitTest {
         this.assertType(func, "function");
         this.assertEquals(func(10, 20), 30);
         this.assertEquals(func(1.5, 2.5), 4);
-        this.assertEquals(func("Dictu ", "is great!"), "Dictu is great!");
+        this.assertEquals(func("Camus ", "is great!"), "Camus is great!");
     }
 
     testExplicitReturn() {
@@ -61,7 +61,7 @@ class TestArrowFunctions < UnitTest {
         this.assertType(func, "function");
         this.assertEquals(func(10, 20), 30);
         this.assertEquals(func(1.5, 2.5), 4);
-        this.assertEquals(func("Dictu ", "is great!"), "Dictu is great!");
+        this.assertEquals(func("Camus ", "is great!"), "Camus is great!");
 
         const func1 = def (a, b) => {
             a += b;
@@ -71,7 +71,7 @@ class TestArrowFunctions < UnitTest {
         this.assertType(func1, "function");
         this.assertEquals(func1(10, 20), 30);
         this.assertEquals(func1(1.5, 2.5), 4);
-        this.assertEquals(func1("Dictu ", "is great!"), "Dictu is great!");
+        this.assertEquals(func1("Camus ", "is great!"), "Camus is great!");
     }
 
     testExplicitReturnWithThreeParameters() {
@@ -100,7 +100,7 @@ class TestArrowFunctions < UnitTest {
         this.assertEquals(func(), 30);
         this.assertEquals(func(10, 20), 30);
         this.assertEquals(func(1.5, 2.5), 4);
-        this.assertEquals(func("Dictu ", "is great!"), "Dictu is great!");
+        this.assertEquals(func("Camus ", "is great!"), "Camus is great!");
     }
 }
 

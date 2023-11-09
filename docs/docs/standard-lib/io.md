@@ -38,8 +38,8 @@ IO.print(0);
 Prints a given list of values to stdout with an appended newline character.
 
 ```cs
-IO.println("Dictu!");
-// Dictu!
+IO.println("Camus!");
+// Camus!
 ```
 
 ### IO.copyFile(String: src, String: dst) -> Result\<Nil>

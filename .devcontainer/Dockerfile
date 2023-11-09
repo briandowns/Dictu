@@ -5,7 +5,7 @@ RUN adduser vscode && \
     echo vscode ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/vscode && \
     chmod 0440 /etc/sudoers.d/vscode
 
-WORKDIR Dictu
+WORKDIR Camus
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update && apt upgrade -y && \
     apt install -y --no-install-recommends \
@@ -17,6 +17,6 @@ RUN apt update && apt upgrade -y && \
         ca-certificates && \
 	rm -rf /var/lib/apt/lists/*
 
-RUN git clone https://github.com/dictu-lang/Dictu.git
+RUN git clone https://github.com/camus-lang/Camus.git
 
 USER root

@@ -1,4 +1,4 @@
-#define DICTU_ENV_SOURCE "import Env;\n" \
+#define CAMUS_ENV_SOURCE "import Env;\n" \
 "\n" \
 "def readFile(path='.env') {\n" \
 "    const SPLIT_DELIMITER = '=';\n" \

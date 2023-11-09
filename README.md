@@ -1,15 +1,15 @@
-# Dictu
+# Camus
 
-*What is Dictu?*
+*What is Camus?*
 
-Dictu is a high-level dynamically typed, multi-paradigm, interpreted programming language. Dictu has a very familiar
+Camus is a high-level dynamically typed, multi-paradigm, interpreted programming language. Camus has a very familiar
 C-style syntax along with taking inspiration from the family of languages surrounding it, such as Python and JavaScript.
 
-### Dictu documentation
-Documentation for Dictu can be found [here](https://dictu-lang.com/)
+### Camus documentation
+Documentation for Camus can be found [here](https://camus-lang.com/)
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ab84059049bd4ba7b7b8c1fcfaac4ea5)](https://app.codacy.com/manual/jasonhall96686/Dictu?utm_source=github.com&utm_medium=referral&utm_content=Jason2605/Dictu&utm_campaign=Badge_Grade_Dashboard)
-[![CI](https://github.com/Jason2605/Dictu/workflows/CI/badge.svg)](https://github.com/Jason2605/Dictu/actions)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ab84059049bd4ba7b7b8c1fcfaac4ea5)](https://app.codacy.com/manual/jasonhall96686/Camus?utm_source=github.com&utm_medium=referral&utm_content=Jason2605/Camus&utm_campaign=Badge_Grade_Dashboard)
+[![CI](https://github.com/Jason2605/Camus/workflows/CI/badge.svg)](https://github.com/Jason2605/Camus/actions)
 
 ## Example programs
 ```cs
@@ -44,55 +44,55 @@ def fibonacci(num) {
 print(fibonacci(10));
 ```
 
-More [here.](https://github.com/Jason2605/Dictu/tree/develop/examples)
+More [here.](https://github.com/Jason2605/Camus/tree/develop/examples)
 
-## Running Dictu
+## Running Camus
 
-Dictu requires that you have CMake installed and it is at least version 3.16.3.
+Camus requires that you have CMake installed and it is at least version 3.16.3.
 
 ### Using CMake (at least version 3.16.3 or greater)
 
 ```bash
-$ git clone -b master https://github.com/dictu-lang/Dictu.git
-$ cd Dictu
+$ git clone -b master https://github.com/camus-lang/Camus.git
+$ cd Camus
 $ cmake -DCMAKE_BUILD_TYPE=Release -B ./build
 $ cmake --build ./build # on Windows add "--config Release" here to get a Release build
-$ ./dictu # on Windows the executable is ".\Release\dictu.exe"
+$ ./camus # on Windows the executable is ".\Release\camus.exe"
 ```
 
 ### Using CMake presets (version 3.21.0 or greater)
 
 ```bash
-$ git clone -b master https://github.com/dictu-lang/Dictu.git
-$ cd Dictu
+$ git clone -b master https://github.com/camus-lang/Camus.git
+$ cd Camus
 $ cmake --preset release
 $ cmake --build --preset release
-$ ./dictu # on Windows the executable is ".\Release\dictu.exe"
+$ ./camus # on Windows the executable is ".\Release\camus.exe"
 ```
 
 #### Compiling without HTTP
 
-The HTTP class within Dictu requires [cURL](https://curl.haxx.se/) to be installed when building the interpreter. If you wish to
-build Dictu without cURL, and in turn the HTTP class, build with the `DISABLE_HTTP` flag.
+The HTTP class within Camus requires [cURL](https://curl.haxx.se/) to be installed when building the interpreter. If you wish to
+build Camus without cURL, and in turn the HTTP class, build with the `DISABLE_HTTP` flag.
 
 ##### Without CMake presets (at least version 3.16.3 or greater)
 
 ```bash
-$ git clone -b master https://github.com/dictu-lang/Dictu.git
-$ cd Dictu
+$ git clone -b master https://github.com/camus-lang/Camus.git
+$ cd Camus
 $ cmake -DCMAKE_BUILD_TYPE=Release -DDISABLE_HTTP=1 -B ./build 
 $ cmake --build ./build # on Windows add "--config Release" here to get a Release build
-$ ./dictu # on Windows the executable is ".\Release\dictu.exe"
+$ ./camus # on Windows the executable is ".\Release\camus.exe"
 ```
 
 ##### CMake presets (version 3.21.0 or greater)
 
 ```bash
-$ git clone -b master https://github.com/dictu-lang/Dictu.git
-$ cd Dictu
+$ git clone -b master https://github.com/camus-lang/Camus.git
+$ cd Camus
 $ cmake --preset release-nohttp
 $ cmake --build --preset release
-$ ./dictu # on Windows add "--config Release" here to get a Release build
+$ ./camus # on Windows add "--config Release" here to get a Release build
 ```
 
 #### Compiling with VCPKG
@@ -101,31 +101,31 @@ This project includes support for the VCPKG C/C++ package manager in [manifest m
 To enable VCPKG support, the `VCPKG_ROOT` environmental variable must be set to the path of a check-out and bootstrapped
 [vcpkg repository](https://github.com/microsoft/vcpkg) on the compiling machine, and the `ENABLE_VCPKG` cmake flag must be set.
 
-Compiling with VCPKG will enable certain features of Dictu that requires external library features to be automatically pulled and compiled.
+Compiling with VCPKG will enable certain features of Camus that requires external library features to be automatically pulled and compiled.
 
 ##### Without CMake presets (at least version 3.16.3 or greater)
 
 ```bash
-$ git clone -b master https://github.com/dictu-lang/Dictu.git
-$ cd Dictu
+$ git clone -b master https://github.com/camus-lang/Camus.git
+$ cd Camus
 $ cmake -DCMAKE_BUILD_TYPE=Release -DENABLE_VCPKG=1 -DCMAKE_TOOLCHAIN_FILE=${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake -B ./build
 $ cmake --build ./build # on Windows add "--config Release" here to get a Release build
-$ ./dictu # on Windows the executable is ".\Release\dictu.exe"
+$ ./camus # on Windows the executable is ".\Release\camus.exe"
 ```
 
 ##### CMake presets (version 3.21.0 or greater)
 
 ```bash
-$ git clone -b master https://github.com/dictu-lang/Dictu.git
-$ cd Dictu
+$ git clone -b master https://github.com/camus-lang/Camus.git
+$ cd Camus
 $ cmake --preset release-vcpkg
 $ cmake --build --preset release-vcpkg
-$ ./dictu # on Windows add "--config Release" here to get a Release build
+$ ./camus # on Windows add "--config Release" here to get a Release build
 ```
 
 ### Docker Installation
 
-Refer to [Dictu Docker](https://github.com/dictu-lang/Dictu/blob/develop/Docker/README.md)
+Refer to [Camus Docker](https://github.com/camus-lang/Camus/blob/develop/Docker/README.md)
 
 ### FreeBSD Installation
 
@@ -146,17 +146,17 @@ export LD_LIBRARY_PATH=/usr/local/lib
 ```
 
 ```bash
-$ git clone -b master https://github.com/dictu-lang/Dictu.git
-$ cd Dictu
+$ git clone -b master https://github.com/camus-lang/Camus.git
+$ cd Camus
 $ cmake -DCMAKE_BUILD_TYPE=Release -B ./build 
 $ cmake --build ./build
-$ ./dictu
+$ ./camus
 ```
 
 ## Extensions
 
-Dictu has a Visual Studio Code extension [here](https://marketplace.visualstudio.com/items?itemName=Dictu.dictuvsc) with the implementation located
-in the [DictuVSC repo](https://github.com/dictu-lang/DictuVSC).
+Camus has a Visual Studio Code extension [here](https://marketplace.visualstudio.com/items?itemName=Camus.camusvsc) with the implementation located
+in the [CamusVSC repo](https://github.com/camus-lang/CamusVSC).
 
 ## Credits
 

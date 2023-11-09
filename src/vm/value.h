@@ -1,7 +1,7 @@
-#ifndef dictu_value_h
-#define dictu_value_h
+#ifndef camus_value_h
+#define camus_value_h
 
-#include "../include/dictu_include.h"
+#include "../include/camus_include.h"
 #include "common.h"
 
 typedef struct sObj Obj;
@@ -81,29 +81,29 @@ bool valuesEqual(Value a, Value b);
 
 void initValueArray(ValueArray *array);
 
-void writeValueArray(DictuVM *vm, ValueArray *array, Value value);
+void writeValueArray(CamusVM *vm, ValueArray *array, Value value);
 
-void freeValueArray(DictuVM *vm, ValueArray *array);
+void freeValueArray(CamusVM *vm, ValueArray *array);
 
-void grayDict(DictuVM *vm, ObjDict *dict);
+void grayDict(CamusVM *vm, ObjDict *dict);
 
-bool dictSet(DictuVM *vm, ObjDict *dict, Value key, Value value);
+bool dictSet(CamusVM *vm, ObjDict *dict, Value key, Value value);
 
 bool dictGet(ObjDict *dict, Value key, Value *value);
 
-bool dictDelete(DictuVM *vm, ObjDict *dict, Value key);
+bool dictDelete(CamusVM *vm, ObjDict *dict, Value key);
 
 bool setGet(ObjSet *set, Value value);
 
-bool setInsert(DictuVM *vm, ObjSet *set, Value value);
+bool setInsert(CamusVM *vm, ObjSet *set, Value value);
 
-bool setDelete(DictuVM *vm, ObjSet *set, Value value);
+bool setDelete(CamusVM *vm, ObjSet *set, Value value);
 
-void graySet(DictuVM *vm, ObjSet *set);
+void graySet(CamusVM *vm, ObjSet *set);
 
 char *valueToString(Value value);
 
-char *valueTypeToString(DictuVM *vm, Value value, int *length);
+char *valueTypeToString(CamusVM *vm, Value value, int *length);
 
 void printValue(Value value);
 

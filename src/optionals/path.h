@@ -1,5 +1,5 @@
-#ifndef dictu_path_h
-#define dictu_path_h
+#ifndef camus_path_h
+#define camus_path_h
 
 #include <limits.h>
 #include <stdlib.h>
@@ -15,6 +15,6 @@
 #include <dirent.h>
 #endif
 
-Value createPathModule(DictuVM *vm);
+Value createPathModule(CamusVM *vm);
 
-#endif //dictu_path_h
+#endif //camus_path_h

@@ -1,11 +1,11 @@
-#ifndef dictu_object_module_h
-#define dictu_object_module_h
+#ifndef camus_object_module_h
+#define camus_object_module_h
 
 #include <stdlib.h>
 
 #include "../optionals.h"
 #include "../../vm/vm.h"
 
-Value createObjectModule(DictuVM *vm);
+Value createObjectModule(CamusVM *vm);
 
-#endif //dictu_object_module_h
+#endif //camus_object_module_h

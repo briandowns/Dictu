@@ -1,6 +1,6 @@
 #include "hashlib.h"
 
-static Value sha256(DictuVM *vm, int argCount, Value *args) {
+static Value sha256(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "sha256() takes 1 argument (%d given).", argCount);
         return EMPTY_VAL;
@@ -37,7 +37,7 @@ static Value sha256(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(copyString(vm, buffer, 64));
 }
 
-static Value hmac(DictuVM *vm, int argCount, Value *args) {
+static Value hmac(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 2 && argCount != 3) {
         runtimeError(vm, "hmac() takes 2 or 3 arguments (%d given).", argCount);
         return EMPTY_VAL;
@@ -82,7 +82,7 @@ static Value hmac(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(copyString(vm, (const char *)digest, 32));
 }
 
-static Value bcrypt(DictuVM *vm, int argCount, Value *args) {
+static Value bcrypt(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1 && argCount != 2) {
         runtimeError(vm, "bcrypt() takes 1 or 2 arguments (%d given).", argCount);
         return EMPTY_VAL;
@@ -110,7 +110,7 @@ static Value bcrypt(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(copyString(vm, hash, strlen(hash)));
 }
 
-static Value bcryptVerify(DictuVM *vm, int argCount, Value *args) {
+static Value bcryptVerify(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 2) {
         runtimeError(vm, "bcryptVerify() takes 2 arguments (%d given).", argCount);
         return EMPTY_VAL;
@@ -127,7 +127,7 @@ static Value bcryptVerify(DictuVM *vm, int argCount, Value *args) {
     return BOOL_VAL(bcrypt_checkpass(stringA->chars, stringB->chars) == 0);
 }
 
-static Value verify(DictuVM *vm, int argCount, Value *args) {
+static Value verify(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 2) {
         runtimeError(vm, "verify() takes 2 arguments (%d given).", argCount);
         return EMPTY_VAL;
@@ -148,7 +148,7 @@ static Value verify(DictuVM *vm, int argCount, Value *args) {
     return BOOL_VAL(_compare((const uint8_t *) stringA->chars, (const uint8_t *) stringB->chars, stringA->length) == 0);
 }
 
-Value createHashlibModule(DictuVM *vm) {
+Value createHashlibModule(CamusVM *vm) {
     ObjString *name = copyString(vm, "Hashlib", 7);
     push(vm, OBJ_VAL(name));
     ObjModule *module = newModule(vm, name);

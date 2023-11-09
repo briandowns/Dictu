@@ -5,7 +5,7 @@
 #define AS_BIGINT(abstract) ((BigIntData*) ((abstract)->data))
 
 #define DECL_OP(name) \
-    static Value name(DictuVM *vm, int argCount, Value *args)
+    static Value name(CamusVM *vm, int argCount, Value *args)
 
 #define APPLY_OP(name, optype, func) \
     DECL_OP(name) { \
@@ -28,7 +28,7 @@ DECL_OP(arithMul);
 DECL_OP(arithDiv);
 DECL_OP(arithMod);
 
-static void freeBigInt(DictuVM *vm, ObjAbstract *abstract) {
+static void freeBigInt(CamusVM *vm, ObjAbstract *abstract) {
     bigint_free(&AS_BIGINT(abstract)->value);
     FREE(vm, BigIntData, AS_BIGINT(abstract));
 }
@@ -73,7 +73,7 @@ static bool isBigIntValue(Value val) {
     return isBigInt((ObjAbstract*) AS_ABSTRACT(val));
 }
 
-static BigIntData* freeBigIntOnFailure(DictuVM *vm, BigIntData* bi, bigint* ptr) {
+static BigIntData* freeBigIntOnFailure(CamusVM *vm, BigIntData* bi, bigint* ptr) {
     if (bi != NULL && ptr == NULL) {
         FREE(vm, BigIntData, bi);
         return NULL;
@@ -82,13 +82,13 @@ static BigIntData* freeBigIntOnFailure(DictuVM *vm, BigIntData* bi, bigint* ptr)
     return bi;
 }
 
-static BigIntData *allocBigInt(DictuVM *vm) {
+static BigIntData *allocBigInt(CamusVM *vm) {
     BigIntData *bi = ALLOCATE(vm, BigIntData, 1);
     bigint_init(&bi->value);
     return bi;
 }
 
-static BigIntData *cloneBigInt(DictuVM *vm, BigIntData* toClone) {
+static BigIntData *cloneBigInt(CamusVM *vm, BigIntData* toClone) {
     BigIntData *bi = allocBigInt(vm);
 
     if (bi != NULL) {
@@ -98,7 +98,7 @@ static BigIntData *cloneBigInt(DictuVM *vm, BigIntData* toClone) {
     return bi;
 }
 
-static BigIntData *bigIntFromIntString(DictuVM *vm, Value strValue) {
+static BigIntData *bigIntFromIntString(CamusVM *vm, Value strValue) {
     if (!isIntString(strValue)) {
         return NULL;
     }
@@ -114,7 +114,7 @@ static BigIntData *bigIntFromIntString(DictuVM *vm, Value strValue) {
     return freeBigIntOnFailure(vm, bi, ret);
 }
 
-static BigIntData *bigIntFromLong(DictuVM *vm, Value numValue) {
+static BigIntData *bigIntFromLong(CamusVM *vm, Value numValue) {
     if (!isLong(numValue)) {
         return NULL;
     }
@@ -130,7 +130,7 @@ static BigIntData *bigIntFromLong(DictuVM *vm, Value numValue) {
     return freeBigIntOnFailure(vm, bi, ret);
 }
 
-static Value newBigIntValue(DictuVM *vm, BigIntData *bi) {
+static Value newBigIntValue(CamusVM *vm, BigIntData *bi) {
     if (bi == NULL) {
         return newResultError(vm, "error: failed to instantiate bigint");
     }
@@ -176,7 +176,7 @@ static Value unwrapBigInt(Value val) {
     }
 }
 
-static Value newBigInt(DictuVM *vm, int argCount, Value *args) {
+static Value newBigInt(CamusVM *vm, int argCount, Value *args) {
     if (argCount > 1) {
         runtimeError(vm, "wrong number of arguments");
     }
@@ -212,7 +212,7 @@ static bool handleLongOrUnwrap(Value arg, bigint* tmp, Value* val, bool* argIsLo
     }
 }
 
-static Value handleLongOrUnwrapError(DictuVM *vm, bool argIsLong) {
+static Value handleLongOrUnwrapError(CamusVM *vm, bool argIsLong) {
     if (argIsLong) {
         return newResultError(vm, "error: invalid argument");
     }
@@ -220,7 +220,7 @@ static Value handleLongOrUnwrapError(DictuVM *vm, bool argIsLong) {
     return newResultError(vm, "error: operation error");
 }
 
-static Value applyOp1Arg(DictuVM *vm, int argCount, Value *args, int (*op)(const bigint*, const bigint*)) {
+static Value applyOp1Arg(CamusVM *vm, int argCount, Value *args, int (*op)(const bigint*, const bigint*)) {
     if (argCount != 1) {
         runtimeError(vm, "wrong number of arguments");
     }
@@ -243,7 +243,7 @@ static Value applyOp1Arg(DictuVM *vm, int argCount, Value *args, int (*op)(const
     return NUMBER_VAL(res);
 }
 
-static Value dealWithReturn(DictuVM *vm,  BigIntData* bi, bigint* ptr) {
+static Value dealWithReturn(CamusVM *vm,  BigIntData* bi, bigint* ptr) {
     bi = freeBigIntOnFailure(vm, bi, ptr);
 
     if (ptr == NULL) {
@@ -253,7 +253,7 @@ static Value dealWithReturn(DictuVM *vm,  BigIntData* bi, bigint* ptr) {
     return newBigIntValue(vm, bi);
 }
 
-static Value applyOp0ArgToReturn(DictuVM *vm, int argCount, Value *args, bigint* (*op)(bigint*)) {
+static Value applyOp0ArgToReturn(CamusVM *vm, int argCount, Value *args, bigint* (*op)(bigint*)) {
     if (argCount != 0) {
         return newResultError(vm, "error: wrong number of arguments");
     }
@@ -268,7 +268,7 @@ static Value applyOp0ArgToReturn(DictuVM *vm, int argCount, Value *args, bigint*
     return dealWithReturn(vm, bi, ret);
 }
 
-static Value applyOp1ArgAndReturn(DictuVM *vm, int argCount, Value *args, bigint* (*op)(bigint*, const bigint*, const bigint*)) {
+static Value applyOp1ArgAndReturn(CamusVM *vm, int argCount, Value *args, bigint* (*op)(bigint*, const bigint*, const bigint*)) {
     if (argCount != 1) {
         runtimeError(vm, "wrong number of arguments");
     }
@@ -308,7 +308,7 @@ APPLY_OP(arithMul,   Op1ArgAndReturn, &bigint_mul)
 APPLY_OP(arithDiv,   Op1ArgAndReturn, &bigint_div)
 APPLY_OP(arithMod,   Op1ArgAndReturn, &bigint_mod)
 
-Value createBigIntModule(DictuVM *vm) {
+Value createBigIntModule(CamusVM *vm) {
     ObjString *name = copyString(vm, "BigInt", 6);
     push(vm, OBJ_VAL(name));
     ObjModule *module = newModule(vm, name);

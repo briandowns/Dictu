@@ -15,7 +15,7 @@ nav_order: 14
 
 ## Error Handling
 
-Dictu does not have exceptions like many other languages, and instead
+Camus does not have exceptions like many other languages, and instead
 uses a Result type. A Result is a type which can be in one of two states,
 SUCCESS or ERROR. Logic which may return an error will always return a Result
 type which will wrap a value on success or wrap a string on failure with a given

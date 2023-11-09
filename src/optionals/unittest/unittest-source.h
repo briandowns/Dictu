@@ -1,4 +1,4 @@
-#define DICTU_UNITTEST_SOURCE "import Inspect;\n" \
+#define CAMUS_UNITTEST_SOURCE "import Inspect;\n" \
 "import System;\n" \
 "\n" \
 "abstract class UnitTest {\n" \

@@ -1,8 +1,8 @@
-#ifndef dictu_stack_h
-#define dictu_stack_h
+#ifndef camus_stack_h
+#define camus_stack_h
 
 #include "optionals.h"
 
-Value createStackModule(DictuVM *vm);
+Value createStackModule(CamusVM *vm);
 
-#endif //dictu_stack_h
+#endif //camus_stack_h

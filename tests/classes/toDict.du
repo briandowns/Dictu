@@ -12,7 +12,7 @@ class Test {
     var publicField1 = "a";
     var publicField2 = "b";
 
-    const constant = "dictu";
+    const constant = "camus";
 
     methodA() {}
     methodB() {}
@@ -30,7 +30,7 @@ class TestClassToDict < UnitTest {
         this.assertEquals(test._class.toDict().len(), 3);
         this.assertEquals(test._class.toDict()["public_variables"].len(), 2);
         this.assertEquals(test._class.toDict()["public_methods"].len(), 3);
-        this.assertEquals(test._class.toDict()["constants"].get("constant"), "dictu");
+        this.assertEquals(test._class.toDict()["constants"].get("constant"), "camus");
     }
 
     testClassToDictInheritance() {
@@ -38,7 +38,7 @@ class TestClassToDict < UnitTest {
         this.assertEquals(test._class.toDict().len(), 3);
         this.assertEquals(test._class.toDict()["public_variables"].len(), 2);
         this.assertEquals(test._class.toDict()["public_methods"].len(), 3);
-        this.assertEquals(test._class.toDict()["constants"].get("constant"), "dictu");
+        this.assertEquals(test._class.toDict()["constants"].get("constant"), "camus");
     }
 }
 

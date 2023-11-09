@@ -11,8 +11,8 @@ class TestSetAdd < UnitTest {
     testSetAdd() {
         const mySet = set();
 
-        mySet.add("dictu");
-        this.assertTruthy(mySet.contains("dictu"));
+        mySet.add("camus");
+        this.assertTruthy(mySet.contains("camus"));
         this.assertEquals(mySet.len(), 1);
 
         mySet.add("is");

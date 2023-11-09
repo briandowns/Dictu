@@ -28,7 +28,7 @@ import Hashlib;
 Hashes a given string using the SHA-256 algorithm.
 
 ```cs
-Hashlib.sha256("Dictu"); // 889bb2f43047c331bed74b1a9b309cc66adff6c6d4c3517547813ad67ba8d105
+Hashlib.sha256("Camus"); // 889bb2f43047c331bed74b1a9b309cc66adff6c6d4c3517547813ad67ba8d105
 ```
 
 ### Hashlib.hmac(String: key, String: payload, Boolean: raw -> Optional) -> String
@@ -67,6 +67,6 @@ Hashlib.bcryptVerify("my message", "wrong"); // false
 Timing safe hash comparison. This should always be favoured over normal string comparison.
 
 ```cs
-Hashlib.verify(Hashlib.sha256("Dictu"), "889bb2f43047c331bed74b1a9b309cc66adff6c6d4c3517547813ad67ba8d105"); // true
-Hashlib.verify(Hashlib.sha256("Dictu"), "wrong"); // false
+Hashlib.verify(Hashlib.sha256("Camus"), "889bb2f43047c331bed74b1a9b309cc66adff6c6d4c3517547813ad67ba8d105"); // true
+Hashlib.verify(Hashlib.sha256("Camus"), "wrong"); // false
 ```

@@ -16,7 +16,7 @@ class TestSetLen < UnitTest {
     testSetLenAdd() {
         const mySet = set();
 
-        mySet.add("dictu");
+        mySet.add("camus");
         this.assertEquals(mySet.len(), 1);
 
         mySet.add("is");

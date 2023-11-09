@@ -9,7 +9,7 @@ import Hashlib;
 
 class TestHashlibHmac < UnitTest {
     testHashlibHmac() {
-        const hmac = Hashlib.hmac("key!", "Dictu");
+        const hmac = Hashlib.hmac("key!", "Camus");
 
         this.assertType(hmac, "string");
         this.assertEquals(hmac.len(), 64);

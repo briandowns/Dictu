@@ -1,4 +1,4 @@
-#!/usr/bin/env dictu
+#!/usr/bin/env camus
 
 import Process;
 import System;
@@ -48,7 +48,7 @@ def build(debug) {
 
 // install installs the binary built in the previous step.
 def install() {
-    const cmd = ["sudo", "cp", "dictu", "/usr/local/bin"];
+    const cmd = ["sudo", "cp", "camus", "/usr/local/bin"];
 
     const res = Process.run(cmd);
     if (not res.success()) {

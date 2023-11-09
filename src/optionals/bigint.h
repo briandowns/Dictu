@@ -1,9 +1,9 @@
-#ifndef dictu_bigint_h
-#define dictu_bigint_h
+#ifndef camus_bigint_h
+#define camus_bigint_h
 
 #include "optionals.h"
 #include "../vm/vm.h"
 
-Value createBigIntModule(DictuVM *vm);
+Value createBigIntModule(CamusVM *vm);
 
-#endif //dictu_bigint_h
+#endif //camus_bigint_h

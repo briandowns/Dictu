@@ -1,5 +1,5 @@
-#ifndef dictu_dicts_h
-#define dictu_dicts_h
+#ifndef camus_dicts_h
+#define camus_dicts_h
 
 #include <stdbool.h>
 #include <string.h>
@@ -8,6 +8,6 @@
 #include "../copy.h"
 #include "../../util.h"
 
-void declareDictMethods(DictuVM *vm);
+void declareDictMethods(CamusVM *vm);
 
-#endif //dictu_dicts_h
+#endif //camus_dicts_h

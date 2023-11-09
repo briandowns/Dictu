@@ -4,7 +4,7 @@
 #include "value.h"
 #include "vm.h"
 
-void initChunk(DictuVM *vm, Chunk *chunk) {
+void initChunk(CamusVM *vm, Chunk *chunk) {
     UNUSED(vm);
 
     chunk->count = 0;
@@ -14,14 +14,14 @@ void initChunk(DictuVM *vm, Chunk *chunk) {
     initValueArray(&chunk->constants);
 }
 
-void freeChunk(DictuVM *vm, Chunk *chunk) {
+void freeChunk(CamusVM *vm, Chunk *chunk) {
     FREE_ARRAY(vm, uint8_t, chunk->code, chunk->capacity);
     FREE_ARRAY(vm, int, chunk->lines, chunk->capacity);
     freeValueArray(vm, &chunk->constants);
     initChunk(vm, chunk);
 }
 
-void writeChunk(DictuVM *vm, Chunk *chunk, uint8_t byte, int line) {
+void writeChunk(CamusVM *vm, Chunk *chunk, uint8_t byte, int line) {
     if (chunk->capacity < chunk->count + 1) {
         int oldCapacity = chunk->capacity;
         chunk->capacity = GROW_CAPACITY(oldCapacity);
@@ -36,7 +36,7 @@ void writeChunk(DictuVM *vm, Chunk *chunk, uint8_t byte, int line) {
     chunk->count++;
 }
 
-int addConstant(DictuVM *vm, Chunk *chunk, Value value) {
+int addConstant(CamusVM *vm, Chunk *chunk, Value value) {
     push(vm, value);
     writeValueArray(vm, &chunk->constants, value);
     pop(vm);

@@ -17,7 +17,7 @@ parent: Collections
 ---
 ## Dictionaries
 
-Dictionaries are a key:value pair data type. Dictu requires that the dictionary key be an immutable type (nil, boolean, number, string), however the value can be any type.
+Dictionaries are a key:value pair data type. Camus requires that the dictionary key be an immutable type (nil, boolean, number, string), however the value can be any type.
 
 ```cs
 var myDict = {"key": 1, "key1": true};

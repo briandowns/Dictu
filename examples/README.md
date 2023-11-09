@@ -1,4 +1,4 @@
-# Example Dictu programs
+# Example Camus programs
 ## Classes
 ```js
 // Setup a new trait
@@ -54,7 +54,7 @@ cayman.printName();
 // Call the method defined in the class
 cayman.printModel();
 ```
-[See here](https://github.com/Jason2605/Dictu/blob/develop/examples/classes.du)
+[See here](https://github.com/Jason2605/Camus/blob/develop/examples/classes.du)
 
 ## Factorial
 ```js
@@ -74,7 +74,7 @@ if (amount > 0) {
 }
 ```
 
-[See here](https://github.com/Jason2605/Dictu/blob/develop/examples/factorial.du)
+[See here](https://github.com/Jason2605/Camus/blob/develop/examples/factorial.du)
 
 ## FizzBuzz
 
@@ -90,7 +90,7 @@ for (var i = 1; i < 101; i += 1) {
 }
 ```
 
-[See here](https://github.com/Jason2605/Dictu/blob/develop/examples/fizzBuzz.du)
+[See here](https://github.com/Jason2605/Camus/blob/develop/examples/fizzBuzz.du)
 
 ## Guessing Game
 
@@ -114,7 +114,7 @@ while {
 }
 ```
 
-[See here](https://github.com/Jason2605/Dictu/blob/develop/examples/guessingGame.du)
+[See here](https://github.com/Jason2605/Camus/blob/develop/examples/guessingGame.du)
 
 ## Recursive Fibonacci
 

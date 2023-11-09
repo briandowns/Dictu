@@ -111,7 +111,7 @@ while (i < 10) {
 }
 ```
 
-Dictu also implements syntactic sugar for a while true loop.
+Camus also implements syntactic sugar for a while true loop.
 
 ```cs
 // While 'true' loop

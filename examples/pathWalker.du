@@ -80,11 +80,11 @@ class Walker {
     }
 }
 
-var dictuDir = Path.join(Path.dirname(__file__), '..');
+var camusDir = Path.join(Path.dirname(__file__), '..');
 
 // Traverse the file system starting from the project directory. Prune every directory named 'docs'
 // from the tree.
-var walker = Walker(dictuDir, ['docs']);
+var walker = Walker(camusDir, ['docs']);
 
 while {
     var tmp = walker.next();
@@ -107,16 +107,16 @@ while {
 
 print();
 print('Example using `Walker.exhaust`:');
-print(Walker(Path.join(dictuDir, '.github'), []).exhaust());
+print(Walker(Path.join(camusDir, '.github'), []).exhaust());
 
 print();
 print('Example using `Walker.exhaustDirs`:');
-print(Walker(Path.join(dictuDir, '.github'), []).exhaustDirs());
+print(Walker(Path.join(camusDir, '.github'), []).exhaustDirs());
 
 print();
 print('Example using `Walker.exhaustFiles`:');
-print(Walker(Path.join(dictuDir, '.github'), []).exhaustFiles());
+print(Walker(Path.join(camusDir, '.github'), []).exhaustFiles());
 
 print();
 print('Example using `Walker.exhaustAll`:');
-print(Walker(Path.join(dictuDir, '.github'), []).exhaustAll());
+print(Walker(Path.join(camusDir, '.github'), []).exhaustAll());

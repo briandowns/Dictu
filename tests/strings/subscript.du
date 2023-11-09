@@ -7,7 +7,7 @@ from UnitTest import UnitTest;
 
 class TestStringSubscript < UnitTest {
     testStringSubscript() {
-        const string = "Dictu is great!";
+        const string = "Camus is great!";
         const stringList = ['D', 'i', 'c', 't', 'u', ' ', 'i', 's', ' ', 'g', 'r', 'e', 'a', 't', '!'];
 
         this.assertEquals(string[0], "D");

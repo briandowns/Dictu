@@ -2,7 +2,7 @@
 #include "../memory.h"
 
 
-static Value lenString(DictuVM *vm, int argCount, Value *args) {
+static Value lenString(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "len() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -12,7 +12,7 @@ static Value lenString(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(string->length);
 }
 
-static Value toNumberString(DictuVM *vm, int argCount, Value *args) {
+static Value toNumberString(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "toNumber() takes no arguments (%d given).", argCount);
         return EMPTY_VAL;
@@ -44,7 +44,7 @@ static Value toNumberString(DictuVM *vm, int argCount, Value *args) {
     return newResultSuccess(vm, NUMBER_VAL(number));
 }
 
-static Value formatString(DictuVM *vm, int argCount, Value *args) {
+static Value formatString(CamusVM *vm, int argCount, Value *args) {
     if (argCount == 0) {
         runtimeError(vm, "format() takes at least 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -121,7 +121,7 @@ static Value formatString(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(takeString(vm, newStr, fullLength - 1));
 }
 
-static Value splitString(DictuVM *vm, int argCount, Value *args) {
+static Value splitString(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1 && argCount != 2) {
         runtimeError(vm, "split() takes 1 or 2 arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -213,7 +213,7 @@ static Value splitString(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(list);
 }
 
-static Value containsString(DictuVM *vm, int argCount, Value *args) {
+static Value containsString(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "contains() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -234,7 +234,7 @@ static Value containsString(DictuVM *vm, int argCount, Value *args) {
     return TRUE_VAL;
 }
 
-static Value findString(DictuVM *vm, int argCount, Value *args) {
+static Value findString(CamusVM *vm, int argCount, Value *args) {
     if (argCount < 1 || argCount > 2) {
         runtimeError(vm, "find() takes either 1 or 2 arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -275,7 +275,7 @@ static Value findString(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(position);
 }
 
-static Value replaceString(DictuVM *vm, int argCount, Value *args) {
+static Value replaceString(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 2) {
         runtimeError(vm, "replace() takes 2 arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -342,7 +342,7 @@ static Value replaceString(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(takeString(vm, newStr, length - 1));
 }
 
-static Value lowerString(DictuVM *vm, int argCount, Value *args) {
+static Value lowerString(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "lower() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -359,7 +359,7 @@ static Value lowerString(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(takeString(vm, temp, string->length));
 }
 
-static Value upperString(DictuVM *vm, int argCount, Value *args) {
+static Value upperString(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "upper() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -376,7 +376,7 @@ static Value upperString(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(takeString(vm, temp, string->length));
 }
 
-static Value startsWithString(DictuVM *vm, int argCount, Value *args) {
+static Value startsWithString(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "startsWith() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -393,7 +393,7 @@ static Value startsWithString(DictuVM *vm, int argCount, Value *args) {
     return BOOL_VAL(strncmp(string, start->chars, start->length) == 0);
 }
 
-static Value endsWithString(DictuVM *vm, int argCount, Value *args) {
+static Value endsWithString(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "endsWith() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -414,7 +414,7 @@ static Value endsWithString(DictuVM *vm, int argCount, Value *args) {
     return BOOL_VAL(strcmp(string->chars + (string->length - suffix->length), suffix->chars) == 0);
 }
 
-static Value leftStripString(DictuVM *vm, int argCount, Value *args) {
+static Value leftStripString(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "leftStrip() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -440,7 +440,7 @@ static Value leftStripString(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(takeString(vm, temp, string->length - count));
 }
 
-static Value rightStripString(DictuVM *vm, int argCount, Value *args) {
+static Value rightStripString(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "rightStrip() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -466,7 +466,7 @@ static Value rightStripString(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(takeString(vm, temp, length + 1));
 }
 
-static Value stripString(DictuVM *vm, int argCount, Value *args) {
+static Value stripString(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "strip() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -479,7 +479,7 @@ static Value stripString(DictuVM *vm, int argCount, Value *args) {
     return string;
 }
 
-static Value countString(DictuVM *vm, int argCount, Value *args) {
+static Value countString(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "count() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -502,7 +502,7 @@ static Value countString(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(count);
 }
 
-static Value titleString(DictuVM *vm, int argCount, Value *args) {
+static Value titleString(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "title() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -530,7 +530,7 @@ static Value titleString(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(takeString(vm, temp, string->length));
 }
 
-static Value repeatString(DictuVM *vm, int argCount, Value *args) {
+static Value repeatString(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "repeat() takes one argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -555,7 +555,7 @@ static Value repeatString(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(takeString(vm, temp, tempLen - 1));
 }
 
-void declareStringMethods(DictuVM *vm) {
+void declareStringMethods(CamusVM *vm) {
     defineNative(vm, &vm->stringMethods, "len", lenString);
     defineNative(vm, &vm->stringMethods, "toNumber", toNumberString);
     defineNative(vm, &vm->stringMethods, "format", formatString);

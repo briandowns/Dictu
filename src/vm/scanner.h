@@ -1,5 +1,5 @@
-#ifndef dictu_scanner_h
-#define dictu_scanner_h
+#ifndef camus_scanner_h
+#define camus_scanner_h
 
 typedef enum {
     // Single-character tokens.

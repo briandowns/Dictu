@@ -60,7 +60,7 @@ Returns the length of the given set.
 
 ```cs
 var mySet = set();
-mySet.add("Dictu!");
+mySet.add("Camus!");
 mySet.len(); // 1
 ```
 
@@ -70,7 +70,7 @@ Adding to sets is just a case of passing a value to .add()
 
 ```cs
 var mySet = set();
-mySet.add("Dictu!");
+mySet.add("Camus!");
 ```
 
 ### set.contains(value) -> Boolean
@@ -79,8 +79,8 @@ To check if a set contains a value use `.contains()`
 
 ```cs
 var mySet = set();
-mySet.add("Dictu!");
-print(mySet.contains("Dictu!")); // true
+mySet.add("Camus!");
+print(mySet.contains("Camus!")); // true
 print(mySet.contains("Other!")); // false
 ```
 
@@ -103,6 +103,6 @@ To remove a value from a set use `.remove()`.
 
 ```cs
 var mySet = set();
-mySet.add("Dictu!");
-mySet.remove("Dictu!");
+mySet.add("Camus!");
+mySet.remove("Camus!");
 ```

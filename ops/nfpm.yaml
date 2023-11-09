@@ -1,4 +1,4 @@
-name: dictu
+name: camus
 
 # Architecture. (required)
 # This will expand any env var you set in the field, e.g. version: ${GOARCH}
@@ -65,15 +65,15 @@ maintainer: Brian Downs <brian.downs@gmail.com>
 # Defaults to `no description given`.
 # Most packagers call for a one-line synopsis of the package. Some (like deb)
 # also call for a multi-line description starting on the second line.
-description: Dictu Programming Language
+description: Camus Programming Language
 
 # Vendor.
 # This will expand any env var you set in the field, e.g. vendor: ${VENDOR}
 # This is only used by the rpm packager.
-vendor: Dictu-lang
+vendor: Camus-lang
 
 # Package's homepage.
-homepage: https://dictu-lang.com/
+homepage: https://camus-lang.com/
 
 license: MIT
 
@@ -84,8 +84,8 @@ license: MIT
 disable_globbing: false
 
 contents:
-  - src: ./dictu
-    dst: /usr/local/bin/dictu
+  - src: ./camus
+    dst: /usr/local/bin/camus
 
 rpm:
   # The package group. This option is deprecated by most distros
@@ -94,7 +94,7 @@ rpm:
 
   # The package summary. This is, by default, the first line of the
   # description, but can be explicitly provided here.
-  summary: Dictu Programming Language
+  summary: Camus Programming Language
 
   # The packager is used to identify the organization that actually packaged
   # the software, as opposed to the author of the software.

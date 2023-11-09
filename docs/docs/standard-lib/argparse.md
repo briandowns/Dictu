@@ -115,7 +115,7 @@ print(args.option, args.option1);
 CLI Input / Output:
 
 ```
-$ dictu argparse.du --option "Hello"
+$ camus argparse.du --option "Hello"
 hello
 nil
 ```

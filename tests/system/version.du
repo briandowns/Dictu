@@ -3,7 +3,7 @@
  *
  * Testing the System.version attribute
  *
- * version is a dictionary denoting the Dictu version.
+ * version is a dictionary denoting the Camus version.
  */
 from UnitTest import UnitTest;
 

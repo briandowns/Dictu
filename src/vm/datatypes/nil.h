@@ -1,9 +1,9 @@
-#ifndef dictu_nil_h
-#define dictu_nil_h
+#ifndef camus_nil_h
+#define camus_nil_h
 
 #include "../common.h"
 #include "../util.h"
 
-void declareNilMethods(DictuVM *vm);
+void declareNilMethods(CamusVM *vm);
 
-#endif //dictu_nil_h
+#endif //camus_nil_h

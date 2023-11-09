@@ -5,7 +5,7 @@
 #include "vm.h"
 #include "memory.h"
 
-char *readFile(DictuVM *vm, const char *path) {
+char *readFile(CamusVM *vm, const char *path) {
     FILE *file = fopen(path, "rb");
     if (file == NULL) {
         return NULL;
@@ -33,7 +33,7 @@ char *readFile(DictuVM *vm, const char *path) {
     return buffer;
 }
 
-ObjString *dirname(DictuVM *vm, char *path, int len) {
+ObjString *dirname(CamusVM *vm, char *path, int len) {
     if (!len) {
         return copyString(vm, ".", 1);
     }
@@ -88,7 +88,7 @@ bool resolvePath(char *directory, char *path, char *ret) {
     return true;
 }
 
-ObjString *getDirectory(DictuVM *vm, char *source) {
+ObjString *getDirectory(CamusVM *vm, char *source) {
     // Slight workaround to ensure only .du files are the ones
     // attempted to be found.
     int len = strlen(source);
@@ -109,7 +109,7 @@ ObjString *getDirectory(DictuVM *vm, char *source) {
     return dirname(vm, res, strlen(res));
 }
 
-void defineNative(DictuVM *vm, Table *table, const char *name, NativeFn function) {
+void defineNative(CamusVM *vm, Table *table, const char *name, NativeFn function) {
     ObjNative *native = newNative(vm, function);
     push(vm, OBJ_VAL(native));
     ObjString *methodName = copyString(vm, name, strlen(name));
@@ -119,7 +119,7 @@ void defineNative(DictuVM *vm, Table *table, const char *name, NativeFn function
     pop(vm);
 }
 
-void defineNativeProperty(DictuVM *vm, Table *table, const char *name, Value value) {
+void defineNativeProperty(CamusVM *vm, Table *table, const char *name, Value value) {
     push(vm, value);
     ObjString *propertyName = copyString(vm, name, strlen(name));
     push(vm, OBJ_VAL(propertyName));
@@ -137,7 +137,7 @@ bool isValidKey(Value value) {
     return false;
 }
 
-Value boolNative(DictuVM *vm, int argCount, Value *args) {
+Value boolNative(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "bool() takes no arguments (%d given).", argCount);
         return EMPTY_VAL;

@@ -1,7 +1,7 @@
 #include "process.h"
 
 #ifdef _WIN32
-static char* buildArgs(DictuVM *vm, ObjList* list, int *size) {
+static char* buildArgs(CamusVM *vm, ObjList* list, int *size) {
     // 3 for 1st arg escape + null terminator
     int length = 3;
 
@@ -36,7 +36,7 @@ static char* buildArgs(DictuVM *vm, ObjList* list, int *size) {
     return string;
 }
 
-static Value execute(DictuVM* vm, ObjList* argList, bool wait) {
+static Value execute(CamusVM* vm, ObjList* argList, bool wait) {
     PROCESS_INFORMATION ProcessInfo;
 
     STARTUPINFO StartupInfo;
@@ -64,7 +64,7 @@ static Value execute(DictuVM* vm, ObjList* argList, bool wait) {
     return newResultError(vm, "Unable to start process");
 }
 
-static Value executeReturnOutput(DictuVM* vm, ObjList* argList) {
+static Value executeReturnOutput(CamusVM* vm, ObjList* argList) {
     PROCESS_INFORMATION ProcessInfo;
     STARTUPINFO StartupInfo;
 
@@ -130,7 +130,7 @@ static Value executeReturnOutput(DictuVM* vm, ObjList* argList) {
     return newResultSuccess(vm, OBJ_VAL(takeString(vm, output, total)));
 }
 #else
-static Value execute(DictuVM* vm, ObjList* argList, bool wait) {
+static Value execute(CamusVM* vm, ObjList* argList, bool wait) {
     char** arguments = ALLOCATE(vm, char*, argList->values.count + 1);
     for (int i = 0; i < argList->values.count; ++i) {
         if (!IS_STRING(argList->values.values[i])) {
@@ -161,7 +161,7 @@ static Value execute(DictuVM* vm, ObjList* argList, bool wait) {
     return newResultSuccess(vm, NIL_VAL);
 }
 
-static Value executeReturnOutput(DictuVM* vm, ObjList* argList) {
+static Value executeReturnOutput(CamusVM* vm, ObjList* argList) {
     char** arguments = ALLOCATE(vm, char*, argList->values.count + 1);
     for (int i = 0; i < argList->values.count; ++i) {
         if (!IS_STRING(argList->values.values[i])) {
@@ -222,7 +222,7 @@ static Value executeReturnOutput(DictuVM* vm, ObjList* argList) {
 }
 #endif
 
-static Value execNative(DictuVM* vm, int argCount, Value* args) {
+static Value execNative(CamusVM* vm, int argCount, Value* args) {
     if (argCount != 1) {
         runtimeError(vm, "exec() takes 1 argument (%d given).", argCount);
         return EMPTY_VAL;
@@ -237,7 +237,7 @@ static Value execNative(DictuVM* vm, int argCount, Value* args) {
     return execute(vm, argList, false);
 }
 
-static Value runNative(DictuVM* vm, int argCount, Value* args) {
+static Value runNative(CamusVM* vm, int argCount, Value* args) {
     if (argCount != 1 && argCount != 2) {
         runtimeError(vm, "run() takes 1 or 2 arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -268,7 +268,7 @@ static Value runNative(DictuVM* vm, int argCount, Value* args) {
     return execute(vm, argList, true);
 }
 
-Value createProcessModule(DictuVM* vm) {
+Value createProcessModule(CamusVM* vm) {
     ObjString* name = copyString(vm, "Process", 7);
     push(vm, OBJ_VAL(name));
     ObjModule* module = newModule(vm, name);

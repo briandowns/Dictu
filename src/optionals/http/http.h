@@ -1,5 +1,5 @@
-#ifndef dictu_http_h
-#define dictu_http_h
+#ifndef camus_http_h
+#define camus_http_h
 
 #include "../optionals.h"
 #include "../../vm/vm.h"
@@ -9,7 +9,7 @@
 #endif
 
 typedef struct response {
-    DictuVM *vm;
+    CamusVM *vm;
     ObjList *headers;
     char *res;
     size_t len;
@@ -17,6 +17,6 @@ typedef struct response {
     bool firstIteration;
 } Response;
 
-Value createHTTPModule(DictuVM *vm);
+Value createHTTPModule(CamusVM *vm);
 
-#endif //dictu_http_h
+#endif //camus_http_h

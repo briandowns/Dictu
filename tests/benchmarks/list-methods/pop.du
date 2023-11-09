@@ -1,7 +1,7 @@
 var x = [];
 
 for (var i = 0; i < 10000; i += 1) {
-    x.push("Dictu is great!");
+    x.push("Camus is great!");
 }
 
 var start = System.clock();

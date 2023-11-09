@@ -7,18 +7,18 @@ from UnitTest import UnitTest;
 
 class TestStringSlicing < UnitTest {
     testStringSlice() {
-        const x = "Dictu";
+        const x = "Camus";
 
-        this.assertEquals(x[0:x.len()], "Dictu");
-        this.assertEquals(x[0:], "Dictu");
+        this.assertEquals(x[0:x.len()], "Camus");
+        this.assertEquals(x[0:], "Camus");
         this.assertEquals(x[1:], "ictu");
         this.assertEquals(x[2:], "ctu");
         this.assertEquals(x[3:], "tu");
         this.assertEquals(x[4:], "u");
         this.assertEquals(x[5:], "");
 
-        this.assertEquals(x[:x.len()], "Dictu");
-        this.assertEquals(x[:5], "Dictu");
+        this.assertEquals(x[:x.len()], "Camus");
+        this.assertEquals(x[:5], "Camus");
         this.assertEquals(x[:4], "Dict");
         this.assertEquals(x[:3], "Dic");
         this.assertEquals(x[:2], "Di");

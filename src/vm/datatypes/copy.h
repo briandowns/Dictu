@@ -1,5 +1,5 @@
-#ifndef dictu_copy_h
-#define dictu_copy_h
+#ifndef camus_copy_h
+#define camus_copy_h
 
 #include <stdbool.h>
 #include <string.h>
@@ -8,10 +8,10 @@
 #include "../vm.h"
 #include "../memory.h"
 
-ObjList *copyList(DictuVM *vm, ObjList *oldList, bool shallow);
+ObjList *copyList(CamusVM *vm, ObjList *oldList, bool shallow);
 
-ObjDict *copyDict(DictuVM *vm, ObjDict *oldDict, bool shallow);
+ObjDict *copyDict(CamusVM *vm, ObjDict *oldDict, bool shallow);
 
-ObjInstance *copyInstance(DictuVM *vm, ObjInstance *oldInstance, bool shallow);
+ObjInstance *copyInstance(CamusVM *vm, ObjInstance *oldInstance, bool shallow);
 
-#endif //dictu_copy_h
+#endif //camus_copy_h

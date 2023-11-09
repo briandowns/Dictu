@@ -1,6 +1,6 @@
 #include "nil.h"
 
-static Value toStringNil(DictuVM *vm, int argCount, Value *args) {
+static Value toStringNil(CamusVM *vm, int argCount, Value *args) {
     UNUSED(args);
 
     if (argCount != 0) {
@@ -11,7 +11,7 @@ static Value toStringNil(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(copyString(vm, "nil", 3));
 }
 
-void declareNilMethods(DictuVM *vm) {
+void declareNilMethods(CamusVM *vm) {
     defineNative(vm, &vm->nilMethods, "toString", toStringNil);
     defineNative(vm, &vm->nilMethods, "toBool", boolNative); // Defined in util
 }

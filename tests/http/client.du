@@ -27,7 +27,7 @@ class TestHttpClient < UnitTest {
         const headers = [
             "Content-Type: application/json", 
             "Accept: application/json",
-            "User-Agent: Dictu"
+            "User-Agent: Camus"
         ];
         const ret = this.httpClient.setHeaders(headers);
         

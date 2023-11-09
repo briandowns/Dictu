@@ -1,5 +1,5 @@
-#ifndef dictu_term_h
-#define dictu_term_h
+#ifndef camus_term_h
+#define camus_term_h
 
 #ifdef _WIN32
 #include "windowsapi.h"
@@ -12,6 +12,6 @@
 #include "../vm/vm.h"
 #include "../vm/memory.h"
 
-Value createTermModule(DictuVM *vm);
+Value createTermModule(CamusVM *vm);
 
-#endif //dictu_term_h
+#endif //camus_term_h

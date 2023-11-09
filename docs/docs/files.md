@@ -18,8 +18,8 @@ nav_order: 12
 
 ### Opening files
 
-Opening files is very easy in Dictu. Syntax is `with(<file name>, <open mode>) {}`. Inside the `with` block, `file` is declared
-as a constant for you, and is the file object which has just been opened. Dictu will handle closing the file for you and happens
+Opening files is very easy in Camus. Syntax is `with(<file name>, <open mode>) {}`. Inside the `with` block, `file` is declared
+as a constant for you, and is the file object which has just been opened. Camus will handle closing the file for you and happens
 when you leave the with scope automatically. Note, the path when opening files is relative to the process **not** the current script running.
 
 | Open Mode | Description                                                                                                                |

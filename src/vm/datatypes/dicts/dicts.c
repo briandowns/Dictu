@@ -3,14 +3,14 @@
 /*
  * Note: We should try to implement everything we can in C
  *       rather than in the host language as C will always
- *       be faster than Dictu, and there will be extra work
- *       at startup running the Dictu code, however compromises
+ *       be faster than Camus, and there will be extra work
+ *       at startup running the Camus code, however compromises
  *       must be made due to the fact the VM is not re-enterable
  */
 
 #include "dict-source.h"
 
-static Value toStringDict(DictuVM *vm, int argCount, Value *args) {
+static Value toStringDict(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "toString() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -24,7 +24,7 @@ static Value toStringDict(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(string);
 }
 
-static Value lenDict(DictuVM *vm, int argCount, Value *args) {
+static Value lenDict(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "len() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -34,7 +34,7 @@ static Value lenDict(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(dict->count);
 }
 
-static Value keysDict(DictuVM *vm, int argCount, Value *args) {
+static Value keysDict(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "keys() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -57,7 +57,7 @@ static Value keysDict(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(list);
 }
 
-static Value getDictItem(DictuVM *vm, int argCount, Value *args) {
+static Value getDictItem(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1 && argCount != 2) {
         runtimeError(vm, "get() takes 1 or 2 arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -83,7 +83,7 @@ static Value getDictItem(DictuVM *vm, int argCount, Value *args) {
     return defaultValue;
 }
 
-static Value removeDictItem(DictuVM *vm, int argCount, Value *args) {
+static Value removeDictItem(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "remove() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -107,7 +107,7 @@ static Value removeDictItem(DictuVM *vm, int argCount, Value *args) {
     return EMPTY_VAL;
 }
 
-static Value dictItemExists(DictuVM *vm, int argCount, Value *args) {
+static Value dictItemExists(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "exists() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -132,7 +132,7 @@ static Value dictItemExists(DictuVM *vm, int argCount, Value *args) {
     return FALSE_VAL;
 }
 
-static Value copyDictShallow(DictuVM *vm, int argCount, Value *args) {
+static Value copyDictShallow(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "copy() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -144,7 +144,7 @@ static Value copyDictShallow(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(newDict);
 }
 
-static Value copyDictDeep(DictuVM *vm, int argCount, Value *args) {
+static Value copyDictDeep(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "deepCopy() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -156,7 +156,7 @@ static Value copyDictDeep(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(newDict);
 }
 
-void declareDictMethods(DictuVM *vm) {
+void declareDictMethods(CamusVM *vm) {
     defineNative(vm, &vm->dictMethods, "toString", toStringDict);
     defineNative(vm, &vm->dictMethods, "len", lenDict);
     defineNative(vm, &vm->dictMethods, "keys", keysDict);
@@ -167,7 +167,7 @@ void declareDictMethods(DictuVM *vm) {
     defineNative(vm, &vm->dictMethods, "deepCopy", copyDictDeep);
     defineNative(vm, &vm->dictMethods, "toBool", boolNative); // Defined in util
 
-    dictuInterpret(vm, "Dict", DICTU_DICT_SOURCE);
+    camusInterpret(vm, "Dict", CAMUS_DICT_SOURCE);
 
     Value Dict;
     tableGet(&vm->modules, copyString(vm, "Dict", 4), &Dict);

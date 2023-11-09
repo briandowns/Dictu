@@ -896,7 +896,7 @@ static void beginFunction(Compiler *compiler, Compiler *fnCompiler, FunctionType
         }
 
         if (fnCompiler->function->propertyCount > 0) {
-            DictuVM *vm = fnCompiler->parser->vm;
+            CamusVM *vm = fnCompiler->parser->vm;
             push(vm, OBJ_VAL(fnCompiler->function));
             fnCompiler->function->propertyIndexes = ALLOCATE(vm, int, fnCompiler->function->propertyCount);
             fnCompiler->function->propertyNames = ALLOCATE(vm, int, fnCompiler->function->propertyCount);
@@ -911,7 +911,7 @@ static void beginFunction(Compiler *compiler, Compiler *fnCompiler, FunctionType
         }
 
         if (fnCompiler->function->privatePropertyCount > 0) {
-            DictuVM *vm = fnCompiler->parser->vm;
+            CamusVM *vm = fnCompiler->parser->vm;
             push(vm, OBJ_VAL(fnCompiler->function));
             fnCompiler->function->privatePropertyIndexes = ALLOCATE(vm, int, fnCompiler->function->privatePropertyCount);
             fnCompiler->function->privatePropertyNames = ALLOCATE(vm, int, fnCompiler->function->privatePropertyCount);
@@ -1628,7 +1628,7 @@ static void method(Compiler *compiler, bool private, LangToken *identifier, bool
     }
 
     if (*hasAnnotation) {
-        DictuVM *vm = compiler->parser->vm;
+        CamusVM *vm = compiler->parser->vm;
 
         Value existingDict;
         dictGet(compiler->methodAnnotations, OBJ_VAL(vm->annotationString), &existingDict);
@@ -1722,7 +1722,7 @@ static Value parseValue(Compiler *compiler) {
 }
 
 static Value parseDict(Compiler *compiler) {
-    DictuVM *vm = compiler->parser->vm;
+    CamusVM *vm = compiler->parser->vm;
     ObjDict *dict = newDict(vm);
     push(vm, OBJ_VAL(dict));
 
@@ -1761,7 +1761,7 @@ static Value parseDict(Compiler *compiler) {
 }
 
 static Value parseList(Compiler *compiler) {
-    DictuVM *vm = compiler->parser->vm;
+    CamusVM *vm = compiler->parser->vm;
     ObjList *list = newList(vm);
     push(vm, OBJ_VAL(list));
 
@@ -1790,7 +1790,7 @@ static Value parseList(Compiler *compiler) {
 }
 
 static void parseAnnotations(Compiler *compiler, ObjDict *annotationDict) {
-    DictuVM *vm = compiler->parser->vm;
+    CamusVM *vm = compiler->parser->vm;
 
     do {
         consume(compiler, TOKEN_IDENTIFIER, "Expected annotation identifier");
@@ -1843,7 +1843,7 @@ static void parseAnnotations(Compiler *compiler, ObjDict *annotationDict) {
 }
 
 static void parseFieldAnnotations(Compiler *compiler) {
-    DictuVM *vm = compiler->parser->vm;
+    CamusVM *vm = compiler->parser->vm;
     if (compiler->fieldAnnotations == NULL) {
         compiler->fieldAnnotations = newDict(vm);
     }
@@ -1857,7 +1857,7 @@ static void parseFieldAnnotations(Compiler *compiler) {
 }
 
 static void parseMethodAnnotations(Compiler *compiler) {
-    DictuVM *vm = compiler->parser->vm;
+    CamusVM *vm = compiler->parser->vm;
     if (compiler->methodAnnotations == NULL) {
         compiler->methodAnnotations = newDict(vm);
     }
@@ -1871,7 +1871,7 @@ static void parseMethodAnnotations(Compiler *compiler) {
 }
 
 static void parseClassAnnotations(Compiler *compiler) {
-    DictuVM *vm = compiler->parser->vm;
+    CamusVM *vm = compiler->parser->vm;
     compiler->classAnnotations = newDict(vm);
 
     parseAnnotations(compiler, compiler->classAnnotations);
@@ -1922,7 +1922,7 @@ static void parseClassBody(Compiler *compiler) {
             emitByte(compiler, false);
 
             if (hasAnnotation) {
-                DictuVM *vm = compiler->parser->vm;
+                CamusVM *vm = compiler->parser->vm;
                 ObjString *varName = AS_STRING(currentChunk(compiler)->constants.values[name]);
 
                 Value existingDict;
@@ -1943,7 +1943,7 @@ static void parseClassBody(Compiler *compiler) {
             emitByte(compiler, true);
 
             if (hasAnnotation) {
-                DictuVM *vm = compiler->parser->vm;
+                CamusVM *vm = compiler->parser->vm;
                 ObjString *varName = AS_STRING(currentChunk(compiler)->constants.values[name]);
 
                 Value existingDict;
@@ -2595,12 +2595,12 @@ static void importStatement(Compiler *compiler) {
         uint8_t importName = identifierConstant(compiler, &compiler->parser->previous);
         declareVariable(compiler, &compiler->parser->previous);
 
-        bool dictuSource = false;
+        bool camusSource = false;
 
         int index = findBuiltinModule(
             (char *) compiler->parser->previous.start,
             compiler->parser->previous.length - compiler->parser->current.length,
-            &dictuSource
+            &camusSource
         );
 
         if (index == -1) {
@@ -2610,7 +2610,7 @@ static void importStatement(Compiler *compiler) {
         emitBytes(compiler, OP_IMPORT_BUILTIN, index);
         emitByte(compiler, importName);
 
-        if (dictuSource) {
+        if (camusSource) {
             emitByte(compiler, OP_POP);
             emitByte(compiler, OP_IMPORT_VARIABLE);
         }
@@ -2670,12 +2670,12 @@ static void fromImportStatement(Compiler *compiler) {
         consume(compiler, TOKEN_IDENTIFIER, "Expect import identifier.");
         uint8_t importName = identifierConstant(compiler, &compiler->parser->previous);
 
-        bool dictuSource;
+        bool camusSource;
 
         int index = findBuiltinModule(
                 (char *) compiler->parser->previous.start,
                 compiler->parser->previous.length,
-                &dictuSource
+                &camusSource
         );
 
         consume(compiler, TOKEN_IMPORT, "Expect 'import' after identifier");
@@ -2947,7 +2947,7 @@ static void statement(Compiler *compiler) {
     }
 }
 
-ObjFunction *compile(DictuVM *vm, ObjModule *module, const char *source) {
+ObjFunction *compile(CamusVM *vm, ObjModule *module, const char *source) {
     Parser parser;
     parser.vm = vm;
     parser.hadError = false;
@@ -2981,7 +2981,7 @@ ObjFunction *compile(DictuVM *vm, ObjModule *module, const char *source) {
     return parser.hadError ? NULL : function;
 }
 
-void grayCompilerRoots(DictuVM *vm) {
+void grayCompilerRoots(CamusVM *vm) {
     Compiler *compiler = vm->compiler;
 
     while (compiler != NULL) {

@@ -15,7 +15,7 @@ typedef struct {
 #define AS_QUEUE(v) ((Queue*)AS_ABSTRACT(v)->data)
 #define DEFAULT_QUEUE_CAPACITY 8
 
-void freeQueue(DictuVM *vm, ObjAbstract *abstract) {
+void freeQueue(CamusVM *vm, ObjAbstract *abstract) {
     Queue *queue = (Queue*)abstract->data;
     FREE_ARRAY(vm, Value, queue->dq, queue->capacity);
     FREE(vm, Queue, abstract->data);
@@ -29,7 +29,7 @@ char *queueToString(ObjAbstract *abstract) {
     return queueString;
 }
 
-void grayQueue(DictuVM *vm, ObjAbstract *abstract) {
+void grayQueue(CamusVM *vm, ObjAbstract *abstract) {
     Queue *queue = (Queue*)abstract->data;
 
     if (queue == NULL) return;
@@ -57,7 +57,7 @@ void grayQueue(DictuVM *vm, ObjAbstract *abstract) {
     }
 }
 
-static Value queueIsFull(DictuVM *vm, int argCount, Value *args) {
+static Value queueIsFull(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "isFull() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -69,7 +69,7 @@ static Value queueIsFull(DictuVM *vm, int argCount, Value *args) {
     return BOOL_VAL(isFull);
 }
 
-static Value queueIsEmpty(DictuVM *vm, int argCount, Value *args) {
+static Value queueIsEmpty(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "isEmpty() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -81,7 +81,7 @@ static Value queueIsEmpty(DictuVM *vm, int argCount, Value *args) {
     return BOOL_VAL(isEmpty);
 }
 
-static Value queueCap(DictuVM *vm, int argCount, Value *args) {
+static Value queueCap(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "cap() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -92,7 +92,7 @@ static Value queueCap(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(queue->capacity);
 }
 
-static Value queueLen(DictuVM *vm, int argCount, Value *args) {
+static Value queueLen(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "len() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -103,7 +103,7 @@ static Value queueLen(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(queue->count);
 }
 
-static Value queuePeek(DictuVM *vm, int argCount, Value *args) {
+static Value queuePeek(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "peek() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -114,7 +114,7 @@ static Value queuePeek(DictuVM *vm, int argCount, Value *args) {
     return queue->dq[queue->front];
 }
 
-static Value queuePush(DictuVM *vm, int argCount, Value *args) {
+static Value queuePush(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "push() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -138,9 +138,9 @@ static Value queuePush(DictuVM *vm, int argCount, Value *args) {
     return NIL_VAL;
 }
 
-Queue* createQueue(DictuVM *vm, double capacity);
+Queue* createQueue(CamusVM *vm, double capacity);
 
-static void shrinkQueue(DictuVM *vm, Queue *queue) {
+static void shrinkQueue(CamusVM *vm, Queue *queue) {
     int oldCapacity = queue->capacity;
     Queue *newQueue = createQueue(vm, SHRINK_CAPACITY(oldCapacity));
 
@@ -166,7 +166,7 @@ static void shrinkQueue(DictuVM *vm, Queue *queue) {
     FREE(vm, Queue, newQueue);
 }
 
-static Value queuePop(DictuVM *vm, int argCount, Value *args) {
+static Value queuePop(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "pop() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -194,7 +194,7 @@ static Value queuePop(DictuVM *vm, int argCount, Value *args) {
     return data;
 }
 
-Queue* createQueue(DictuVM *vm, double capacity) {
+Queue* createQueue(CamusVM *vm, double capacity) {
     Queue *queue = ALLOCATE(vm, Queue, 1);
     queue->dq = ALLOCATE(vm, Value, capacity);
     queue->capacity = capacity;
@@ -205,7 +205,7 @@ Queue* createQueue(DictuVM *vm, double capacity) {
     return queue;
 }
 
-ObjAbstract* newQueueObj(DictuVM *vm, double capacity) {
+ObjAbstract* newQueueObj(CamusVM *vm, double capacity) {
     ObjAbstract *abstract = newAbstract(vm, freeQueue, queueToString);
     push(vm, OBJ_VAL(abstract));
 
@@ -229,7 +229,7 @@ ObjAbstract* newQueueObj(DictuVM *vm, double capacity) {
     return abstract;
 }
 
-static Value newQueue(DictuVM *vm, int argCount, Value *args) {
+static Value newQueue(CamusVM *vm, int argCount, Value *args) {
     UNUSED(args);
 
     if (argCount != 0) {
@@ -240,7 +240,7 @@ static Value newQueue(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(newQueueObj(vm, DEFAULT_QUEUE_CAPACITY));
 }
 
-static Value newQueueWithSize(DictuVM *vm, int argCount, Value *args) {
+static Value newQueueWithSize(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "newWithSize() takes 1 argument (%d given).", argCount);
         return EMPTY_VAL;
@@ -259,7 +259,7 @@ static Value newQueueWithSize(DictuVM *vm, int argCount, Value *args) {
     return newResultSuccess(vm, OBJ_VAL(newQueueObj(vm, capacity)));
 }
 
-Value createQueueModule(DictuVM *vm) {
+Value createQueueModule(CamusVM *vm) {
     ObjString *name = copyString(vm, "Queue", 5);
     push(vm, OBJ_VAL(name));
     ObjModule *module = newModule(vm, name);

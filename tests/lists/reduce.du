@@ -32,12 +32,12 @@ class TestListReduce < UnitTest {
         this.assertEquals(l, 115);
 
         // Strings
-        const string = ["Dictu ", "is", " great!"].reduce(def (accumulator, currentValue) => accumulator + currentValue, "");
-        this.assertEquals(string, "Dictu is great!");
+        const string = ["Camus ", "is", " great!"].reduce(def (accumulator, currentValue) => accumulator + currentValue, "");
+        this.assertEquals(string, "Camus is great!");
 
         // Lists
-        const newList = [["Dictu "], ["is"], [" great!"]].reduce(def (accumulator, currentValue) => accumulator + currentValue, []);
-        this.assertEquals(newList, ["Dictu ", "is", " great!"]);
+        const newList = [["Camus "], ["is"], [" great!"]].reduce(def (accumulator, currentValue) => accumulator + currentValue, []);
+        this.assertEquals(newList, ["Camus ", "is", " great!"]);
     }
 }
 

@@ -9,11 +9,11 @@ from UnitTest import UnitTest;
 
 class TestStringUpper < UnitTest {
     testStringUpper() {
-        this.assertEquals("DiCtU".upper(), "DICTU");
-        this.assertEquals("DICTU".upper(), "DICTU");
-        this.assertEquals("dictu".upper(), "DICTU");
+        this.assertEquals("DiCtU".upper(), "CAMUS");
+        this.assertEquals("CAMUS".upper(), "CAMUS");
+        this.assertEquals("camus".upper(), "CAMUS");
         this.assertEquals("12345".upper(), "12345");
-        this.assertEquals("12Dictu45".upper(), "12DICTU45");
+        this.assertEquals("12Camus45".upper(), "12CAMUS45");
         this.assertEquals("!@£$%^&*".upper(), "!@£$%^&*");
     }
 }

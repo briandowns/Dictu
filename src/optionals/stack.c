@@ -13,7 +13,7 @@ typedef struct {
 #define AS_STACK(v) ((Stack*)AS_ABSTRACT(v)->data)
 #define DEFAULT_STACK_CAPACITY 8
 
-void grayStack(DictuVM *vm, ObjAbstract *abstract) {
+void grayStack(CamusVM *vm, ObjAbstract *abstract) {
     Stack *stack = (Stack*)abstract->data;
 
     if (stack == NULL) return;
@@ -23,7 +23,7 @@ void grayStack(DictuVM *vm, ObjAbstract *abstract) {
     }
 }
 
-void freeStack(DictuVM *vm, ObjAbstract *abstract) {
+void freeStack(CamusVM *vm, ObjAbstract *abstract) {
     Stack *stack = (Stack*)abstract->data;
     FREE_ARRAY(vm, Value, stack->ds, stack->capacity);
     FREE(vm, Stack, abstract->data);
@@ -38,7 +38,7 @@ char *stackToString(ObjAbstract *abstract) {
 }
 
 
-static Value stackIsFull(DictuVM *vm, int argCount, Value *args) {
+static Value stackIsFull(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "isFull() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -50,7 +50,7 @@ static Value stackIsFull(DictuVM *vm, int argCount, Value *args) {
     return BOOL_VAL(isFull);
 }
 
-static Value stackIsEmpty(DictuVM *vm, int argCount, Value *args) {
+static Value stackIsEmpty(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "isEmpty() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -62,7 +62,7 @@ static Value stackIsEmpty(DictuVM *vm, int argCount, Value *args) {
     return BOOL_VAL(isEmpty);
 }
 
-static Value stackCap(DictuVM *vm, int argCount, Value *args) {
+static Value stackCap(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "cap() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -72,7 +72,7 @@ static Value stackCap(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(stack->capacity);
 }
 
-static Value stackLen(DictuVM *vm, int argCount, Value *args) {
+static Value stackLen(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "len() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -83,7 +83,7 @@ static Value stackLen(DictuVM *vm, int argCount, Value *args) {
     return NUMBER_VAL(stack->top);
 }
 
-static Value stackPeek(DictuVM *vm, int argCount, Value *args) {
+static Value stackPeek(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "peek() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -94,7 +94,7 @@ static Value stackPeek(DictuVM *vm, int argCount, Value *args) {
     return stack->ds[stack->top - 1];
 }
 
-static Value stackPush(DictuVM *vm, int argCount, Value *args) {
+static Value stackPush(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "push() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -112,7 +112,7 @@ static Value stackPush(DictuVM *vm, int argCount, Value *args) {
     return NIL_VAL;
 }
 
-static Value stackPop(DictuVM *vm, int argCount, Value *args) {
+static Value stackPop(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "pop() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -136,7 +136,7 @@ static Value stackPop(DictuVM *vm, int argCount, Value *args) {
     return data;
 }
 
-ObjAbstract* newStackObj(DictuVM *vm, double capacity) {
+ObjAbstract* newStackObj(CamusVM *vm, double capacity) {
     ObjAbstract *abstract = newAbstract(vm, freeStack, stackToString);
     push(vm, OBJ_VAL(abstract));
 
@@ -164,7 +164,7 @@ ObjAbstract* newStackObj(DictuVM *vm, double capacity) {
     return abstract;
 }
 
-static Value newStack(DictuVM *vm, int argCount, Value *args) {
+static Value newStack(CamusVM *vm, int argCount, Value *args) {
     UNUSED(args);
 
     if (argCount != 0) {
@@ -175,7 +175,7 @@ static Value newStack(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(newStackObj(vm, DEFAULT_STACK_CAPACITY));
 }
 
-static Value newStackWithSize(DictuVM *vm, int argCount, Value *args) {
+static Value newStackWithSize(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "newWithSize() takes 1 argument (%d given).", argCount);
         return EMPTY_VAL;
@@ -194,7 +194,7 @@ static Value newStackWithSize(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(newResultSuccess(vm, OBJ_VAL(newStackObj(vm, capacity))));
 }
 
-Value createStackModule(DictuVM *vm) {
+Value createStackModule(CamusVM *vm) {
     ObjString *name = copyString(vm, "Stack", 5);
     push(vm, OBJ_VAL(name));
     ObjModule *module = newModule(vm, name);

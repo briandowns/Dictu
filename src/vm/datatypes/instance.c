@@ -2,7 +2,7 @@
 #include "../vm.h"
 #include "../memory.h"
 
-static Value toString(DictuVM *vm, int argCount, Value *args) {
+static Value toString(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "toString() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -17,7 +17,7 @@ static Value toString(DictuVM *vm, int argCount, Value *args) {
 }
 
 
-static Value hasAttribute(DictuVM *vm, int argCount, Value *args) {
+static Value hasAttribute(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "hasAttribute() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -58,7 +58,7 @@ static Value hasAttribute(DictuVM *vm, int argCount, Value *args) {
     return FALSE_VAL;
 }
 
-static Value getAttribute(DictuVM *vm, int argCount, Value *args) {
+static Value getAttribute(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1 && argCount != 2) {
         runtimeError(vm, "getAttribute() takes 1 or 2 arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -114,7 +114,7 @@ static bool exists(ObjList *list, ObjString *search) {
     return false;
 }
 
-static Value getAttributes(DictuVM *vm, int argCount, Value *args) {
+static Value getAttributes(CamusVM *vm, int argCount, Value *args) {
     if (argCount > 0) {
         runtimeError(vm, "getAttributes() takes 0 arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -213,7 +213,7 @@ static Value getAttributes(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(dict);
 }
 
-static Value setAttribute(DictuVM *vm, int argCount, Value *args) {
+static Value setAttribute(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 2) {
         runtimeError(vm, "setAttribute() takes 2 arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -233,7 +233,7 @@ static Value setAttribute(DictuVM *vm, int argCount, Value *args) {
     return NIL_VAL;
 }
 
-static Value isInstance(DictuVM *vm, int argCount, Value *args) {
+static Value isInstance(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 1) {
         runtimeError(vm, "isInstance() takes 1 argument (%d given)", argCount);
         return EMPTY_VAL;
@@ -260,7 +260,7 @@ static Value isInstance(DictuVM *vm, int argCount, Value *args) {
     return BOOL_VAL(false);
 }
 
-static Value copyShallow(DictuVM *vm, int argCount, Value *args) {
+static Value copyShallow(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "copy() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -272,7 +272,7 @@ static Value copyShallow(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(instance);
 }
 
-static Value copyDeep(DictuVM *vm, int argCount, Value *args) {
+static Value copyDeep(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "deepCopy() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -284,7 +284,7 @@ static Value copyDeep(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(instance);
 }
 
-static Value methods(DictuVM *vm, int argCount, Value *args) {
+static Value methods(CamusVM *vm, int argCount, Value *args) {
     if (argCount != 0) {
         runtimeError(vm, "methods() takes no arguments (%d given)", argCount);
         return EMPTY_VAL;
@@ -307,7 +307,7 @@ static Value methods(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(list);
 }
 
-void declareInstanceMethods(DictuVM *vm) {
+void declareInstanceMethods(CamusVM *vm) {
     defineNative(vm, &vm->instanceMethods, "toString", toString);
     defineNative(vm, &vm->instanceMethods, "hasAttribute", hasAttribute);
     defineNative(vm, &vm->instanceMethods, "getAttribute", getAttribute);

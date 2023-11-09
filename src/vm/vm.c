@@ -27,7 +27,7 @@
 #include "natives.h"
 #include "../optionals/optionals.h"
 
-static void resetStack(DictuVM *vm) {
+static void resetStack(CamusVM *vm) {
     vm->stackTop = vm->stack;
     vm->frameCount = 0;
     vm->openUpvalues = NULL;
@@ -51,7 +51,7 @@ static void resetStack(DictuVM *vm) {
         unpack = false;                                                             \
     }
 
-void runtimeError(DictuVM *vm, const char *format, ...) {
+void runtimeError(CamusVM *vm, const char *format, ...) {
     for (int i = vm->frameCount - 1; i >= 0; i--) {
         CallFrame *frame = &vm->frames[i];
 
@@ -80,15 +80,15 @@ void runtimeError(DictuVM *vm, const char *format, ...) {
     resetStack(vm);
 }
 
-DictuVM *dictuInitVM(bool repl, int argc, char **argv) {
-    DictuVM *vm = malloc(sizeof(*vm));
+CamusVM *camusInitVM(bool repl, int argc, char **argv) {
+    CamusVM *vm = malloc(sizeof(*vm));
 
     if (vm == NULL) {
         printf("Unable to allocate memory\n");
         exit(71);
     }
 
-    memset(vm, '\0', sizeof(DictuVM));
+    memset(vm, '\0', sizeof(CamusVM));
 
     resetStack(vm);
     vm->objects = NULL;
@@ -151,7 +151,7 @@ DictuVM *dictuInitVM(bool repl, int argc, char **argv) {
     return vm;
 }
 
-void dictuFreeVM(DictuVM *vm) {
+void camusFreeVM(CamusVM *vm) {
     if (vm->repl) {
         freeTable(vm, &vm->constants);
     }
@@ -188,21 +188,21 @@ void dictuFreeVM(DictuVM *vm) {
     free(vm);
 }
 
-void push(DictuVM *vm, Value value) {
+void push(CamusVM *vm, Value value) {
     *vm->stackTop = value;
     vm->stackTop++;
 }
 
-Value pop(DictuVM *vm) {
+Value pop(CamusVM *vm) {
     vm->stackTop--;
     return *vm->stackTop;
 }
 
-Value peek(DictuVM *vm, int distance) {
+Value peek(CamusVM *vm, int distance) {
     return vm->stackTop[-1 - distance];
 }
 
-ObjClosure *compileModuleToClosure(DictuVM *vm, char *name, char *source) {
+ObjClosure *compileModuleToClosure(CamusVM *vm, char *name, char *source) {
     ObjString *pathObj = copyString(vm, name, strlen(name));
     push(vm, OBJ_VAL(pathObj));
     ObjModule *module = newModule(vm, pathObj);
@@ -219,7 +219,7 @@ ObjClosure *compileModuleToClosure(DictuVM *vm, char *name, char *source) {
     return closure;
 }
 
-static bool call(DictuVM *vm, ObjClosure *closure, int argCount) {
+static bool call(CamusVM *vm, ObjClosure *closure, int argCount) {
     if (argCount < closure->function->arity) {
         if ((argCount + closure->function->isVariadic) == closure->function->arity) {
             // add missing variadic param ([])
@@ -280,7 +280,7 @@ static bool call(DictuVM *vm, ObjClosure *closure, int argCount) {
     return true;
 }
 
-static bool callValue(DictuVM *vm, Value callee, int argCount, bool unpack) {
+static bool callValue(CamusVM *vm, Value callee, int argCount, bool unpack) {
     if (IS_OBJ(callee)) {
         HANDLE_UNPACK
 
@@ -350,7 +350,7 @@ static bool callValue(DictuVM *vm, Value callee, int argCount, bool unpack) {
     return false;
 }
 
-static bool callNativeMethod(DictuVM *vm, Value method, int argCount) {
+static bool callNativeMethod(CamusVM *vm, Value method, int argCount) {
     NativeFn native = AS_NATIVE(method);
 
     Value result = native(vm, argCount, vm->stackTop - argCount - 1);
@@ -363,7 +363,7 @@ static bool callNativeMethod(DictuVM *vm, Value method, int argCount) {
     return true;
 }
 
-static bool invokeFromClass(DictuVM *vm, ObjClass *klass, ObjString *name,
+static bool invokeFromClass(CamusVM *vm, ObjClass *klass, ObjString *name,
                             int argCount, bool unpack) {
     HANDLE_UNPACK
 
@@ -382,7 +382,7 @@ static bool invokeFromClass(DictuVM *vm, ObjClass *klass, ObjString *name,
     return call(vm, AS_CLOSURE(method), argCount);
 }
 
-static bool invokeInternal(DictuVM *vm, ObjString *name, int argCount, bool unpack) {
+static bool invokeInternal(CamusVM *vm, ObjString *name, int argCount, bool unpack) {
     Value receiver = peek(vm, argCount);
 
     HANDLE_UNPACK
@@ -450,7 +450,7 @@ static bool invokeInternal(DictuVM *vm, ObjString *name, int argCount, bool unpa
     return false;
 }
 
-static bool invoke(DictuVM *vm, ObjString *name, int argCount, bool unpack) {
+static bool invoke(CamusVM *vm, ObjString *name, int argCount, bool unpack) {
     Value receiver = peek(vm, argCount);
 
     HANDLE_UNPACK
@@ -685,7 +685,7 @@ static bool invoke(DictuVM *vm, ObjString *name, int argCount, bool unpack) {
     return false;
 }
 
-static bool bindMethod(DictuVM *vm, ObjClass *klass, ObjString *name) {
+static bool bindMethod(CamusVM *vm, ObjClass *klass, ObjString *name) {
     Value method;
     if (!tableGet(&klass->publicMethods, name, &method)) {
         return false;
@@ -701,8 +701,8 @@ static bool bindMethod(DictuVM *vm, ObjClass *klass, ObjString *name) {
 // is already in an upvalue, the existing one is used. (This is
 // important to ensure that multiple closures closing over the same
 // variable actually see the same variable.) Otherwise, it creates a
-// new open upvalue and adds it to the DictuVM's list of upvalues.
-static ObjUpvalue *captureUpvalue(DictuVM *vm, Value *local) {
+// new open upvalue and adds it to the CamusVM's list of upvalues.
+static ObjUpvalue *captureUpvalue(CamusVM *vm, Value *local) {
     // If there are no open upvalues at all, we must need a new one.
     if (vm->openUpvalues == NULL) {
         vm->openUpvalues = newUpvalue(vm, local);
@@ -738,7 +738,7 @@ static ObjUpvalue *captureUpvalue(DictuVM *vm, Value *local) {
     return createdUpvalue;
 }
 
-static void closeUpvalues(DictuVM *vm, Value *last) {
+static void closeUpvalues(CamusVM *vm, Value *last) {
     while (vm->openUpvalues != NULL &&
            vm->openUpvalues->value >= last) {
         ObjUpvalue *upvalue = vm->openUpvalues;
@@ -753,7 +753,7 @@ static void closeUpvalues(DictuVM *vm, Value *last) {
     }
 }
 
-static void defineMethod(DictuVM *vm, ObjString *name) {
+static void defineMethod(CamusVM *vm, ObjString *name) {
     Value method = peek(vm, 0);
     ObjClass *klass = AS_CLASS(peek(vm, 1));
     ObjFunction *function = AS_CLOSURE(method)->function;
@@ -771,7 +771,7 @@ static void defineMethod(DictuVM *vm, ObjString *name) {
     pop(vm);
 }
 
-static void createClass(DictuVM *vm, ObjString *name, ObjClass *superclass, ClassType type) {
+static void createClass(CamusVM *vm, ObjString *name, ObjClass *superclass, ClassType type) {
     ObjClass *klass = newClass(vm, name, superclass, type);
     push(vm, OBJ_VAL(klass));
 
@@ -807,7 +807,7 @@ bool isFalsey(Value value) {
            (IS_SET(value) && AS_SET(value)->count == 0);
 }
 
-static void concatenate(DictuVM *vm) {
+static void concatenate(CamusVM *vm) {
     ObjString *b = AS_STRING(peek(vm, 0));
     ObjString *a = AS_STRING(peek(vm, 1));
 
@@ -825,11 +825,11 @@ static void concatenate(DictuVM *vm) {
     push(vm, OBJ_VAL(result));
 }
 
-static void setReplVar(DictuVM *vm, Value value) {
+static void setReplVar(CamusVM *vm, Value value) {
     tableSet(vm, &vm->globals, vm->replVar, value);
 }
 
-static void copyAnnotations(DictuVM *vm, ObjDict *superAnnotations, ObjDict *klassAnnotations) {
+static void copyAnnotations(CamusVM *vm, ObjDict *superAnnotations, ObjDict *klassAnnotations) {
     for (int i = 0; i <= superAnnotations->capacityMask; ++i) {
         DictItem *item = &superAnnotations->entries[i];
 
@@ -847,7 +847,7 @@ static void copyAnnotations(DictuVM *vm, ObjDict *superAnnotations, ObjDict *kla
     }
 }
 
-static DictuInterpretResult run(DictuVM *vm) {
+static CamusInterpretResult run(CamusVM *vm) {
     CallFrame *frame = &vm->frames[vm->frameCount - 1];
     register uint8_t* ip = frame->ip;
 
@@ -2374,7 +2374,7 @@ static DictuInterpretResult run(DictuVM *vm) {
     return INTERPRET_RUNTIME_ERROR;
 }
 
-DictuInterpretResult dictuInterpret(DictuVM *vm, char *moduleName, char *source) {
+CamusInterpretResult camusInterpret(CamusVM *vm, char *moduleName, char *source) {
     ObjString *name = copyString(vm, moduleName, strlen(moduleName));
     push(vm, OBJ_VAL(name));
     ObjModule *module = newModule(vm, name);
@@ -2391,7 +2391,7 @@ DictuInterpretResult dictuInterpret(DictuVM *vm, char *moduleName, char *source)
     pop(vm);
     push(vm, OBJ_VAL(closure));
     callValue(vm, OBJ_VAL(closure), 0, false);
-    DictuInterpretResult result = run(vm);
+    CamusInterpretResult result = run(vm);
 
     return result;
 }
