@@ -25,6 +25,7 @@ import "files/import.du";
 import "switch/import.du";
 import "maths/import.du";
 import "datetime/import.du";
+import "time/import.du";
 import "env/import.du";
 import "system/import.du";
 import "json/import.du";

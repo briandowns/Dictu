@@ -1,0 +1,49 @@
+/**
+ * constants.du
+ *
+ * Testing the Time constant values.
+ *
+ * A set of constants defined in the Time module.
+ */
+
+import Time;
+import System;
+
+from UnitTest import UnitTest;
+
+class TestTimeConstants < UnitTest {
+    const dateTimeFormat = "%a %b %d %H:%M:%S %Y";
+
+    testSecondsPerMinuteConstant() {
+        const now = Time.now();
+        const res = now.format(Time.ISO8601).unwrap();
+        print(res);
+        // const startSec = Time.strptime(this.dateTimeFormat, "Fri May 29 03:12:32 2020");
+        // const minAgo = startSec - Time.SECONDS_IN_MINUTE;
+        // const endSec = Time.strptime(this.dateTimeFormat, "Fri May 29 03:11:32 2020");
+        // this.assertTruthy(minAgo == endSec);
+    }
+
+    // testSecondsPerHourConstant() {
+    //     const startSec = Datetime.strptime(this.dateTimeFormat, "Fri May 29 03:12:32 2020");
+    //     const hourAgo = startSec - Time.SECONDS_PER_HOUR;
+    //     const endSec = Datetime.strptime(this.dateTimeFormat, "Fri May 29 02:12:32 2020");
+    //     this.assertTruthy(hourAgo == endSec);
+    // }
+
+    // testSecondsPerDayConstant() {
+    //     const startSec = Time.strptime(this.dateTimeFormat, "Fri May 29 03:12:32 2020");
+    //     const dayAgo = startSec - Time.SECONDS_PER_DAY;
+    //     const endSec = Time.strptime(this.dateTimeFormat, "Fri May 28 03:12:32 2020");
+    //     this.assertTruthy(dayAgo == endSec);
+    // }
+
+    // testSecondsPerWeekConstant() {
+    //     const startSec = Time.strptime(this.dateTimeFormat, "Fri May 29 03:12:32 2020");
+    //     const weekAgo = startSec - Time.SECONDS_PER_WEEK;
+    //     const endSec = Time.strptime(this.dateTimeFormat, "Fri May 22 03:12:32 2020");
+    //     this.assertTruthy(weekAgo == endSec);
+    // }
+}
+
+TestTimeConstants().run();

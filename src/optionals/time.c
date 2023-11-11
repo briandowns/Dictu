@@ -6,6 +6,15 @@
 #define _XOPEN_SOURCE 500
 #endif
 
+#ifdef _WIN32
+#define localtime_r(TIMER, BUF) localtime_s(BUF, TIMER)
+// Assumes length of BUF is 26
+#define asctime_r(TIME_PTR, BUF) (asctime_s(BUF, 26, TIME_PTR), BUF)
+#define gmtime_r(TIMER, BUF) gmtime_s(BUF, TIMER)
+#else
+#define HAS_STRPTIME
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -16,6 +25,7 @@
 
 #define ISO8601Format "%m/%d/%Y %H:%M:%S %Z"
 #define RFC3339Format "%Y-%m-%dT%T%Z"
+#define RFC2822Format "%a, %d %b %Y %T %z"
 
 #define AS_TIME(v) ((Time*)AS_ABSTRACT(v)->data)
 
@@ -80,26 +90,6 @@ static Value subTime(DictuVM *vm, int argCount, Value *args) {
     t2->wall = t1->wall - duration;
 
     return OBJ_VAL(absT2);
-}
-
-// _mkgmtime for Windows...
-static Value utcTime(DictuVM *vm, int argCount, Value *args) {
-    if (argCount != 0) {
-        runtimeError(vm, "utc() takes 0 arguments (%d given)", argCount);
-        return EMPTY_VAL;
-    }
-
-    Time *t1 = AS_TIME(args[0]);
-    time_t tVal = t1->wall;
-
-    struct tm local;
-    localtime_r(&tVal, &local);
-    printf("%s\n", local.tm_zone);
-
-    // ObjAbstract* absT2 = newTimeObj(vm);
-    // Time *t2 = absT2->data;
-
-    return OBJ_VAL(NULL);
 }
 
 static Value getTZTime(DictuVM *vm, int argCount, Value *args) {
@@ -169,6 +159,9 @@ ObjAbstract* newTimeObj(DictuVM *vm) {
 
     Time *time = ALLOCATE(vm, Time, 1);
 
+    struct timespec ts;
+    timespec_get(&ts, TIME_UTC);
+    
     time->mono = mono.tv_sec;
     time->wall = wall.tv_sec;
 
@@ -177,7 +170,6 @@ ObjAbstract* newTimeObj(DictuVM *vm) {
      */
     defineNative(vm, &abstract->values, "add", addTime);
     defineNative(vm, &abstract->values, "sub", subTime);
-    defineNative(vm, &abstract->values, "utc", utcTime);
     defineNative(vm, &abstract->values, "getTZ", getTZTime);
     defineNative(vm, &abstract->values, "format", formatTime);
     defineNative(vm, &abstract->values, "toNumber", toNumberTime);
@@ -206,6 +198,34 @@ static Value nowTime(DictuVM *vm, int argCount, Value *args) {
     return OBJ_VAL(newTimeObj(vm));
 }
 
+#ifdef HAS_STRPTIME
+static Value parseTime(DictuVM *vm, int argCount, Value *args) {
+    if (argCount != 2) {
+        runtimeError(vm, "strptime() takes 2 arguments (%d given)", argCount);
+        return EMPTY_VAL;
+    }
+
+    if (!IS_STRING(args[0]) || !IS_STRING(args[1])) {
+        runtimeError(vm, "strptime() arguments must be strings");
+        return EMPTY_VAL;
+    }
+
+    ObjAbstract* absT2 = newTimeObj(vm);
+    Time *t2 = absT2->data;
+
+    struct tm local;
+    char *end = strptime(AS_CSTRING(args[1]), AS_CSTRING(args[0]), &local);
+    if (end == NULL) {
+        return newResultError(vm, "asdf");
+    }
+
+    t2->mono = local.tm_sec;
+    t2->wall = local.tm_sec;
+
+    return newResultSuccess(vm, OBJ_VAL(absT2));
+}
+#endif
+
 Value createTimeModule(DictuVM *vm) {
     ObjString *name = copyString(vm, "Time", 4);
     push(vm, OBJ_VAL(name));
@@ -213,12 +233,13 @@ Value createTimeModule(DictuVM *vm) {
     push(vm, OBJ_VAL(module));
 
     /**
-     * Define Datetime methods
+     * Define Time methods
      */
     defineNative(vm, &module->values, "now", nowTime);
+    defineNative(vm, &module->values, "parse", parseTime);
 
     /**
-     * Define Datetime properties
+     * Define Time properties
      */
     defineNativeProperty(vm, &module->values, "SECONDS_PER_MINUTE", NUMBER_VAL(60));
     defineNativeProperty(vm, &module->values, "SECONDS_PER_HOUR", NUMBER_VAL(3600));
@@ -230,6 +251,7 @@ Value createTimeModule(DictuVM *vm) {
     defineNativeProperty(vm, &module->values, "DAYS_PER_4_YEARS", NUMBER_VAL(365*4 + 1));
 
     defineNativeProperty(vm, &module->values, "RFC3339", OBJ_VAL(copyString(vm, RFC3339Format, strlen(RFC3339Format))));
+    defineNativeProperty(vm, &module->values, "RFC2822", OBJ_VAL(copyString(vm, RFC2822Format, strlen(RFC2822Format))));
     defineNativeProperty(vm, &module->values, "ISO8601", OBJ_VAL(copyString(vm, ISO8601Format, strlen(ISO8601Format))));
 
     pop(vm);

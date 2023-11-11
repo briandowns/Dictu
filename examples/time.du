@@ -10,6 +10,9 @@ import Time;
     print(t1.toNumber());
     print(t2.toNumber());
 
-    //t1.utc();
-    print(t1.getTZ());
+    print("RFC2822 - {}".format(t2.format(Time.RFC2822).unwrap()));
+    //print(t1.getTZ());
+
+    const t3 = Time.parse("%a %b %d %H:%M:%S %Y", "Fri May 29 03:12:32 2020").unwrap();
+    print(t3.format("%a %b %d %H:%M:%S %Y").unwrap());
 }
