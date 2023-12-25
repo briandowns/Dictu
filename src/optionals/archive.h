@@ -1,8 +1,8 @@
 #ifndef _dictu_archive_h
 #define _dictu_archive_h
 
-// #include <archive.h>
-// #include <archive_entry.h>
+#include <archive.h>
+#include <archive_entry.h>
 
 #include "../vm/vm.h"
 

@@ -1,7 +1,7 @@
 #include <string.h>
 #include <time.h>
 
-//#include "archive.h"
+#include "archive.h"
 #include "optionals.h"
 #include "../vm/vm.h"
 
